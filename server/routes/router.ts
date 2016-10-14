@@ -8,6 +8,6 @@ export function setRoutes(app: express.Application) {
 
   // send index.html
   app.all('/*', (req, res) => {
-    res.sendFile('index.html', { root: path.join(__dirname, '/../public') });
+    res.sendFile('index.html', { root: 'web/dist' });
   });
 }

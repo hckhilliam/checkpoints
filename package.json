@@ -5,8 +5,11 @@
   "private": true,
   "scripts": {
     "server": "set DEBUG=*&&node ./server/dist/www",
-    "webpack": "webpack -d --progress --watch",
-    "build": "webpack"
+    "webpack-web": "webpack-dev-server  --progress --colors --hot --inline --content-base web/dist/ --config webpack.web.config.js",
+    "webpack-server": "webpack -d --progress --watch --config webpack.node.config.js",
+    "build-web": "webpack --progress --config webpack.web.config.js",
+    "build-server": "webpack --progress --config webpack.node.config.js",
+    "build": "webpack --progress"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -17,11 +20,13 @@
     "morgan": "^1.7.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
     "react-router-redux": "^4.0.6",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
-    "whatwg-fetch": "^1.0.0"
+    "whatwg-fetch": "^1.0.0",
+    "whatwg-streams": "^0.1.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.1",
