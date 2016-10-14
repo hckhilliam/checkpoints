@@ -1,3 +1,7 @@
+/// <reference path="../global.d.ts" />
+
+import './lib/fb';
+
 import * as React from 'react';
 import { render } from 'react-dom';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -6,7 +10,9 @@ import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware, routerReducer } from 'react-router-redux';
 
-var reducer = combineReducers({
+import FacebookLoginButton from './components/FacebookLoginButton';
+
+const reducer = combineReducers({
   routing: routerReducer
 });
 const reduxRouterMiddleware = routerMiddleware(browserHistory as any);
@@ -19,7 +25,10 @@ class App extends React.Component<{}, {}> {
   render() {
     return (
       <Provider store={store}>
-        <h1 style={{fontSize: 128, color: 'green'}}>Hello friends!</h1>
+        <div>
+          <h1 style={{fontSize: 128, color: 'green'}}>Hello friends!</h1>
+          <FacebookLoginButton />
+        </div>
       </Provider>
     );
   }

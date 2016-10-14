@@ -4,4 +4,4 @@ npm-debug.log
 webpack-records
 
 server/dist/*
-web/dist/bundle.*
+web/dist/*bundle.*
