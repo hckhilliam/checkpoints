@@ -1,0 +1,39 @@
+{
+  "name": "checkpoints",
+  "version": "1.0.0",
+  "description": "Checkpoints!",
+  "private": true,
+  "scripts": {
+    "server": "set DEBUG=*&&node ./server/dist/www",
+    "webpack": "webpack -d --progress --watch",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.2.0",
+    "express": "^4.14.0",
+    "lodash": "^4.16.4",
+    "morgan": "^1.7.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-router": "^2.8.1",
+    "react-router-redux": "^4.0.6",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0",
+    "whatwg-fetch": "^1.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.5.1",
+    "node-sass": "^3.10.1",
+    "postcss-loader": "^0.13.0",
+    "sass-loader": "^4.0.2",
+    "source-map-loader": "^0.1.5",
+    "style-loader": "^0.13.1",
+    "ts-loader": "^0.9.1",
+    "typescript": "^2.0.3",
+    "typings": "^1.4.0",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
