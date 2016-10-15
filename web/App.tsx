@@ -9,6 +9,7 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware, routerReducer } from 'react-router-redux';
+import Router from './Router';
 
 import FacebookLoginButton from './components/FacebookLoginButton';
 
@@ -25,12 +26,17 @@ class App extends React.Component<{}, {}> {
   render() {
     return (
       <Provider store={store}>
-        <div>
-          <h1 style={{fontSize: 128, color: 'green'}}>Hello friends!</h1>
-          <FacebookLoginButton />
-        </div>
+        <Router history={history} />
       </Provider>
     );
+    // return (
+    //   <Provider store={store}>
+    //     <div>
+    //       <h1 style={{fontSize: 128, color: 'green'}}>Hello friends!</h1>
+    //       <FacebookLoginButton />
+    //     </div>
+    //   </Provider>
+    // );
   }
 }
 
