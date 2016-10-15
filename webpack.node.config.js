@@ -21,6 +21,13 @@ module.exports = {
       { test: /\.json$/, loader: "json-loader" }
     ]
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env": {
+        "MONGODB": JSON.stringify(process.env.MONGODB || 'mongodb://localhost/checkpoints')
+      }
+    })
+  ],
   resolve: {
     extensions: ["", ".ts", ".js"]
   },
