@@ -16,8 +16,12 @@
     "mongoose": "registry:dt/mongoose#4.5.9+20161010180758",
     "morgan": "registry:dt/morgan#1.7.0+20160524142355",
     "node": "registry:env/node#6.0.0+20161011193755",
+    "passport": "registry:dt/passport#0.2.0+20161013124703",
+    "passport-facebook": "registry:dt/passport-facebook#1.0.3+20160316155526",
     "react-router-redux": "registry:dt/react-router-redux#4.0.0+20160930121107",
     "react-router/history": "registry:dt/react-router/history#2.0.0+20160830150755",
-    "redux": "registry:dt/redux#3.5.2+20160703092728"
+    "redux": "registry:dt/redux#3.5.2+20160703092728",
+    "whatwg-fetch": "registry:dt/whatwg-fetch#0.0.0+20161004182750",
+    "whatwg-streams": "registry:dt/whatwg-streams#0.0.0+20160829180742"
   }
 }

@@ -5,6 +5,7 @@ import * as logger from 'morgan';
 import * as path from 'path';
 
 import { setRoutes } from './routes/router';
+import { intializeAuth } from './modules/auth';
 
 const app = express();
 
@@ -16,6 +17,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static('web/dist'));
 
+// Cors
+app.use(require('cors')());
+
+// Authentication
+intializeAuth(app);
+
+// Routes
 setRoutes(app);
 
 // catch 404 and forward to error handler

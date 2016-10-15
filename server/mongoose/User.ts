@@ -6,7 +6,7 @@ const schema = {
   email: { type: String, required: true, unique: true },
   name: { type: String, required: true },
   accessToken: String,
-  fbId: String
+  facebookId: String
 };
 
 const userSchema = new mongoose.Schema(schema);
