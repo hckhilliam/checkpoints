@@ -38,19 +38,11 @@ export function intializeAuth(app: express.Application) {
 export function authenticateFacebook(options = {}) {
   return passport.authenticate(
     'facebook',
-    Object.assign(
-      {},
-      {
-        scope: ['public_profile', 'email'],
-        session: false
-      },
-      options
-    )
+    {
+      scope: ['public_profile', 'email'],
+      session: false,
+      successRedirect: '/',
+      failureRedirect: '/'
+    }
   );
-}
-
-export function authenticateFacebookCallback() {
-  return authenticateFacebook({
-    failureRedirect: '/login'
-  });
 }

@@ -1,14 +1,23 @@
 export function checkLogin() {
   FB.getLoginStatus(response => {
-    const { status } = response;
-    if (status == 'connected') {
-      console.log(1);
-    } else {
-      login();
-    }
+    console.log(response);
   });
 }
 
 export function login() {
-  window.location.href = '/api/auth/facebook';
+  window.location.href = '/api/auth/facebook/callback';
+}
+
+export function loginDialog() {
+  FB.login(response => {
+    console.log(response);
+    if (response.status == 'connected')
+      login();
+  }, true);
+}
+
+export function logout() {
+  FB.logout(response => {
+    window.location.href = '/api/auth/logout';
+  });
 }
