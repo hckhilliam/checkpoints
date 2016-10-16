@@ -1,0 +1,14 @@
+$primary-color: #FAFAFA;
+
+body {
+  margin: 0;
+  background-color:  $primary-color;
+  font-family: 'Cormorant Garamond';
+}
+
+.page-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}

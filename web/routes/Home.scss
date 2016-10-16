@@ -1,0 +1,31 @@
+$title-font-size: 80px;
+
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: inherit;
+  width: inherit;
+
+  h1 {
+    font-size: $title-font-size;
+    i {
+      color: green;
+      font-size: $title-font-size*0.6;
+    }
+  }
+
+  //temp
+  .login-buttons {
+    button {
+      padding: 10px;
+      background-color: #3b5998;
+      color: #FBFBFB;
+      border: none;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+  }
+}

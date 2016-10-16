@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.5.1",
+    "css-loader": "^0.25.0",
     "empty-module": "0.0.2",
     "json-loader": "^0.5.4",
     "node-sass": "^3.10.1",

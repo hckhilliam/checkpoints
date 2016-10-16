@@ -6,7 +6,7 @@ import Root from './Root';
 import Home from './Home';
 
 interface Props {
-  history: ReactRouterRedux.ReactRouterReduxHistory
+  history: ReactRouterRedux.ReactRouterReduxHistory,
 }
 
 export class Router extends React.Component<Props, {}> {

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 const Root = props => {
   return (
-    <div>
+    <div className="page-content">
       {props.children}
     </div>
   );

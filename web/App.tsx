@@ -11,6 +11,7 @@ import { browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware, routerReducer } from 'react-router-redux';
 
 import Router from './routes/Router';
+import './App.scss';
 
 const reducer = combineReducers({
   routing: routerReducer
