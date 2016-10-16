@@ -9,7 +9,3 @@ export function createUser(name: string, email: string) {
   });
   return user.save();
 }
-
-// export function getUser(id: number) {
-//   return
-// }

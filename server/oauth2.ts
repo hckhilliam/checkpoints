@@ -2,7 +2,9 @@ const oauth2orize = require('oauth2orize');
 const uid = require('uid-safe');
 const debug = require('debug')('checkpoints:oauth2');
 
-import { authenticateUser } from './auth/userAuth';
+import * as passport from 'passport';
+
+import { checkUser } from './auth/userAuth';
 import { checkClient } from './modules/client';
 import AccessToken from './mongoose/AccessToken';
 
@@ -26,8 +28,8 @@ function upsertToken(userId, clientId, done) {
       uid(192).then(token => {
         const accessToken = new AccessToken({
           token,
-          userId: userId,
-          clientId: clientId
+          user_id: userId,
+          client_id: clientId
         });
         accessToken.save().then(() => {
           debug(`Token generated for user (${userId}), client (${clientId}), token (${token})`);
@@ -49,6 +51,7 @@ server.serializeClient((client, done) => {
 });
 
 server.deserializeClient((id, done) => {
+  debug('deserializeClient');
   checkClient(id, (err, client) => {
     if (err)
       return done(err);
@@ -57,7 +60,7 @@ server.deserializeClient((id, done) => {
 });
 
 server.grant(oauth2orize.grant.token((client, user, ares, done) => {
-  debug(client);
+  debug(user, client);
   const user_id = user._id;
   const client_id = client._id;
   upsertToken(user.email, client._id, done);
@@ -65,20 +68,38 @@ server.grant(oauth2orize.grant.token((client, user, ares, done) => {
 
 server.exchange(oauth2orize.exchange.password((client, username, password, scope, done) => {
   // Check client
-  checkClient(client._id, (err, c) => {
-    if (err)
-      return done(err);
-    if (!c)
-      return done(null, false);
+  debug('exchange password', client, username, password);
+  // checkClient(client._id, (err, c) => {
+  //   if (err)
+  //     return done(err);
+  //   if (!c)
+  //     return done(null, false);
 
     // Validate user
-    authenticateUser(username, password)
+    checkUser(username, password)
       .then(user => {
         if (!user)
           return done(null, false);
 
-        upsertToken(username._id, client._id, done);
+        // upsertToken(username._id, client._id, done);
+        const token = user['accessToken'];
+        if (token) {
+          debug(`Token retrieved for user (${user['_id']}), token (${token})`);
+          return done(null, token);
+        } else {
+          uid(192).then(token => {
+            user['accessToken'] = token;
+            (user as any).save().then(() => {
+              debug(`Token generated for user (${user['_id']}), token (${token})`);
+              done(null, token);
+            }).catch(err => {
+              done(err);
+            });
+          });
+        }
       })
       .catch(err => done(err));
-  });
+  // });
 }));
+
+export default server;

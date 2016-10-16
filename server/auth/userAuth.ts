@@ -1,10 +1,12 @@
+const debug = require('debug')('checkpoints:userAuth');
+
 import * as passport from 'passport';
 import { Strategy } from 'passport-local';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt-nodejs';
 
 import User from '../mongoose/User';
 
-const saltRounds = 10;
+const ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy;
 
 function getUser(email) {
   return User.findOne({ email });
@@ -12,7 +14,7 @@ function getUser(email) {
 
 function hash(password) {
   return new Promise((resolve, reject) => {
-    bcrypt.hash(password, saltRounds, (err, hash) => {
+    bcrypt.hash(password, null, null, (err, hash) => {
       if (err)
         return reject(err);
       return resolve(hash);
@@ -50,7 +52,7 @@ export function createUser(email, password, name) {
   });
 }
 
-export function authenticateUser(email, password) {
+export function checkUser(email, password) {
   return new Promise((resolve, reject) => {
     getUser(email)
       .then(user => {
@@ -67,6 +69,7 @@ export function authenticateUser(email, password) {
 
 export function useLocalStrategy() {
   passport.use(new Strategy((username, password, done) => {
+    debug('local');
     getUser(username)
       .then(user => {
         if (!user)
@@ -85,14 +88,43 @@ export function useLocalStrategy() {
   }));
 
   passport.serializeUser((user, done) => {
+    debug('serialize');
+    debug(user);
     done(null, user.email);
   });
 
   passport.deserializeUser((email, done) => {
+    debug('deserializeUser');
     getUser(email)
       .then(user => {
         user ? done(null, user) : done(null, false);
       })
       .catch(err => done(err, null));
   })
+}
+
+export function useClientPasswordStrategy() {
+  passport.use(new ClientPasswordStrategy((username, password, done) => {
+    debug('client password');
+    getUser(username)
+      .then(user => {
+        if (!user)
+          return done(null, false);
+
+        bcrypt.compare(password, user['password'], (err, res) => {
+          if (err)
+            return done(err);
+
+          return res
+            ? done(null, user)
+            : done(null, false);
+        });
+      })
+      .catch(err => done(err));
+  }));
+}
+
+export function authenticateUser() {
+  debug('auth user local');
+  return passport.authenticate('local', { session: false });
 }

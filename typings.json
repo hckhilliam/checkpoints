@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "bcrypt": "registry:npm/bcrypt#0.8.0+20161010165625",
     "body-parser": "registry:npm/body-parser#1.15.2+20160815132839",
     "debug": "registry:npm/debug#2.0.0+20160723033700",
     "express": "registry:npm/express#4.14.0+20160925001530",
@@ -12,6 +11,7 @@
     "redux-thunk": "registry:npm/redux-thunk#2.0.0+20160525185520"
   },
   "globalDependencies": {
+    "bcrypt-nodejs": "registry:dt/bcrypt-nodejs#0.0.0+20160316155526",
     "cookie-parser": "registry:dt/cookie-parser#1.3.4+20160316155526",
     "fbsdk": "registry:dt/fbsdk#0.0.0+20161003164619",
     "mongoose": "registry:dt/mongoose#4.5.9+20161010180758",
