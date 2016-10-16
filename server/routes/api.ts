@@ -1,9 +1,5 @@
 import { Router, Request, Response } from 'express';
 
-import auth from './auth';
-import user from './user';
-import checkpoint from './checkpoint';
-
 const debug = require('debug')('checkpoints:api');
 
 const api = Router();
@@ -13,8 +9,8 @@ api.get('/hello', (req: Request, res: Response, next) => {
   res.send(':)');
 });
 
-api.use('/auth', auth);
-api.use('/user', user);
-api.use('/checkpoint', checkpoint);
+api.use('/auth', require('./auth').default);
+api.use('/user', require('./user').default);
+api.use('/checkpoint', require('./checkpoint').default);
 
 export default api;

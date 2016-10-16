@@ -36,7 +36,7 @@ export function createUser(email, password, name) {
             } else {
               const newUser = new User({
                 email,
-                password,
+                password: hashedPassword,
                 name
               });
               newUser.save().then(u => resolve(u));
