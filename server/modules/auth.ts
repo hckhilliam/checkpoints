@@ -11,14 +11,19 @@ function upsertFacebookUser(profile, accessToken, done) {
     facebookId: profile.id,
     accessToken
   };
-  User.findOneAndUpdate(
-    { email: user.email },
-    user,
-    { upsert: true },
-    (err, user) => {
-      done(err, user);
+  User.findOne({ email: user.email }, (err, res) => {
+    if (err)
+      return done(err);
+    if (res) {
+      res.update(user, (err, user) => {
+        done(err, user);
+      });
+    } else {
+      new User(user).save((err, user) => {
+        done(err, user);
+      });
     }
-  );
+  });
 }
 
 export function intializeAuth(app: express.Application) {

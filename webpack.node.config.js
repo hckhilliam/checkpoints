@@ -24,7 +24,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       "process.env": {
-        "MONGODB": JSON.stringify(process.env.MONGODB || 'mongodb://localhost/checkpoints'),
+        "MONGODB": JSON.stringify(process.env.MONGODB || 'mongodb://dev:12345678@ds017688.mlab.com:17688/checkpoints_dev'),
         "FACEBOOK_APP_ID": JSON.stringify(process.env.FACEBOOK_APP_ID || '1122984984444971'),
         "FACEBOOK_APP_SECRET": JSON.stringify(process.env.FACEBOOK_APP_SECRET || '1aa31bc51756994148f7060891ffe3df')
       }
