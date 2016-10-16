@@ -1,10 +1,10 @@
-import { Router, Request, Response } from 'express';
-import { createUser } from '../modules/user';
+import {Router, Request, Response} from 'express';
+import {createUser} from '../modules/user';
 
 const api = Router();
 
 api.get('/create', (req: Request, res: Response, next) => {
-  const { name, email } = req.query;
+  const {name, email} = req.query;
   createUser(name, email).then(user => {
     res.json(user);
   }).catch(error => {
@@ -12,7 +12,7 @@ api.get('/create', (req: Request, res: Response, next) => {
     res.json({
       error
     });
-  })
+  });
 });
 
 export default api;
