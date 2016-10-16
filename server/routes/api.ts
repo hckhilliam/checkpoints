@@ -4,9 +4,12 @@ import auth from './auth';
 import user from './user';
 import checkpoint from './checkpoint';
 
+const debug = require('debug')('checkpoints:api');
+
 const api = Router();
 
 api.get('/hello', (req: Request, res: Response, next) => {
+  debug('hello!');
   res.send(':)');
 });
 

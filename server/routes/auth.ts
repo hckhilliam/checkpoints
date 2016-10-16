@@ -1,9 +1,9 @@
 import { Router, Request, Response } from 'express';
-import { authenticateFacebook } from '../modules/auth';
+import { authenticateFacebook } from '../auth/facebookAuth';
 
 const api = Router();
 
-api.get('/facebook/callback', authenticateFacebook(), (req: Request, res: Response) => {
+api.get('/facebook', authenticateFacebook(), (req: Request, res: Response) => {
   res.redirect('/');
 });
 

@@ -5,7 +5,7 @@ import * as logger from 'morgan';
 import * as path from 'path';
 
 import { setRoutes } from './routes/router';
-import { intializeAuth } from './modules/auth';
+import { initializeAuth } from './auth/auth';
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.use(express.static('web/dist'));
 app.use(require('cors')());
 
 // Authentication
-intializeAuth(app);
+initializeAuth(app);
 
 // Routes
 setRoutes(app);

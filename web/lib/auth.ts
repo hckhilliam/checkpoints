@@ -5,7 +5,7 @@ export function checkLogin() {
 }
 
 export function login() {
-  window.location.href = '/api/auth/facebook/callback';
+  window.location.href = '/api/auth/facebook';
 }
 
 export function loginDialog() {

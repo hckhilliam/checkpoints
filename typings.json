@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "bcrypt": "registry:npm/bcrypt#0.8.0+20161010165625",
     "body-parser": "registry:npm/body-parser#1.15.2+20160815132839",
     "debug": "registry:npm/debug#2.0.0+20160723033700",
     "express": "registry:npm/express#4.14.0+20160925001530",
@@ -18,6 +19,8 @@
     "node": "registry:env/node#6.0.0+20161011193755",
     "passport": "registry:dt/passport#0.2.0+20161013124703",
     "passport-facebook": "registry:dt/passport-facebook#1.0.3+20160316155526",
+    "passport-http-bearer": "registry:dt/passport-http-bearer#1.0.1+20160316155526",
+    "passport-local": "registry:dt/passport-local#0.0.0+20160316155526",
     "react-router-redux": "registry:dt/react-router-redux#4.0.0+20160930121107",
     "react-router/history": "registry:dt/react-router/history#2.0.0+20160830150755",
     "redux": "registry:dt/redux#3.5.2+20160703092728",

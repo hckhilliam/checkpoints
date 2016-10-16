@@ -12,6 +12,7 @@
     "build": "webpack --progress"
   },
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.1",
@@ -23,8 +24,11 @@
     "mongoose": "^4.6.3",
     "mongoose-auto-increment": "^5.0.1",
     "morgan": "^1.7.0",
+    "oauth2orize": "^1.5.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
+    "passport-http-bearer": "^1.0.1",
+    "passport-local": "^1.0.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
@@ -32,6 +36,7 @@
     "react-router-redux": "^4.0.6",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
+    "uid-safe": "^2.1.2",
     "whatwg-fetch": "^1.0.0",
     "whatwg-streams": "^0.1.1"
   },

@@ -3,11 +3,15 @@
  */
 
 var debug = require('debug')('checkpoints:server');
+var initializeClients = require('../modules/client').initializeClients;
 
 // Connect to mongo database
 var db = require('../mongoose/db');
 db.initialize().then(() => {
-  createServer();
+  // Create clients for oauth2
+  initializeClients().then(() => {
+    createServer();
+  });
 });
 
 function createServer() {

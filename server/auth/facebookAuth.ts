@@ -1,4 +1,3 @@
-import * as express from 'express';
 import * as passport from 'passport';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 
@@ -26,20 +25,6 @@ function upsertFacebookUser(profile, accessToken, done) {
   });
 }
 
-export function intializeAuth(app: express.Application) {
-  app.use(passport.initialize());
-
-  passport.use(new FacebookStrategy({
-    clientID: process.env['FACEBOOK_APP_ID'],
-    clientSecret: process.env['FACEBOOK_APP_SECRET'],
-    callbackURL: 'http://localhost:8080/api/auth/facebook/callback',
-    profileFields: ['id', 'email', 'displayName']
-  },
-  (accessToken, refreshToken, profile, done) => {
-    upsertFacebookUser(profile, accessToken, done);
-  }))
-}
-
 export function authenticateFacebook(options = {}) {
   return passport.authenticate(
     'facebook',
@@ -50,4 +35,17 @@ export function authenticateFacebook(options = {}) {
       failureRedirect: '/'
     }
   );
+}
+
+
+export function useFacebookStrategy() {
+  passport.use(new FacebookStrategy({
+    clientID: process.env['FACEBOOK_APP_ID'],
+    clientSecret: process.env['FACEBOOK_APP_SECRET'],
+    callbackURL: 'http://localhost:8080/api/auth/facebook',
+    profileFields: ['id', 'email', 'displayName']
+  },
+  (accessToken, refreshToken, profile, done) => {
+    upsertFacebookUser(profile, accessToken, done);
+  }));
 }
