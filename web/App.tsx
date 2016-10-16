@@ -1,4 +1,5 @@
 /// <reference path="../global.d.ts" />
+import './App.scss';
 
 import './lib/fb';
 
@@ -10,10 +11,12 @@ import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware, routerReducer } from 'react-router-redux';
 
+import checkpoints from './reducers/checkpointsReducer';
+
 import Router from './routes/Router';
-import './App.scss';
 
 const reducer = combineReducers({
+  checkpoints,
   routing: routerReducer
 });
 const reduxRouterMiddleware = routerMiddleware(browserHistory as any);

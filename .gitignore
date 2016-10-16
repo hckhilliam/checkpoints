@@ -6,3 +6,5 @@ webpack-records
 
 server/dist/*
 web/dist/*bundle.*
+
+.idea/*

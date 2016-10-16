@@ -54,7 +54,8 @@ module.exports = {
       { test: /\.css$/, loader: "style-loader!css-loader!postcss-loader" },
       { test: /\.scss$/, loaders: ["style", "css", "postcss", "sass"] },
       { test: /\.tsx?$/, loader: "ts" },
-      { test: /\.json$/, loader: "json-loader" }
+      { test: /\.json$/, loader: "json-loader" },
+      { test: /\.png$/, loader: "url-loader", query: { mimetype: "image/png" } }
     ],
     preloaders: [
       { test: /\.js$/, loader: "source-map-loader" }

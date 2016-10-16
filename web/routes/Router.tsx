@@ -4,6 +4,7 @@ import { Router as ReactRouter, Route, IndexRoute } from 'react-router';
 
 import Root from './Root';
 import Home from './Home';
+import Dashboard from './Dashboard';
 
 interface Props {
   history: ReactRouterRedux.ReactRouterReduxHistory,
@@ -25,6 +26,7 @@ export class Router extends React.Component<Props, {}> {
       <ReactRouter history={history}>
         <Route path="/" component={Root}>
           <IndexRoute component={Home} />
+          <Route path="/dashboard" component={Dashboard} />
         </Route>
       </ReactRouter>
     );
