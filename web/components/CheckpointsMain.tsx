@@ -17,22 +17,19 @@ interface State {
 
 export default class CheckpointsMain extends React.Component<Props, State> {
 
-  constructor(){
-    super();
-    this.state={checkpointTitle: ""};
-    this.editNewCheckpoint = this.editNewCheckpoint.bind(this);
-    this.addCheckpoint = this.addCheckpoint.bind(this);
+  state: State = {
+    checkpointTitle: ''
   }
 
   componentDidMount() {
     this.props.onGetCheckpoints();
   }
 
-  editNewCheckpoint(event) {
+  editNewCheckpoint = (event) => {
     this.setState({checkpointTitle: event.target.value });
   }
 
-  addCheckpoint() {
+  addCheckpoint = () => {
     let checkpoint = {title: this.state.checkpointTitle};
     console.log(this.state);
     this.props.onAddCheckpoint(checkpoint);
@@ -44,7 +41,7 @@ export default class CheckpointsMain extends React.Component<Props, State> {
     const unfinished = checkListItems.filter((element) => !element.isCompleted);
     return (
       <div>
-        <h1 >Bucket List</h1>
+        <h1>Bucket List</h1>
 
         <div>
           <input type="text" value={this.state.checkpointTitle} onChange={this.editNewCheckpoint}/>
