@@ -5,6 +5,7 @@ const api = Router();
 
 api.post('/', (req: Request, res: Response, next) => {
   const {title, description, isPrivate} = req['body'];
+  console.log(req);
   checkpoint.createCheckpoint(7, title, description, !!isPrivate).then(checkpoint => {
     res.json(checkpoint);
   }).catch(error => {

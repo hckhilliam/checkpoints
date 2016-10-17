@@ -2,12 +2,17 @@ import * as querystring from 'querystring';
 
 export const UPDATE_CHECKPOINTS = 'UPDATE_CHECKPOINTS';
 export const TOGGLE_ONE_CHECKPOINT = 'TOGGLE_ONE_CHECKPOINT';
+export const INSERT_CHECKPOINT = 'INSERT_CHECKPOINT';
 
 export interface UpdateCheckpointsAction extends Redux.Action {
   checkpoints: Checkpoints.Checkpoint[];
 }
 
 export interface ToggleOneCheckpointAction extends Redux.Action {
+  checkpoint: Checkpoints.Checkpoint;
+}
+
+export interface InsertCheckpointAction extends Redux.Action {
   checkpoint: Checkpoints.Checkpoint;
 }
 
@@ -46,6 +51,25 @@ export function toggleOneCheckpoint(checkpoint: Checkpoints.Checkpoint) {
   }
 }
 
+export function addCheckpoint(checkpoint) {
+  return dispatch => {
+    return fetch('/api/checkpoint/', {
+      method: 'POST',
+      body: JSON.stringify(checkpoint),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    }).then((res) => {
+      return res.json();
+    }).then(checkpoint => {
+      checkpoint.id = checkpoint._id;
+      delete checkpoint._id;
+      dispatch(insertCheckpoint(checkpoint));
+    });
+  }
+}
+
 export function updateCheckpoints(checkpoints): UpdateCheckpointsAction {
   return {
     type: UPDATE_CHECKPOINTS,
@@ -64,4 +88,11 @@ function mapResponseCheckpoint (checkpoint) {
   checkpoint.id = checkpoint._id;
   delete checkpoint._id;
   return checkpoint;
+}
+
+export function insertCheckpoint(checkpoint): InsertCheckpointAction {
+  return {
+      type: INSERT_CHECKPOINT,
+      checkpoint
+  };
 }

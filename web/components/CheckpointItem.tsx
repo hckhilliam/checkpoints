@@ -10,10 +10,6 @@ interface Props {
 export class CheckpointItem extends React.Component<Props, {}> {
   onChanged = () => {
     this.props.toggleChecked();
-    // console.log("haha");
-    // var item = this.state.item;
-    // item.isCompleted = !item.isCompleted;
-    // this.setState({item: item});
   }
 
   render(){
@@ -43,6 +39,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     }
   };
 }
-
 
 export const CheckpointItemContainer = connect(mapStateToProps, mapDispatchToProps)(CheckpointItem);
