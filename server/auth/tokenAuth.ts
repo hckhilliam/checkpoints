@@ -1,6 +1,8 @@
-const debug = require('debug')('checkpoints:token');
+const debug = require('debug')('checkpoints:tokenAuth');
 const uid = require('uid-safe');
 
+import * as passport from 'passport';
+import { Strategy } from 'passport-http-bearer';
 import AccessToken from '../mongoose/AccessToken';
 
 /**
@@ -53,3 +55,23 @@ export function upsertAccessToken(userId, clientId, expires) {
     });
   });
 }
+
+export function useBearerStrategy() {
+  passport.use(new Strategy(
+    (token, done) => {
+      debug('checking token', token);
+      AccessToken.findOne({ token }).populate('user_id')
+        .then(accessToken => {
+          if (!accessToken)
+            return done(null, false);
+          const user = accessToken['user_id'];
+          debug('token', token);
+          debug('user', user);
+          done(null, user);
+        })
+        .catch(err => done(err));
+    }
+  ))
+}
+
+export const authenticateToken = passport.authenticate('bearer', { session: false });

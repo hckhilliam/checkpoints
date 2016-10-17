@@ -4,7 +4,7 @@ const oauth2orize = require('oauth2orize');
 import * as passport from 'passport';
 
 import { checkUser } from './userAuth';
-import { createAccessToken } from './token';
+import { createAccessToken } from './tokenAuth';
 
 const server = oauth2orize.createServer();
 

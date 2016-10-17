@@ -35,7 +35,6 @@ export function usePublicClientStrategy() {
   }));
 }
 
-export function authenticateClientPublic() {
-  debug('auth client public');
+export function authenticatePublicClient() {
   return passport.authenticate('oauth2-public-client', { session: false });
 }

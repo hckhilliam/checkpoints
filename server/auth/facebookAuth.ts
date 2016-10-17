@@ -2,7 +2,7 @@ const debug = require('debug')('checkpoints:facebookAuth');
 
 import * as passport from 'passport';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
-import { createAccessToken } from './token';
+import { createAccessToken } from './tokenAuth';
 const CustomStrategy = require('passport-custom');
 
 import * as FB from 'fb';
@@ -19,11 +19,15 @@ function upsertFacebookUser(userId, profile) {
     name: profile.displayName
   };
 
-  return FacebookUser.findOneAndUpdate(
-    { _id: fbUser._id },
-    fbUser,
-    { upsert: true }
-  );
+  return new Promise((resolve, reject) => {
+    FacebookUser.findOneAndUpdate(
+      { _id: fbUser._id },
+      fbUser,
+      { upsert: true, new: true }
+    ).then(facebookUser => {
+      resolve(facebookUser);
+    }).catch(err => reject(err));
+  });
 }
 
 function upsertUser(profile) {
@@ -34,27 +38,32 @@ function upsertUser(profile) {
 
   return new Promise((resolve, reject) => {
     User.findOne({ email: user.email })
-    .then(res => {
-      if (res) {
-        return upsertFacebookUser(res._id, profile)
-          .then(facebookUser => {
-            resolve({
-              user: res,
-              facebookUser
+      .then(res => {
+        if (res) {
+          debug('existing user', res);
+          return upsertFacebookUser(res._id, profile)
+            .then(facebookUser => {
+              debug('upsert facebook user', facebookUser);
+              resolve({
+                user: res,
+                facebookUser
+              });
+            });
+        } else {
+          const newUser = new User(user);
+          return newUser.save().then(user => {
+            debug('new user', user);
+            return upsertFacebookUser(user._id, profile).then(facebookUser => {
+              debug('upsert facebook user', facebookUser);
+              resolve({
+                user,
+                facebookUser
+              });
             });
           });
-      } else {
-        const newUser = new User(user);
-        return newUser.save().then(user => {
-          return upsertFacebookUser(user._id, profile).then(facebookUser => {
-            resolve({
-              user,
-              facebookUser
-            });
-          });
-        });
-      }
-    });
+        }
+      })
+      .catch(err => reject(err));
   });
 }
 
