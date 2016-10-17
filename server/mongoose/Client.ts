@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 
 const schema = {
+  _id: String,
   name: String
 };
 

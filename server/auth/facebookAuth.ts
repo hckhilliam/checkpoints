@@ -1,51 +1,116 @@
+const debug = require('debug')('checkpoints:facebookAuth');
+
 import * as passport from 'passport';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
+import { createAccessToken } from './token';
+const CustomStrategy = require('passport-custom');
+
+import * as FB from 'fb';
 
 import User from '../mongoose/User';
+import FacebookUser from '../mongoose/FacebookUser';
+import FacebookToken from '../mongoose/FacebookToken';
 
-function upsertFacebookUser(profile, accessToken, done) {
-  const user = {
-    name: profile.displayName,
+function upsertFacebookUser(userId, profile) {
+  const fbUser = {
+    _id: profile.id,
+    user_id: userId,
     email: profile.emails[0].value,
-    facebookId: profile.id,
-    accessToken
+    name: profile.displayName
   };
-  User.findOne({ email: user.email }, (err, res) => {
-    if (err)
-      return done(err);
-    if (res) {
-      res.update(user, (err, user) => {
-        done(err, user);
-      });
-    } else {
-      new User(user).save((err, user) => {
-        done(err, user);
-      });
-    }
-  });
-}
 
-export function authenticateFacebook(options = {}) {
-  return passport.authenticate(
-    'facebook',
-    {
-      scope: ['public_profile', 'email'],
-      session: false,
-      successRedirect: '/',
-      failureRedirect: '/'
-    }
+  return FacebookUser.findOneAndUpdate(
+    { _id: fbUser._id },
+    fbUser,
+    { upsert: true }
   );
 }
 
+function upsertUser(profile) {
+  const user = {
+    name: profile.displayName,
+    email: profile.emails[0].value
+  };
+
+  return new Promise((resolve, reject) => {
+    User.findOne({ email: user.email })
+    .then(res => {
+      if (res) {
+        return upsertFacebookUser(res._id, profile)
+          .then(facebookUser => {
+            resolve({
+              user: res,
+              facebookUser
+            });
+          });
+      } else {
+        const newUser = new User(user);
+        return newUser.save().then(user => {
+          return upsertFacebookUser(user._id, profile).then(facebookUser => {
+            resolve({
+              user,
+              facebookUser
+            });
+          });
+        });
+      }
+    });
+  });
+}
+
+export function authenticateFacebook() {
+  return passport.authenticate('facebook', { session: false });
+}
 
 export function useFacebookStrategy() {
   passport.use(new FacebookStrategy({
     clientID: process.env['FACEBOOK_APP_ID'],
     clientSecret: process.env['FACEBOOK_APP_SECRET'],
-    callbackURL: 'http://localhost:8080/api/auth/facebook',
+    callbackURL: process.env['FACEBOOK_CALLBACK'],
     profileFields: ['id', 'email', 'displayName']
   },
   (accessToken, refreshToken, profile, done) => {
-    upsertFacebookUser(profile, accessToken, done);
+    debug('accessToken', accessToken);
+    debug('profile', profile);
+
+    FB.api('oauth/access_token', {
+      client_id: process.env['FACEBOOK_APP_ID'],
+      client_secret: process.env['FACEBOOK_APP_SECRET'],
+      grant_type: 'fb_exchange_token',
+      fb_exchange_token: accessToken
+    }, res => {
+      if (!res || res.error) {
+        debug('facebook error', !res ? 'error' : res.error);
+        return done(new Error(JSON.stringify(!res ? 'error' : res.error.message)));
+      }
+
+      const { access_token, expires } = res;
+      debug(res);
+
+      upsertUser(profile).then(res => {
+        const { user, facebookUser } = res as any;
+        debug(user, facebookUser);
+        return createAccessToken(user['_id'], 'facebook', 60 * 24 * 3600).then(token => {
+          const facebookToken = new FacebookToken({
+            facebook_token: access_token,
+            access_token: token,
+            user_id: user['_id'],
+            facebook_id: facebookUser['_id'],
+            expires: Date.now() + expires * 1000
+          })
+          return facebookToken.save().then(fbToken => {
+            return done(null, {
+              user,
+              facebookUser,
+              facebookToken: fbToken['facebook_token'],
+              accessToken: fbToken['access_token']
+            });
+          });
+        })
+      }).catch(err => {
+        debug('err', err);
+        done(err)
+      });
+    });
   }));
 }

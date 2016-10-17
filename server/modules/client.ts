@@ -5,11 +5,12 @@ export function initializeClients() {
   return new Promise(resolve => {
     // Web Client
     Client.findOne({ name: 'web' }, (err, res) => {
-      if (err || res) {
+      if (!err && res) {
         debug(`Web client id: ${res._id}`);
         return resolve();
       }
       const client = new Client({
+        _id: 'checkpoints.web',
         name: 'web'
       });
       client.save().then(c => {

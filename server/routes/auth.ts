@@ -1,25 +1,19 @@
-const debug = require('debug')('auth');
+const debug = require('debug')('checkpoints:auth');
 
 import { Router, Request, Response } from 'express';
-import { authenticateFacebook } from '../auth/facebookAuth';
-import { authenticateUser } from '../auth/userAuth';
-import oauth2 from '../oauth2';
+import { login, facebookLogin, facebookCallback } from '../auth/auth';
 
 const api = Router();
 
-api.get('/facebook', authenticateFacebook(), (req: Request, res: Response) => {
-  res.redirect('/');
-});
+api.get('/facebook', facebookLogin);
+
+api.get('/facebook/callback', facebookCallback);
 
 api.get('/logout', (req: Request, res: Response) => {
-  // todo
+  // todo revoke access token
   res.redirect('/');
 });
 
-// api.post('/login', authenticateUser(), (req: Request, res: Response) => {
-//   debug('login');
-//   res.send('login');
-// });
-api.post('/login', authenticateUser(), oauth2.token(), oauth2.errorHandler())
+api.post('/login', login)
 
 export default api;

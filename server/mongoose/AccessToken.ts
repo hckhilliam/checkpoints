@@ -4,6 +4,7 @@ const schema = {
   token: { type: String, required: true, unique: true },
   user_id: { type: String, required: true },
   client_id: { type: String, required: true },
+  expires: { type: Date, required: true }
 };
 
 const accessTokenSchema = new mongoose.Schema(schema);

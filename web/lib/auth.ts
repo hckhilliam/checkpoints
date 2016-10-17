@@ -1,11 +1,13 @@
 export function checkLogin() {
   FB.getLoginStatus(response => {
     console.log(response);
+    if (response.status == 'connected')
+      login();
   });
 }
 
 export function login() {
-  window.location.href = '/api/auth/facebook';
+  fetch('/api/auth/facebook');
 }
 
 export function loginDialog() {

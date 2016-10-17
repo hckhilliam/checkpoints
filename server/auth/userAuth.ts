@@ -6,8 +6,6 @@ import * as bcrypt from 'bcrypt-nodejs';
 
 import User from '../mongoose/User';
 
-const ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy;
-
 function getUser(email) {
   return User.findOne({ email });
 }
@@ -100,28 +98,7 @@ export function useLocalStrategy() {
         user ? done(null, user) : done(null, false);
       })
       .catch(err => done(err, null));
-  })
-}
-
-export function useClientPasswordStrategy() {
-  passport.use(new ClientPasswordStrategy((username, password, done) => {
-    debug('client password');
-    getUser(username)
-      .then(user => {
-        if (!user)
-          return done(null, false);
-
-        bcrypt.compare(password, user['password'], (err, res) => {
-          if (err)
-            return done(err);
-
-          return res
-            ? done(null, user)
-            : done(null, false);
-        });
-      })
-      .catch(err => done(err));
-  }));
+  });
 }
 
 export function authenticateUser() {
