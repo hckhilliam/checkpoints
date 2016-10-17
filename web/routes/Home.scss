@@ -1,4 +1,7 @@
 $title-font-size: 80px;
+$login-button-width: 230px;
+$button-margin: 5px;
+$primary-color: #FAFAFA;
 
 .home {
   display: flex;
@@ -18,14 +21,51 @@ $title-font-size: 80px;
   }
 
   //temp
-  .login-buttons {
+  .facebook-login {
     button {
-      padding: 10px;
-      background-color: #3b5998;
-      color: #FBFBFB;
+      // padding: 10px;
+      // background-color: #3b5998;
+      // color: #FBFBFB;
+      width: $login-button-width;
+      padding: 0px;
       border: none;
-      margin-left: 5px;
-      margin-right: 5px;
+      margin-left: $button-margin;
+      margin-right: $button-margin;
+      margin-bottom: $button-margin;
+    }
+  }
+
+  .email-login {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-family: 'Antic', sans-serif;
+
+    .separator::before,
+    .separator::after {
+        width: $login-button-width*0.4;
+        background: rgba(0,0,0,0.2);
+        box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+        content: '';
+        display: inline-block;
+        height: 1px;
+        position: relative;
+        vertical-align: middle;
+    }
+
+    input {
+      width: $login-button-width;
+      height: 30px;
+      margin-top: $button-margin;
+    }
+
+    button {
+      padding: 0px;
+      border: none;
+      background-color: rgb(0, 191, 20);
+      color: $primary-color;
+      margin-top: $button-margin;
+      font-size: 15px;
     }
   }
 }

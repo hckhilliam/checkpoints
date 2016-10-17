@@ -10,8 +10,14 @@ const Home = props => {
       <h1>
         <img src={logo} />
       </h1>
-      <div className="login-buttons">
+      <div className="facebook-login">
         <FacebookLoginButton />
+      </div>
+      <div className="email-login">
+        <p className="separator"> OR </p>
+        <input type="text" placeholder="Email Address"/>
+        <input type="password" placeholder="Password"/>
+        <button>Log In</button>
       </div>
     </div>
   );

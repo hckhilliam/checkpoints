@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-
 import { checkLogin, logout, loginDialog } from '../lib/auth';
+
+const logo = require('../assets/facebook-login.png');
 
 interface Props {
   onLogin: () => void;
@@ -9,11 +10,21 @@ interface Props {
 
 export class FacebookLoginButton extends React.Component<Props, {}> {
   render() {
+
+    let facebookButtonStyle = {
+      background: logo
+    };
     return (
       <div>
-        <button onClick={checkLogin}>Check Login</button>
-        <button onClick={loginDialog}>Login Dialog</button>
-        <button onClick={logout}>Logout</button>
+      {
+        // <button onClick={checkLogin}>Check Login</button>
+      }
+        <button onClick={loginDialog}>
+          <img src={logo} style={{width: "100%"}}/>
+        </button>
+      {
+        // <button onClick={logout}>Logout</button>
+      }
       </div>
     );
   }
