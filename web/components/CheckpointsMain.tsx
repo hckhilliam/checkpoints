@@ -2,6 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux';
 import CheckpointsList from './CheckpointsList';
 import { getCheckpoints } from '../actions/checkpoints';
+import './CheckpointsMain.scss';
 
 interface Props {
   checkListItems: Checkpoints.Checkpoint[];
@@ -19,9 +20,9 @@ export default class CheckpointsMain extends React.Component<Props, {}> {
     const unfinished = props.checkListItems.filter((element) => !element.isCompleted);
     return (
       <div>
-        <h1>Bucket List</h1>
-        <CheckpointsList list={finished} />
-        <CheckpointsList list={unfinished} />
+        <h1 >Bucket List</h1>
+        <CheckpointsList title="Finished" list={finished} />
+        <CheckpointsList title="Unfinished" list={unfinished} />
       </div>
     );
   }

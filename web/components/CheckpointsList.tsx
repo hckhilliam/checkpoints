@@ -1,17 +1,19 @@
 import * as React from 'react'
 
-import CheckpointItem from './CheckpointItem';
+import {CheckpointItem, CheckpointItemContainer} from './CheckpointItem';
 
 interface Props {
-  list: Checkpoints.Checkpoint[]
+  list: Checkpoints.Checkpoint[];
+  title: string;
 }
 
 export const CheckpointsList = (props: Props) => {
   return (
-    <div>
+    <div className="CheckpointsList ">
+      <h3>{props.title}</h3>
       {
         props.list.map(item => {
-          return <CheckpointItem item={item} key={item.id} />
+          return <CheckpointItemContainer item={item} key={item.id} />
         })
       }
     </div>
