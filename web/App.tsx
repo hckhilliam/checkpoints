@@ -9,30 +9,35 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { syncHistoryWithStore, routerMiddleware, routerReducer } from 'react-router-redux';
-
-import checkpoints from './reducers/checkpointsReducer';
+import { syncHistoryWithStore, routerMiddleware, routerReducer as routing } from 'react-router-redux';
 
 import Router from './routes/Router';
 
+import checkpoints from './reducers/checkpointsReducer';
+import user from './reducers/userReducer';
+
+import { initializeAuth } from './lib/auth';
+
+initializeAuth();
+
 const reducer = combineReducers({
   checkpoints,
-  routing: routerReducer
+  user,
+  routing
 });
+
 const reduxRouterMiddleware = routerMiddleware(browserHistory as any);
 const createStoreWithMiddleware = applyMiddleware(thunk, reduxRouterMiddleware);
 const store = createStore(reducer, createStoreWithMiddleware);
 
 const history = syncHistoryWithStore(browserHistory as any, store);
 
-class App extends React.Component<{}, {}> {
-  render() {
-    return (
-      <Provider store={store}>
-        <Router history={history} />
-      </Provider>
-    );
-  }
+const App = () => {
+  return (
+    <Provider store={store}>
+      <Router history={history} />
+    </Provider>
+  );
 }
 
 // render

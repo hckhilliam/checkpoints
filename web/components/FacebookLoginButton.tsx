@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { checkLogin, logout, loginDialog } from '../lib/auth';
+import { logout } from '../lib/auth';
 
 const logo = require('../assets/facebook-login.png');
 
@@ -16,11 +16,10 @@ export class FacebookLoginButton extends React.Component<Props, {}> {
     };
     return (
       <div>
-      {
-        // <button onClick={checkLogin}>Check Login</button>
-      }
-        <button onClick={loginDialog}>
-          <img src={logo} style={{width: "100%"}}/>
+        <button type="button">
+          <a href="/api/auth/facebook">
+            <img src={logo} style={{width: "100%"}}/>
+          </a>
         </button>
       {
         // <button onClick={logout}>Logout</button>
@@ -39,7 +38,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onLogin: () => {
-      // checkLogin();
+
     }
   };
 }

@@ -4,6 +4,16 @@ declare module "fb" {
 }
 
 declare namespace Checkpoints {
+  interface State {
+    checkpoints?: Checkpoint[];
+    user?: User;
+  }
+
+  interface User {
+    name?: string,
+    email?: string
+  }
+
   interface Checkpoint {
     id: Number;
     user_id: Number;
