@@ -3,8 +3,8 @@ import * as checkpoint from '../modules/checkpoint';
 
 const api = Router();
 
-api.post('/create', (req: Request, res: Response, next) => {
-  const {title, description, isPrivate} = req.query;
+api.post('/', (req: Request, res: Response, next) => {
+  const {title, description, isPrivate} = req['body'];
   checkpoint.createCheckpoint(7, title, description, !!isPrivate).then(checkpoint => {
     res.json(checkpoint);
   }).catch(error => {
@@ -54,7 +54,7 @@ function getCheckpointById(res: Response, _id: number) {
 }
 
 api.put('/:_id', (req: Request, res: Response, next) => {
-  checkpoint.updateCheckpoint(Number(req.params['_id']), req.query).then(checkpoint => {
+  checkpoint.updateCheckpoint(Number(req.params['_id']), req['body']).then(checkpoint => {
     res.json(checkpoint);
   }).catch(error => {
     res.status(500);
