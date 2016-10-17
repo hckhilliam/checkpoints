@@ -28,6 +28,6 @@ api.get('/create', (req: Request, res: Response, next) => {
       res.status(500);
       res.json(err);
     });
-})
+});
 
 export default api;
