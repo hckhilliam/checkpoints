@@ -8,9 +8,9 @@ export function login() {
 }
 
 export function logout() {
-  FB.logout(response => {
-    window.location.href = '/api/auth/logout';
-  });
+  localStorage.removeItem(ACCESS_TOKEN);
+  localStorage.removeItem(FACEBOOK_TOKEN);
+  window.location.href = '/';
 }
 
 export function initializeAuth() {
@@ -36,4 +36,8 @@ export function getFacebookToken() {
 
 export function isLoggedIn() {
   return !!getAccessToken();
+}
+
+export function isFacebookLoggedIn() {
+  return !!getFacebookToken();
 }

@@ -1,7 +1,9 @@
+import './Home.scss'
+
 import * as React from 'react';
 
 import FacebookLoginButton from '../components/FacebookLoginButton';
-import './Home.scss'
+import AuthTest from '../components/AuthTest';
 
 const logo = require('../assets/logo.png');
 const Home = props => {
@@ -15,10 +17,11 @@ const Home = props => {
       </div>
       <div className="email-login">
         <p className="separator"> OR </p>
-        <input type="text" placeholder="Email Address"/>
-        <input type="password" placeholder="Password"/>
+        <input type="text" placeholder="Email Address" />
+        <input type="password" placeholder="Password" />
         <button>Log In</button>
       </div>
+      <AuthTest />
     </div>
   );
 }

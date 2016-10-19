@@ -2,7 +2,7 @@ import { getAccessToken } from './auth';
 
 /**
  * Static methods for calling api with fetch.
- * Sets access_token.
+ * Sets access_token for authorization.
  */
 export default class Api {
   static fetch(url: string, init?: RequestInit): Promise<Response> {
