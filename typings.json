@@ -8,7 +8,8 @@
     "react-dom": "registry:npm/react-dom#15.0.1+20160826174104",
     "react-redux": "registry:npm/react-redux#4.4.0+20160614222153",
     "react-router": "registry:npm/react-router#2.4.0+20160915183637",
-    "redux-thunk": "registry:npm/redux-thunk#2.0.0+20160525185520"
+    "redux-thunk": "registry:npm/redux-thunk#2.0.0+20160525185520",
+    "validator": "registry:npm/validator#5.7.0+20160912014851"
   },
   "globalDependencies": {
     "bcrypt-nodejs": "registry:dt/bcrypt-nodejs#0.0.0+20160316155526",

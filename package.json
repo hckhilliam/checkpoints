@@ -45,6 +45,7 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "uid-safe": "^2.1.2",
+    "validator": "^6.1.0",
     "whatwg-fetch": "^1.0.0",
     "whatwg-streams": "^0.1.1"
   },

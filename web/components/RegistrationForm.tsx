@@ -1,7 +1,10 @@
+import './RegistrationForm.scss';
+
 import * as React from 'react';
 import { connect } from 'react-redux';
 
 import Input from './Input';
+import Button from './Button';
 
 interface RegistrationFormProps {
 
@@ -11,56 +14,68 @@ interface RegistrationFormState {
   name?: string;
   email?: string;
   password?: string;
+  valid?: boolean;
 }
 
 export class RegistrationForm extends React.Component<RegistrationFormProps, RegistrationFormState> {
   state: RegistrationFormState = {
     name: '',
     email: '',
-    password: ''
+    password: '',
+    valid: false
   }
 
-  onChangeName = event => {
+  validate() {
+    if (!this.state.valid) {
+      this.setState({ valid: true });
+    }
+  }
+
+  handleChangeName = event => {
     this.setState({ name: event.target.value });
+    this.validate();
   }
 
-  onChangeEmail = event => {
+  handleChangeEmail = event => {
     this.setState({ email: event.target.value });
+    this.validate();
   }
 
-  onChangePassword = event => {
+  handleChangePassword = event => {
     this.setState({ password: event.target.value });
+    this.validate();
   }
 
-  onSubmit = () => {
+  handleSubmit = event => {
+    event.preventDefault();
 
   }
 
   render() {
     return (
-      <form className="RegistrationForm" onSubmit={this.onSubmit}>
+      <form className="RegistrationForm" onSubmit={this.handleSubmit}>
         <Input
           className="RegistrationForm-input"
           type="text"
           label="Name"
           value={this.state.name}
-          onChange={this.onChangeName}
+          onChange={this.handleChangeName}
         />
         <Input
           className="RegistrationForm-input"
           type="text"
           label="Email"
           value={this.state.email}
-          onChange={this.onChangeEmail}
+          onChange={this.handleChangeEmail}
         />
         <Input
           className="RegistrationForm-input"
           type="password"
           label="Password"
           value={this.state.password}
-          onChange={this.onChangePassword}
+          onChange={this.handleChangePassword}
         />
-        <button className="RegistrationForm-button" type="submit">Register</button>
+        <Button className="RegistrationForm-button" type="submit" primary>Register</Button>
       </form>
     );
   }
