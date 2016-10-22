@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import FacebookLoginButton from '../components/FacebookLoginButton';
 import AuthTest from '../components/AuthTest';
+import RegistrationForm from '../components/RegistrationForm';
 
 const logo = require('../assets/logo.png');
 const Home = props => {
@@ -22,6 +23,7 @@ const Home = props => {
         <button>Log In</button>
       </div>
       <AuthTest />
+      <RegistrationForm />
     </div>
   );
 }

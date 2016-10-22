@@ -1,0 +1,47 @@
+@import "../styles/variables";
+
+.Input {
+  position: relative;
+  padding: 16px 0;
+  margin-bottom: 8px;
+
+  label {
+    position: absolute;
+    font-size: 14px;
+    font-weight: 400;
+    top: 20px;
+    left: 0;
+    color: $md-dark-text-disabled;
+    pointer-events: none;
+    transition: color 0.2s ease,
+                transform 0.2s ease;
+    transform-origin: top left;
+  }
+
+  input {
+    background: none;
+    border: none;
+    padding: 4px 0;
+    width: 100%;
+    border-bottom: 1px solid $md-dark-text-dividers;
+    margin-bottom: -1px;
+    transition: border-bottom-color 0.2s ease;
+  }
+
+  &--focused {
+    input {
+      border-bottom: 2px solid $md-blue-500;
+      margin-bottom: -2px;
+    }
+
+    label {
+      color: $md-blue-500;
+    }
+  }
+
+  &--focused, &--has-value {
+    label {
+      transform: translateY(-20px) scale(0.75);
+    }
+  }
+}

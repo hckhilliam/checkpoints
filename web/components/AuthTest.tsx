@@ -8,7 +8,7 @@ interface AuthTestProps {
 }
 
 class AuthTest extends React.Component<AuthTestProps, {}> {
-  onLogout = () => {
+  handleLogout = () => {
     logout();
   }
 
@@ -17,7 +17,7 @@ class AuthTest extends React.Component<AuthTestProps, {}> {
       <div>
         <div>Logged in: {isLoggedIn() ? 'true' : 'false'}</div>
         <div>Facebook: {isFacebookLoggedIn() ? 'true' : 'false'}</div>
-        <button type="button" onClick={this.onLogout}>Logout</button>
+        <button type="button" onClick={this.handleLogout}>Logout</button>
       </div>
     );
   }

@@ -1,9 +1,12 @@
-$primary-color: #FAFAFA;
+@import 'styles/variables';
+@import 'styles/common';
 
 body {
   margin: 0;
-  background-color:  $primary-color;
-  font-family: 'Cormorant Garamond';
+  background-color: $md-grey-300;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
 }
 
 .page-content {
