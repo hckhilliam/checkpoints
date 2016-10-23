@@ -5,7 +5,7 @@ import { logout } from '../lib/auth';
 const logo = require('../assets/facebook-login.png');
 
 interface Props {
-  onLogin: () => void;
+  onLogin?: () => void;
 }
 
 export class FacebookLoginButton extends React.Component<Props, {}> {

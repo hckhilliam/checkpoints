@@ -23,7 +23,7 @@ export class Router extends React.Component<Props, {}> {
   render() {
     const { history } = this.props;
     return (
-      <ReactRouter history={history}>
+      <ReactRouter history={history as any}>
         <Route path="/" component={Root}>
           <IndexRoute component={Home} />
           <Route path="/dashboard" component={Dashboard} />

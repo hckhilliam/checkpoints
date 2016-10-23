@@ -6,9 +6,9 @@ import { getCheckpoints, addCheckpoint } from '../actions/checkpoints';
 import './CheckpointsMain.scss';
 
 interface Props {
-  checkListItems: Checkpoints.Checkpoint[];
-  onGetCheckpoints: () => void;
-  onAddCheckpoint: (checkpoint) => void;
+  checkListItems?: Checkpoints.Checkpoint[];
+  onGetCheckpoints?: () => void;
+  onAddCheckpoint?: (checkpoint) => void;
 }
 
 interface State {

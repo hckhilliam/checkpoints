@@ -15,8 +15,8 @@ declare namespace Checkpoints {
   }
 
   interface Checkpoint {
-    id: Number;
-    user_id: Number;
+    id: number;
+    user_id: number;
     title: string;
     description: string;
     isPrivate: boolean;

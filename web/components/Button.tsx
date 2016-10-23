@@ -3,6 +3,8 @@ import './Button.scss';
 import * as React from 'react';
 import * as classnames from 'classnames';
 
+import InkRipple from './InkRipple';
+
 interface ButtonProps extends React.HTMLAttributes {
   type?: string;
   raised?: boolean;
@@ -53,6 +55,7 @@ export default class Button extends React.Component<ButtonProps, ButtonState> {
     return (
       <button className={cssClass} {...other} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
         {children}
+        <InkRipple />
       </button>
     );
   }

@@ -18,7 +18,7 @@ export default class OnCompleteDialog extends React.Component<Props, {}> {
 
   render(){
     let checkpoint = this.props.checkpoint;
-    
+
     if (checkpoint.isCompleted) {
       var message = 'are you sure want to change checkpoint, \'' + checkpoint.title + '\', to uncompleted';
     }
@@ -28,8 +28,8 @@ export default class OnCompleteDialog extends React.Component<Props, {}> {
     return (
       <div>
         {message}
-        <input type="button" value="Yes" onClick={this.onYes()} />
-        <input type="button" value="Cancel" onClick={this.onCancel()} />
+        <input type="button" value="Yes" onClick={this.onYes} />
+        <input type="button" value="Cancel" onClick={this.onCancel} />
       </div>
     );
   }

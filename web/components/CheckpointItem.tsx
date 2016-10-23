@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import { toggleOneCheckpoint } from '../actions/checkpoints'
 
 interface Props {
-  item: Checkpoints.Checkpoint;
-  toggleChecked: () => void;
+  item?: Checkpoints.Checkpoint;
+  toggleChecked?: () => void;
 }
 
 export class CheckpointItem extends React.Component<Props, {}> {
