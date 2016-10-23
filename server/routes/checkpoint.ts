@@ -5,6 +5,7 @@ import * as checkpoint from '../modules/checkpoint';
 const api = Router();
 
 const multer = require('multer');
+const UUID = require('uuid-1345');
 
 /* HOW TO USE
  <form id        =  "uploadForm"
@@ -19,10 +20,10 @@ const multer = require('multer');
 api.post('/me/checkpoints/:_id/upload', (req: Request, res: Response, next) => {
   multer({
     storage: multer.diskStorage({
-      destination: `./uploads/7/${req.params['_id']}`,
+      destination: `./public/uploads/7/${req.params['_id']}`,
       filename: function(req: Request, file, callback) {
         debug(`filename is ${file.originalname}`);
-        callback(null, file.originalname);
+        callback(null, `${UUID.v1()}-${file.originalname}`);
       }
     })
   }).array('image')(req, res, function (err) {
