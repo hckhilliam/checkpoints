@@ -63,4 +63,17 @@
       font-weight: 500;
     }
   }
+
+  &--error {
+    input {
+      border-bottom-color: $md-red-500;
+    }
+  }
+
+  &-error {
+    position: absolute;
+    font-size: 11px;
+    bottom: 0;
+    color: $md-red-500;
+  }
 }

@@ -6,7 +6,7 @@ import * as update from 'immutability-helper';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 interface InkRippleProps extends React.HTMLAttributes {
-
+  disabled?: boolean;
 }
 
 interface InkRippleState {
@@ -35,7 +35,7 @@ const leaveDuration = 200;
 
 export default class InkRipple extends React.Component<InkRippleProps, InkRippleState> {
   static defaultProps: InkRippleProps = {
-
+    disabled: false
   }
 
   state: InkRippleState = {
@@ -70,6 +70,9 @@ export default class InkRipple extends React.Component<InkRippleProps, InkRipple
   }
 
   handleRipple = (event: React.MouseEvent) => {
+    if (this.props.disabled)
+      return;
+
     let x = 0, y = 0;
     if (this.node) {
       const rect = this.node.getBoundingClientRect();

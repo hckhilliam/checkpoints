@@ -1,84 +1,36 @@
 import './RegistrationForm.scss';
 
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { reduxForm, FormProps } from 'redux-form';
 
-import Input from './Input';
+import { register, validate, RegistrationData } from '../lib/registration';
+
+import Input, { InputField } from './Input';
 import Button from './Button';
 
-interface RegistrationFormProps {
+interface RegistrationFormProps extends FormProps<RegistrationData, {}> {
 
 }
 
-interface RegistrationFormState {
-  name?: string;
-  email?: string;
-  password?: string;
-  valid?: boolean;
-}
-
-export class RegistrationForm extends React.Component<RegistrationFormProps, RegistrationFormState> {
-  state: RegistrationFormState = {
-    name: '',
-    email: '',
-    password: '',
-    valid: false
-  }
-
-  validate() {
-    if (!this.state.valid) {
-      this.setState({ valid: true });
-    }
-  }
-
-  handleChangeName = event => {
-    this.setState({ name: event.target.value });
-    this.validate();
-  }
-
-  handleChangeEmail = event => {
-    this.setState({ email: event.target.value });
-    this.validate();
-  }
-
-  handleChangePassword = event => {
-    this.setState({ password: event.target.value });
-    this.validate();
-  }
-
-  handleSubmit = event => {
-    event.preventDefault();
-
-  }
-
+export class RegistrationForm extends React.Component<RegistrationFormProps, {}> {
   render() {
+    const { handleSubmit, invalid, submitting } = this.props;
+    const disabled = invalid || submitting;
     return (
-      <form className="RegistrationForm" onSubmit={this.handleSubmit}>
-        <Input
-          className="RegistrationForm-input"
-          type="text"
-          label="Name"
-          value={this.state.name}
-          onChange={this.handleChangeName}
-        />
-        <Input
-          className="RegistrationForm-input"
-          type="text"
-          label="Email"
-          value={this.state.email}
-          onChange={this.handleChangeEmail}
-        />
-        <Input
-          className="RegistrationForm-input"
-          type="password"
-          label="Password"
-          value={this.state.password}
-          onChange={this.handleChangePassword}
-        />
-        <Button className="RegistrationForm-button" type="submit" primary>Register</Button>
+      <form className="RegistrationForm" onSubmit={handleSubmit}>
+        <InputField type="text" label="Name" name="name" />
+        <InputField type="text" label="Email" name="email" />
+        <InputField type="text" label="Password" name="password" />
+        <Button className="RegistrationForm-button" type="submit" primary disabled={disabled}>Register</Button>
       </form>
     );
   }
 }
 
-export default RegistrationForm;
+const RegistrationReduxForm = reduxForm({
+  form: 'RegistrationForm',
+  onSubmit: (values: RegistrationData) => register(values),
+  validate: validate as any
+})(RegistrationForm);
+
+export default RegistrationReduxForm;

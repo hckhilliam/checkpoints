@@ -18,7 +18,7 @@
   transition: background-color 0.2s ease,
               color 0.2s ease;
 
-  &--default {
+  &--default:not(&--disabled) {
     color: $md-dark-text-primary;
 
     &.Button--hover {
@@ -26,7 +26,7 @@
     }
   }
 
-  &--primary {
+  &--primary:not(&--disabled) {
     background-color: $md-green-600;
     color: $md-light-text-primary;
 
@@ -35,16 +35,19 @@
     }
   }
 
+  &--primary.Button--disabled {
+    background-color: $md-light-green-200;
+  }
+
   &--raised {
     box-shadow: 0 2px 5px 0 rgba($md-black, 0.26);
   }
 
-  &--disabled {
-    color: $md-dark-text-disabled;
-    cursor: default;
-  }
-
   &--raised.Button--disabled {
     background-color: rgba($md-black, 0.12);
+  }
+
+  &--disabled {
+    cursor: default;
   }
 }

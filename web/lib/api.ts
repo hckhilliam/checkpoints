@@ -13,4 +13,16 @@ export default class Api {
     });
     return window.fetch(url, options);
   }
+
+  static post(url: string, body: any, init?: RequestInit): Promise<Response> {
+    init = Object.assign({}, init, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    return fetch(url, init);
+  }
 }

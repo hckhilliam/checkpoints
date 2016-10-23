@@ -55,7 +55,7 @@ export default class Button extends React.Component<ButtonProps, ButtonState> {
     return (
       <button className={cssClass} {...other} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
         {children}
-        <InkRipple />
+        <InkRipple disabled={this.props.disabled} />
       </button>
     );
   }

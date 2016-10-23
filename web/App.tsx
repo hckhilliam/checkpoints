@@ -10,6 +10,7 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware, routerReducer as routing } from 'react-router-redux';
+import { reducer as form } from 'redux-form';
 
 import Router from './routes/Router';
 
@@ -23,7 +24,8 @@ initializeAuth();
 const reducer = combineReducers({
   checkpoints,
   user,
-  routing
+  routing,
+  form
 });
 
 const reduxRouterMiddleware = routerMiddleware(browserHistory as any);
