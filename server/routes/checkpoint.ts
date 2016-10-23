@@ -1,7 +1,38 @@
+const debug = require('debug')('checkpoints:checkpoint');
 import {Router, Request, Response} from 'express';
 import * as checkpoint from '../modules/checkpoint';
 
 const api = Router();
+
+const multer = require('multer');
+
+/* HOW TO USE
+ <form id        =  "uploadForm"
+ enctype   =  "multipart/form-data"
+ action    =  "/api/checkpoint/me/checkpoints/2/upload"
+ method    =  "post"
+ >
+ <input type="file" name="image" multiple/>
+ <input type="submit" value="Upload Image" name="submit">
+ </form>
+ */
+api.post('/me/checkpoints/:_id/upload', (req: Request, res: Response, next) => {
+  multer({
+    storage: multer.diskStorage({
+      destination: `./uploads/7/${req.params['_id']}`,
+      filename: function(req: Request, file, callback) {
+        debug(`filename is ${file.originalname}`);
+        callback(null, file.originalname);
+      }
+    })
+  }).array('image')(req, res, function (err) {
+    if (err) {
+      res.end('There was an error uploading the image(s)');
+      throw err;
+    }
+    res.end('Image(s) uploaded successfully');
+  });
+});
 
 api.post('/', (req: Request, res: Response, next) => {
   const {title, description, isPrivate} = req['body'];
