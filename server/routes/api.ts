@@ -9,6 +9,7 @@ import me from './me';
 import users from './users';
 
 import error from '../handlers/error';
+import event from './event';
 
 import { authenticate } from '../auth/auth';
 
@@ -25,6 +26,7 @@ api.use('/user', user);
 api.all('*', init, authenticate);
 api.use('/me', me);
 api.use('/users', users);
+api.use('/events', event);
 
 api.use(error);
 
