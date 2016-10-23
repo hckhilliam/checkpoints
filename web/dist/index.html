@@ -11,6 +11,14 @@
   </head>
   <body>
     <div id="app"></div>
+    <form id        =  "uploadForm"
+          enctype   =  "multipart/form-data"
+          action    =  "/api/checkpoint/me/checkpoints/2/upload"
+          method    =  "post"
+    >
+      <input type="file" name="image" multiple/>
+      <input type="submit" value="Upload Image" name="submit">
+    </form>
     <script src="/vendor.bundle.js"></script>
     <script src="/bundle.js"></script>
   </body>
