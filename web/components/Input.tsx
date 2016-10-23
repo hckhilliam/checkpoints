@@ -65,7 +65,9 @@ export default class Input extends React.Component<InputProps, InputState> {
     return (
       <div className={cssClass}>
         {label ? <label className="Input-label">{label}</label> : null }
-        <input type={type} onFocus={this.handleFocus} onBlur={this.handleBlur} {...other} />
+        <div className="Input-input">
+          <input type={type} onFocus={this.handleFocus} onBlur={this.handleBlur} {...other} />
+        </div>
       </div>
     );
   }

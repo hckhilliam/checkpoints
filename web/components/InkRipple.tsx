@@ -117,7 +117,7 @@ export default class InkRipple extends React.Component<InkRippleProps, InkRipple
 
     return (
       <div className={cssClass} {...other} onMouseDown={this.handleRipple}>
-        <div className="test" style={this.state.style} ref={this.handleRef}>
+        <div style={this.state.style} ref={this.handleRef}>
           <ReactCSSTransitionGroup
             transitionName="ripple"
             transitionEnterTimeout={enterDuration}

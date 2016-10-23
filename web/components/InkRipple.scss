@@ -23,15 +23,15 @@
 
     &-active {
       opacity: 1;
-      width: 150%;
-      height: 150%;
+      width: 120%;
+      height: 120%;
     }
   }
 
   &.ripple-leave {
     opacity: 1;
-    width: 150%;
-    height: 150%;
+    width: 120%;
+    height: 120%;
     transition: all 200ms ease;
 
     &-active {
