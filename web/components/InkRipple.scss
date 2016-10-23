@@ -1,14 +1,41 @@
 @import "../styles/variables";
 
 .InkRipple {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .RippleElement {
-  background-color: rgba($md-black, 0.2);
+  background: radial-gradient(circle, rgba($md-green-200, 0.3), rgba($md-green-200, 0));
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+
+  &.ripple-enter {
+    opacity: 0.01;
+    width: 0;
+    height: 0;
+    transition: all 300ms ease;
+
+    &-active {
+      opacity: 1;
+      width: 150%;
+      height: 150%;
+    }
+  }
+
+  &.ripple-leave {
+    opacity: 1;
+    width: 150%;
+    height: 150%;
+    transition: all 200ms ease;
+
+    &-active {
+      opacity: 0;
+    }
+  }
 }
