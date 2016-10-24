@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { isLoggedIn, isFacebookLoggedIn, logout } from '../lib/auth';
+import { isLoggedIn, isFacebookLoggedIn } from '../lib/auth';
+import { logout } from '../lib/login';
 
 interface AuthTestProps {
   // onLogout: () => void;

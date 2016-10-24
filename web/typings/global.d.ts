@@ -3,6 +3,8 @@ declare module "fb" {
   export = FB;
 }
 
+type HttpResponse = Response;
+
 declare namespace Checkpoints {
   interface State {
     checkpoints?: Checkpoint[];
@@ -23,5 +25,23 @@ declare namespace Checkpoints {
     comments: string[];
     pictures: string[];
     isCompleted: boolean;
+  }
+
+  interface Registration {
+    name: string;
+    email: string;
+    password: string;
+  }
+
+  interface Login {
+    email: string;
+    password: string;
+  }
+
+  interface Response {
+    response: HttpResponse;
+    status: number;
+    body?: any;
+    error?: any;
   }
 }

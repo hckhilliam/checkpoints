@@ -3,16 +3,6 @@ import * as Cookie from 'js-cookie';
 const ACCESS_TOKEN = 'access_token';
 const FACEBOOK_TOKEN = 'facebook_token';
 
-export function login() {
-
-}
-
-export function logout() {
-  localStorage.removeItem(ACCESS_TOKEN);
-  localStorage.removeItem(FACEBOOK_TOKEN);
-  window.location.href = '/';
-}
-
 export function initializeAuth() {
   let accessToken = Cookie.get(ACCESS_TOKEN);
   let facebookToken = Cookie.get(FACEBOOK_TOKEN);
@@ -40,4 +30,9 @@ export function isLoggedIn() {
 
 export function isFacebookLoggedIn() {
   return !!getFacebookToken();
+}
+
+export function clear() {
+  localStorage.removeItem(ACCESS_TOKEN);
+  localStorage.removeItem(FACEBOOK_TOKEN);
 }

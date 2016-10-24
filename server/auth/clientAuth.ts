@@ -28,6 +28,7 @@ export function usePublicClientStrategy() {
   passport.use(new PublicClientStrategy((clientId, done) => {
     debug(clientId);
     Client.findById(clientId).then(client => {
+      debug(client);
       if (!client)
         return done(null, false);
       return done(null, client);

@@ -1,4 +1,4 @@
-/// <reference path="../global.d.ts" />
+/// <reference path="./typings/global.d.ts" />
 import './App.scss';
 
 import './lib/fb';

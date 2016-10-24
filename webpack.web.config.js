@@ -10,7 +10,8 @@ var plugins = [
   }),
   new webpack.DefinePlugin({
     "process.env": {
-      "FB_APPID": JSON.stringify(process.env.FB_APPID || '1122984984444971')
+      "FB_APPID": JSON.stringify(process.env.FB_APPID || "1122984984444971"),
+      "CLIENT_ID": JSON.stringify(process.env.CLIENT_ID || "checkpoints.web")
     }
   })
 ];

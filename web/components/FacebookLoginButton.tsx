@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import InkRipple from './InkRipple';
-import { logout } from '../lib/auth';
+import { logout } from '../lib/login';
 
 const logo = require('../assets/facebook-login.png');
 
@@ -24,9 +24,6 @@ export class FacebookLoginButton extends React.Component<Props, {}> {
           </a>
           <InkRipple />
         </button>
-      {
-        // <button onClick={logout}>Logout</button>
-      }
       </div>
     );
   }

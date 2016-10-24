@@ -1,18 +1,11 @@
-import api from './api';
+import { register as registerUser } from './api/user';
 import * as validator from 'validator';
 
-export interface RegistrationData {
-  name: string;
-  email: string;
-  password: string;
+export function register(data: Checkpoints.Registration) {
+  return registerUser(data);
 }
 
-
-export function register(data: RegistrationData) {
-  return api.post('/api/user/register', data);
-}
-
-export function validate(data: RegistrationData) {
+export function validate(data: Checkpoints.Registration) {
   const errors = {};
 
   if (!data.name) {

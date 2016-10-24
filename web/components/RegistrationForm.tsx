@@ -3,12 +3,12 @@ import './RegistrationForm.scss';
 import * as React from 'react';
 import { reduxForm, FormProps } from 'redux-form';
 
-import { register, validate, RegistrationData } from '../lib/registration';
+import { register, validate } from '../lib/registration';
 
 import Input, { InputField } from './Input';
 import Button from './Button';
 
-interface RegistrationFormProps extends FormProps<RegistrationData, {}> {
+interface RegistrationFormProps extends FormProps<Checkpoints.Registration, {}> {
 
 }
 
@@ -17,10 +17,10 @@ export class RegistrationForm extends React.Component<RegistrationFormProps, {}>
     const { handleSubmit, invalid, submitting } = this.props;
     const disabled = invalid || submitting;
     return (
-      <form className="RegistrationForm" onSubmit={handleSubmit}>
+      <form className="RegistrationForm" onSubmit={handleSubmit} autoComplete="off">
         <InputField type="text" label="Name" name="name" />
         <InputField type="text" label="Email" name="email" />
-        <InputField type="text" label="Password" name="password" />
+        <InputField type="password" label="Password" name="password" />
         <Button className="RegistrationForm-button" type="submit" primary disabled={disabled}>Register</Button>
       </form>
     );
@@ -29,7 +29,7 @@ export class RegistrationForm extends React.Component<RegistrationFormProps, {}>
 
 const RegistrationReduxForm = reduxForm({
   form: 'RegistrationForm',
-  onSubmit: (values: RegistrationData) => register(values),
+  onSubmit: (values: Checkpoints.Registration) => register(values),
   validate: validate as any
 })(RegistrationForm);
 
