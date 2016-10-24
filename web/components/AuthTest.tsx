@@ -33,7 +33,7 @@ export default AuthTest;
 
 // const mapDispatchToProps = dispatch => {
 //   return {
-//     onLogout: () => dispatch()
+//     onLogout: () => <dispatch></dispatch>
 //   };
 // }
 

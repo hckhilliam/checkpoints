@@ -19,7 +19,7 @@ export class FacebookLoginButton extends React.Component<Props, {}> {
     return (
       <div>
         <button type="button" style={{position: 'relative'}}>
-          <a href="/api/auth/facebook">
+          <a href="/api/auth/facebook" style={{position: 'relative', 'z-index': 5}}>
             <img src={logo} style={{width: "100%"}}/>
           </a>
           <InkRipple />
