@@ -9,9 +9,16 @@ export function initializeAuth() {
   Cookie.remove(ACCESS_TOKEN);
   Cookie.remove(FACEBOOK_TOKEN);
 
+  setAccessToken(accessToken);
+  setFacebookToken(facebookToken);
+}
+
+export function setAccessToken(accessToken) {
   if (accessToken)
     localStorage.setItem(ACCESS_TOKEN, accessToken);
+}
 
+export function setFacebookToken(facebookToken) {
   if (facebookToken)
     localStorage.setItem(FACEBOOK_TOKEN, facebookToken);
 }

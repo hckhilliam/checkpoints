@@ -24,6 +24,7 @@ api.post('/register', authenticatePublicClient(), (req: Request, res: Response) 
         });
     })
     .catch(err => {
+      debug(err);
       res.status(500);
       res.json(err);
     });

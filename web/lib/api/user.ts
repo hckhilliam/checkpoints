@@ -1,7 +1,14 @@
-import { post } from './fetch';
+import { get, post } from './fetch';
 
 export function register(data: Checkpoints.Registration) {
-  return post('/api/user/register', data);
+  const body = Object.assign({
+    client_id: process.env['CLIENT_ID']
+  }, data);
+  return post('/api/user/register', body)
+    .then(response => {
+      const token = response.body['access_token'];
+      return token;
+    });
 }
 
 export function login(data: Checkpoints.Login) {
@@ -13,13 +20,11 @@ export function login(data: Checkpoints.Login) {
   };
   return post('/api/auth/login', body)
     .then(response => {
-      if (response.status != 200)
-        throw response.error;
       const token = response.body['access_token'];
       return token;
     });
 }
 
 export function logout() {
-  return post('/api/auth/logout');
+  return get('/api/auth/logout');
 }

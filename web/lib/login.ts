@@ -1,15 +1,20 @@
 import * as validator from 'validator';
 
 import * as user from './api/user';
-import { clear } from './auth';
+import { setAccessToken, clear } from './auth';
 
 export function login(data: Checkpoints.Login) {
-  return user.login(data);
+  return user.login(data).then(token => {
+    setAccessToken(token);
+    return token;
+  });
 }
 
 export function logout() {
   clear();
-  user.logout().then(() => window.location.href = '/');
+  user.logout().then(() => {
+    window.location.href = '/';
+  });
 }
 
 export function validate(data: Checkpoints.Login) {

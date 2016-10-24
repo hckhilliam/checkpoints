@@ -9,9 +9,9 @@ api.get('/facebook', facebookLogin);
 
 api.get('/facebook/callback', facebookCallback);
 
-api.post('/logout', (req: Request, res: Response) => {
+api.get('/logout', (req: Request, res: Response) => {
   // todo revoke access token
-  res.redirect('/');
+  res.sendStatus(200);
 });
 
 api.post('/login', login);
