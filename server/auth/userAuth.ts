@@ -54,9 +54,11 @@ export function checkUser(email, password) {
   return new Promise((resolve, reject) => {
     getUser(email)
       .then(user => {
+        if (!user)
+          return reject('Invalid credentials');
         bcrypt.compare(password, user['password'], (err, res) => {
           if (err)
-            return reject(err);
+            return reject('Invalid credentials');
 
           resolve(res ? user : null);
         });

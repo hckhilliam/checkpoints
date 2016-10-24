@@ -31,7 +31,6 @@ export default class CheckpointsMain extends React.Component<Props, State> {
 
   addCheckpoint = () => {
     let checkpoint = {title: this.state.checkpointTitle};
-    console.log(this.state);
     this.props.onAddCheckpoint(checkpoint);
   }
 

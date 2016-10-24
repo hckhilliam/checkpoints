@@ -12,11 +12,11 @@ export function login(data: Checkpoints.Login) {
     password: data.password
   };
   return post('/api/auth/login', body)
-    .then(token => {
-      console.log(token);
-    })
-    .catch(err => {
-      console.log(err)
+    .then(response => {
+      if (response.status != 200)
+        throw response.error;
+      const token = response.body['access_token'];
+      return token;
     });
 }
 

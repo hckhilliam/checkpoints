@@ -21,7 +21,7 @@ export function fetch(url: string, init?: RequestInit): Promise<Checkpoints.Resp
         } as Checkpoints.Response;
       });
     else
-      return res.text().then(error => {
+      return res.json().then(error => {
         return {
           response: res,
           status: res.status,

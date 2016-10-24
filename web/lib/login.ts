@@ -4,7 +4,7 @@ import * as user from './api/user';
 import { clear } from './auth';
 
 export function login(data: Checkpoints.Login) {
-  user.login(data);
+  return user.login(data);
 }
 
 export function logout() {

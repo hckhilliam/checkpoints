@@ -8,6 +8,10 @@ import { createAccessToken } from './tokenAuth';
 
 const server = oauth2orize.createServer();
 
+function reject() {
+  return new oauth2orize.TokenError('Unauthorized', 'invalid_client');
+}
+
 server.exchange(oauth2orize.exchange.password((client, username, password, scope, done) => {
   debug('exchange password', client, username, password);
 
@@ -15,13 +19,13 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
   checkUser(username, password)
     .then(user => {
       if (!user)
-        return done(null, false);
+        return done(reject());
 
-      createAccessToken(user['_id'], client._id, 60 * 24 * 3600)
+      return createAccessToken(user['_id'], client._id, 60 * 24 * 3600)
         .then(token => done(null, token))
-        .catch(err => done(err));
+        .catch(err => done(reject()));
     })
-    .catch(err => done(err));
+    .catch(err => done(reject()));
 }));
 
 export default server;

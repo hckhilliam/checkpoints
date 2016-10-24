@@ -1,5 +1,20 @@
+@import "../styles/variables";
+
 .LoginForm {
   &-button {
     width: 100%;
+  }
+
+  &-error {
+    text-align: center;
+    height: 48px;
+    line-height: 48px;
+    color: $md-red-500;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &--error &-error {
+    opacity: 1;
   }
 }
