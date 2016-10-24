@@ -19,13 +19,11 @@ const Home = props => {
       </div>
       <div className="email-login">
         <p className="separator"> OR </p>
-        <input type="text" placeholder="Email Address" />
-        <input type="password" placeholder="Password" />
-        <button>Log In</button>
+        <span>Continue with email</span>
       </div>
-      <AuthTest />
       <LoginForm />
       <RegistrationForm />
+      <AuthTest />
     </div>
   );
 }
