@@ -4,3 +4,9 @@
 *:focus {
   outline: none;
 }
+
+a {
+  &:link, &:hover, &:active {
+    color: $md-green-700;
+  }
+}

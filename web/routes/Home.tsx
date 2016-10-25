@@ -4,8 +4,7 @@ import * as React from 'react';
 
 import FacebookLoginButton from '../components/FacebookLoginButton';
 import AuthTest from '../components/AuthTest';
-import RegistrationForm from '../components/RegistrationForm';
-import LoginForm from '../components/LoginForm';
+import Login from '../components/Login';
 
 const logo = require('../assets/logo.png');
 const Home = props => {
@@ -21,9 +20,8 @@ const Home = props => {
         <p className="separator"> OR </p>
         <span>Continue with email</span>
       </div>
-      <LoginForm />
-      <RegistrationForm />
-      <AuthTest />
+      <Login />
+      {/* <AuthTest /> */}
     </div>
   );
 }

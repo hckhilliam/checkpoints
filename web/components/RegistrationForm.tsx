@@ -15,8 +15,8 @@ interface RegistrationFormProps extends FormProps<Checkpoints.Registration, {}> 
 
 export class RegistrationForm extends React.Component<RegistrationFormProps, {}> {
   render() {
-    const { handleSubmit, invalid, submitting, error } = this.props;
-    const disabled = invalid || submitting;
+    const { handleSubmit, pristine, invalid, submitting, error } = this.props;
+    const disabled = pristine || invalid || submitting;
     return (
       <form className="RegistrationForm" onSubmit={handleSubmit} autoComplete="off">
         <InputField type="text" label="Name" name="name" />

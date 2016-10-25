@@ -85,6 +85,9 @@ export default class InkRipple extends React.Component<InkRippleProps, InkRipple
 
   handleRef = (node: HTMLDivElement) => {
     this.node = node;
+    if (!node)
+      return;
+
     const size = Math.max(node.clientWidth, node.clientHeight);
 
     let left: number | string;

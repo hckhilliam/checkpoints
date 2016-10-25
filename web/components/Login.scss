@@ -1,0 +1,16 @@
+@import "../styles/variables";
+
+.Login {
+  width: 256px;
+  max-width: 100%;
+  min-height: 320px;
+
+  &-actions {
+    text-align: center;
+
+    a {
+      font-size: 16px;
+      text-decoration: none;
+    }
+  }
+}
