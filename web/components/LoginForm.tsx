@@ -8,15 +8,14 @@ import { login, validate } from '../lib/login';
 
 import Input, { InputField } from './Input';
 import Button from './Button';
+import FormMessage from './FormMessage';
 
 export class LoginForm extends React.Component<FormProps<Checkpoints.Login, {}>, {}> {
   render() {
     const { handleSubmit, invalid, submitting, error } = this.props;
     const disabled = invalid || submitting;
 
-    const cssClass = classnames('LoginForm', {
-      'LoginForm--error': !!error
-    });
+    const cssClass = classnames('LoginForm');
 
     return (
       <form className={cssClass} onSubmit={handleSubmit} autoComplete="off">
@@ -25,7 +24,8 @@ export class LoginForm extends React.Component<FormProps<Checkpoints.Login, {}>,
         <Button className="LoginForm-button" type="submit" primary disabled={disabled}>
           {submitting ? 'Logging in' : 'Login'}
         </Button>
-        <div className="LoginForm-error">{error}</div>
+        <FormMessage type="Error">{(!submitting && error) ? error : null}</FormMessage>
+
       </form>
     );
   }

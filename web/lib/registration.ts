@@ -7,6 +7,8 @@ export function register(data: Checkpoints.Registration) {
   return registerUser(data).then(token => {
     setAccessToken(token);
     return token;
+  }).catch(err => {
+    throw err.error;
   });
 }
 

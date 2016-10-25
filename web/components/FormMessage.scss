@@ -1,0 +1,32 @@
+@import "../styles/variables";
+
+.FormMessage {
+  text-align: center;
+  margin: 8px 0;
+  overflow: hidden;
+  border-bottom: 1px solid;
+  box-sizing: border-box;
+
+  height: 0;
+  line-height: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+
+  &--has-value {
+    height: 32px;
+    line-height: 32px;
+    opacity: 1;
+  }
+
+  &--Info.FormMessage--has-value {
+    background-color: rgba($md-blue-500, 0.06);
+    border-bottom-color: $md-blue-500;
+    color: $md-blue-500;
+  }
+
+  &--Error.FormMessage--has-value {
+    background-color: rgba($md-red-500, 0.06);
+    border-bottom-color: $md-red-500;
+    color: $md-red-500;
+  }
+}

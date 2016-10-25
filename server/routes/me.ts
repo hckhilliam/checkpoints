@@ -5,7 +5,7 @@ import { Router, Request, Response } from 'express';
 const api = Router();
 
 api.get('/hello', (req: Request, res: Response) => {
-  res.send(`Hey ${req['user'].name}!`);
+  res.send(`Hey ${req['user'].name} ${req['user']._id}!`);
 })
 
 api.get('/checkpoints', (req: Request, res: Response, next) => {
