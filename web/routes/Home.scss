@@ -7,29 +7,7 @@
   height: inherit;
   width: inherit;
 
-  &-panel.Panel {
-    padding: 32px;
-    width: 256px;
-  }
-
   &-login {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    margin-bottom: 12px;
-
-    &-line::before, &-line::after {
-      content: '';
-      width: 40%;
-      background: rgba(0, 0, 0, 0.2);
-      box-shadow: 0 1px 0 rgba(255,255,255,0.5);
-      display: inline-block;
-      height: 1px;
-      vertical-align: middle;
-    }
-
-    &-email {
-      font-size: 18px;
-    }
+    width: 288px;
   }
 }

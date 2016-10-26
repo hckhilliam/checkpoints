@@ -1,5 +1,11 @@
 .FacebookLoginButton {
+  display: block;
   position: relative;
   background: none;
   border: none;
+  padding: 0;
+
+  img {
+    width: 100%;
+  }
 }

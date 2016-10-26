@@ -2,7 +2,7 @@
 
 .FormMessage {
   text-align: center;
-  margin: 8px 0;
+  margin: 0;
   overflow: hidden;
   border-bottom: 1px solid;
   box-sizing: border-box;
@@ -13,6 +13,7 @@
   transition: all 0.3s ease;
 
   &--has-value {
+    margin-top: 8px;
     height: 32px;
     line-height: 32px;
     opacity: 1;

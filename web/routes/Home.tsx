@@ -13,14 +13,7 @@ const Home = props => {
       <h1>
         <img src={logo} />
       </h1>
-      <Panel className="Home-panel">
-        <FacebookLoginButton className="Home-facebook" />
-        <div className="Home-login">
-          <p className="Home-login-line"> OR </p>
-          <span className="Home-login-email">Continue with email</span>
-        </div>
-        <Login />
-      </Panel>
+      <Login className="Home-login" />
     </div>
   );
 }

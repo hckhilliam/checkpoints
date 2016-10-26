@@ -6,11 +6,48 @@
   min-height: 320px;
 
   &-actions {
+    margin: 16px 0;
     text-align: center;
 
     a {
       font-size: 16px;
       text-decoration: none;
     }
+  }
+
+  &-panel.Panel {
+    padding: 16px;
+  }
+
+  &-separator {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    &-line {
+      font-size: 24px;
+      font-weight: 300;
+      margin: 12px 0;
+
+      &::before, &::after {
+        content: '';
+        width: 40%;
+        background: rgba(0, 0, 0, 0.2);
+        box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+        display: inline-block;
+        height: 1px;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  &-email {
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  &-form {
+    min-height: 384px;
   }
 }
