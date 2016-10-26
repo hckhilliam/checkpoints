@@ -9,6 +9,8 @@ import Input, { InputField } from './Input';
 import Button from './Button';
 import FormMessage from './FormMessage';
 
+import { getInfo } from '../actions/user';
+
 interface RegistrationFormProps extends FormProps<Checkpoints.Registration, {}> {
 
 }
@@ -42,6 +44,9 @@ const RegistrationReduxForm = reduxForm({
           reject(new SubmissionError({ _error: err }));
         });
     });
+  },
+  onSubmitSuccess: (result, dispatch: Function) => {
+    dispatch(getInfo());
   }
 })(RegistrationForm);
 

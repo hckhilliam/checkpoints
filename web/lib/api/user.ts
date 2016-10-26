@@ -28,3 +28,8 @@ export function login(data: Checkpoints.Login) {
 export function logout() {
   return get('/api/auth/logout');
 }
+
+export function getUserInfo(): Promise<Checkpoints.User> {
+  return get('/api/me/info')
+    .then(response => response.body as Checkpoints.User);
+}

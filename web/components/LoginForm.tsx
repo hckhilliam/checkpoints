@@ -10,6 +10,8 @@ import Input, { InputField } from './Input';
 import Button from './Button';
 import FormMessage from './FormMessage';
 
+import { getInfo } from '../actions/user';
+
 export class LoginForm extends React.Component<FormProps<Checkpoints.Login, {}>, {}> {
   render() {
     const { handleSubmit, pristine, invalid, submitting, error } = this.props;
@@ -42,8 +44,8 @@ const LoginReduxForm = reduxForm({
         });
     });
   },
-  onSubmitSuccess: (result, dispatch) => {
-    // todo
+  onSubmitSuccess: (result, dispatch: Function) => {
+    dispatch(getInfo());
   }
 })(LoginForm);
 

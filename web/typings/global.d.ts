@@ -12,8 +12,8 @@ declare namespace Checkpoints {
   }
 
   interface User {
+    id?: string;
     name?: string;
-    email?: string;
   }
 
   interface Checkpoint {
