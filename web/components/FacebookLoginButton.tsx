@@ -1,47 +1,23 @@
+import './FacebookLoginButton.scss';
+
 import * as React from 'react';
-import { connect } from 'react-redux';
 
 import InkRipple from './InkRipple';
-import { logout } from '../lib/login';
 
 const logo = require('../assets/facebook-login.png');
 
-interface Props {
-  onLogin?: () => void;
-}
-
-export class FacebookLoginButton extends React.Component<Props, {}> {
-  render() {
-
-    let facebookButtonStyle = {
-      background: logo
-    };
-    return (
-      <div>
-        <button type="button" style={{position: 'relative'}}>
-          <a href="/api/auth/facebook" style={{position: 'relative', zIndex: 5}}>
-            <img src={logo} style={{width: "100%"}}/>
-          </a>
-          <InkRipple />
-        </button>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-
-  }
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onLogin: () => {
-
-    }
+const FacebookLoginButton = (props: React.HTMLAttributes) => {
+  let facebookButtonStyle = {
+    background: logo
   };
-}
 
-const FacebookLoginButtonContainer = connect(mapStateToProps, mapDispatchToProps)(FacebookLoginButton);
-export default FacebookLoginButtonContainer;
+  return (
+    <button type="button" {...this.props} className="FacebookLoginButton">
+      <a href="/api/auth/facebook" style={{position: 'relative', zIndex: 5}}>
+        <img src={logo} style={{width: "100%"}}/>
+      </a>
+      <InkRipple />
+    </button>
+  );
+};
+export default FacebookLoginButton;
