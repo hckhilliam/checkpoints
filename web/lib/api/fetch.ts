@@ -18,7 +18,7 @@ function parseResponse(response) {
   });
 }
 
-export function fetch(url: string, init: RequestInit = {}): Promise<Checkpoints.Response> {
+function fetch(url: string, init: RequestInit = {}): Promise<Checkpoints.Response> {
   let headers = init.headers as Headers || new Headers();
   if (isLoggedIn())
     headers.append('Authorization', `Bearer ${getAccessToken()}`);
@@ -47,7 +47,18 @@ export function fetch(url: string, init: RequestInit = {}): Promise<Checkpoints.
   });
 }
 
-export const get = fetch;
+export function get(url: string, params?: { [key: string]: string }, init?: RequestInit): Promise<Checkpoints.Response> {
+  init = Object.assign({}, init, {
+    method: 'GET'
+  });
+
+  if (params) {
+    const querystring = _.map(params, (v, k) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
+    url += `?${querystring}`;
+  }
+
+  return fetch(url, init);
+}
 
 export function post(url: string, body?: any, init?: RequestInit): Promise<Checkpoints.Response> {
   init = Object.assign({}, init, {
@@ -61,3 +72,21 @@ export function post(url: string, body?: any, init?: RequestInit): Promise<Check
   return fetch(url, init);
 }
 
+export function put(url: string, body?: any, init?: RequestInit): Promise<Checkpoints.Response> {
+  init = Object.assign({}, init, {
+    method: 'PUT',
+    body: JSON.stringify(body),
+    headers: new Headers({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    })
+  });
+  return fetch(url, init);
+}
+
+export function del(url: string, init?: RequestInit): Promise<Checkpoints.Response> {
+  init = Object.assign({}, init, {
+    method: 'DELETE'
+  });
+  return fetch(url, init);
+}
