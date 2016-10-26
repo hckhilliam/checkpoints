@@ -1,6 +1,7 @@
 import './Login.scss';
 
 import * as React from 'react';
+import { connect } from 'react-redux';
 import * as classnames from 'classnames';
 
 import Panel from '../components/Panel';
@@ -8,11 +9,18 @@ import LoginForm from './LoginForm';
 import RegistrationForm from './RegistrationForm';
 import FacebookLoginButton from './FacebookLoginButton';
 
+import { getInfo } from '../actions/user';
+import { dashboard } from '../actions/routing';
+
+interface LoginProps extends React.HTMLAttributes {
+  onSubmitSuccess?: () => void;
+}
+
 interface LoginState {
   login?: boolean;
 }
 
-export default class Login extends React.Component<React.HTMLAttributes, LoginState> {
+export class Login extends React.Component<LoginProps, LoginState> {
   state: LoginState = {
     login: true
   }
@@ -26,13 +34,13 @@ export default class Login extends React.Component<React.HTMLAttributes, LoginSt
   }
 
   render() {
-    const { className } = this.props;
-    const other = _.omit(this.props, 'className');
+    const { className, onSubmitSuccess } = this.props;
+    const other = _.omit(this.props, 'className', 'onSubmitSuccess');
     const cssClass = classnames('Login', this.props.className);
 
     const form = this.state.login
-      ? <LoginForm />
-      : <RegistrationForm />;
+      ? <LoginForm onSubmitSuccess={onSubmitSuccess} />
+      : <RegistrationForm onSubmitSuccess={onSubmitSuccess} />;
 
     return (
       <div className={cssClass} {...other}>
@@ -57,3 +65,18 @@ export default class Login extends React.Component<React.HTMLAttributes, LoginSt
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {};
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSubmitSuccess: () => {
+      dispatch(getInfo()).then(dispatch(dashboard()))
+    }
+  };
+};
+
+const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(Login);
+export default LoginContainer;

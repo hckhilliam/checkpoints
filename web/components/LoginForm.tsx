@@ -10,9 +10,11 @@ import Input, { InputField } from './Input';
 import Button from './Button';
 import FormMessage from './FormMessage';
 
-import { getInfo } from '../actions/user';
+interface LoginFormProps extends FormProps<Checkpoints.Login, {}> {
+  onSubmitSuccess: () => void;
+}
 
-export class LoginForm extends React.Component<FormProps<Checkpoints.Login, {}>, {}> {
+export class LoginForm extends React.Component<LoginFormProps, {}> {
   render() {
     const { handleSubmit, pristine, invalid, submitting, error } = this.props;
     const disabled = pristine || invalid || submitting;
@@ -26,7 +28,6 @@ export class LoginForm extends React.Component<FormProps<Checkpoints.Login, {}>,
           {submitting ? 'Logging in' : 'Login'}
         </Button>
         <FormMessage type="Error">{(!submitting && error) ? error : null}</FormMessage>
-
       </form>
     );
   }
@@ -43,9 +44,6 @@ const LoginReduxForm = reduxForm({
           reject(new SubmissionError({ _error: 'Incorrect login' }));
         });
     });
-  },
-  onSubmitSuccess: (result, dispatch: Function) => {
-    dispatch(getInfo());
   }
 })(LoginForm);
 

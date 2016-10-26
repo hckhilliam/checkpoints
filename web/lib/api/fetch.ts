@@ -27,23 +27,25 @@ function fetch(url: string, init: RequestInit = {}): Promise<Checkpoints.Respons
   });
   return new Promise<Checkpoints.Response>((resolve, reject) => {
     window.fetch(url, options).then(res => {
-      if (res.status == 200)
-        return parseResponse(res).then(body => {
-          resolve({
-            response: res,
-            status: res.status,
-            body
+      switch (res.status) {
+        case 200:
+          return parseResponse(res).then(body => {
+            resolve({
+              response: res,
+              status: res.status,
+              body
+            });
           });
-        });
-      else
-        return parseResponse(res).then(error => {
-          reject({
-            response: res,
-            status: res.status,
-            error
+        default:
+          return parseResponse(res).then(error => {
+            reject({
+              response: res,
+              status: res.status,
+              error
+            });
           });
-        });
-      });
+      }
+    });
   });
 }
 

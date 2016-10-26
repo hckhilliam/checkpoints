@@ -2,7 +2,10 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Router as ReactRouter, Route, IndexRoute } from 'react-router';
 
+import { isLoggedIn } from '../lib/auth';
+
 import Root from './Root';
+import UserRoot from './UserRoot';
 import Home from './Home';
 import Dashboard from './Dashboard';
 
@@ -20,13 +23,25 @@ export class Router extends React.Component<Props, {}> {
     }
   }
 
+  requireAuth = (nextState, replace) => {
+    if (!isLoggedIn())
+      replace('/');
+  }
+
+  handleEnter = (nextState, replace) => {
+    if (isLoggedIn())
+      replace('/dashboard');
+  }
+
   render() {
     const { history } = this.props;
     return (
       <ReactRouter history={history as any}>
         <Route path="/" component={Root}>
-          <IndexRoute component={Home} />
-          <Route path="/dashboard" component={Dashboard} />
+          <IndexRoute component={Home} onEnter={this.handleEnter} />
+          <Route component={UserRoot} onEnter={this.requireAuth}>
+            <Route path="/dashboard" component={Dashboard} />
+          </Route>
         </Route>
       </ReactRouter>
     );
