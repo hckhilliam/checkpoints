@@ -8,7 +8,7 @@
   width: inherit;
 
   &-panel.Panel {
-    padding: 16px;
+    padding: 32px;
     width: 256px;
   }
 
@@ -27,9 +27,9 @@
       height: 1px;
       vertical-align: middle;
     }
-  }
 
-  &-email {
-    font-size: 18px;
+    &-email {
+      font-size: 18px;
+    }
   }
 }

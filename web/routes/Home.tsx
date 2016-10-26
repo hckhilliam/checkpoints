@@ -17,7 +17,7 @@ const Home = props => {
         <FacebookLoginButton className="Home-facebook" />
         <div className="Home-login">
           <p className="Home-login-line"> OR </p>
-          <span className="login-email">Continue with email</span>
+          <span className="Home-login-email">Continue with email</span>
         </div>
         <Login />
       </Panel>
