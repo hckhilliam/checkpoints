@@ -68,7 +68,10 @@ function upsertUser(profile) {
 }
 
 export function authenticateFacebook() {
-  return passport.authenticate('facebook', { session: false });
+  return passport.authenticate('facebook', {
+    session: false,
+    scope: process.env['FACEBOOK_SCOPE']
+  });
 }
 
 export function useFacebookStrategy() {

@@ -2,6 +2,12 @@ var webpack = require("webpack");
 var path = require("path");
 var fs = require('fs');
 
+const facebookScope = [
+  'email',
+  'public_profile',
+  'user_friends'
+];
+
 var nodeModules = {};
 fs.readdirSync(path.join(__dirname, "node_modules"))
   .filter(x => x != ".bin")
@@ -27,7 +33,8 @@ module.exports = {
         "FACEBOOK_CALLBACK": JSON.stringify('http://localhost:8080/api/auth/facebook/callback'),
         "MONGODB": JSON.stringify(process.env.MONGODB || "mongodb://dev:12345678@ds017688.mlab.com:17688/checkpoints_dev"),
         "FACEBOOK_APP_ID": JSON.stringify(process.env.FACEBOOK_APP_ID || "1122984984444971"),
-        "FACEBOOK_APP_SECRET": JSON.stringify(process.env.FACEBOOK_APP_SECRET || "1aa31bc51756994148f7060891ffe3df")
+        "FACEBOOK_APP_SECRET": JSON.stringify(process.env.FACEBOOK_APP_SECRET || "1aa31bc51756994148f7060891ffe3df"),
+        "FACEBOOK_SCOPE": JSON.stringify(facebookScope)
       }
     })
   ],
