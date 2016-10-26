@@ -1,3 +1,5 @@
+import * as querystring from 'querystring';
+
 import { getAccessToken, isLoggedIn } from '../auth';
 
 /**
@@ -27,23 +29,22 @@ function fetch(url: string, init: RequestInit = {}): Promise<Checkpoints.Respons
   });
   return new Promise<Checkpoints.Response>((resolve, reject) => {
     window.fetch(url, options).then(res => {
-      switch (res.status) {
-        case 200:
-          return parseResponse(res).then(body => {
-            resolve({
-              response: res,
-              status: res.status,
-              body
-            });
+      if (res.ok) {
+        return parseResponse(res).then(body => {
+          resolve({
+            response: res,
+            status: res.status,
+            body
           });
-        default:
-          return parseResponse(res).then(error => {
-            reject({
-              response: res,
-              status: res.status,
-              error
-            });
+        });
+      } else {
+        return parseResponse(res).then(error => {
+          reject({
+            response: res,
+            status: res.status,
+            error
           });
+        });
       }
     });
   });
@@ -55,8 +56,8 @@ export function get(url: string, params?: { [key: string]: string }, init?: Requ
   });
 
   if (params) {
-    const querystring = _.map(params, (v, k) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
-    url += `?${querystring}`;
+    const qs = querystring.stringify(params);
+    url += `?${qs}`;
   }
 
   return fetch(url, init);

@@ -1,4 +1,4 @@
-import * as querystring from 'querystring';
+import * as checkpoints from '../lib/api/checkpoints';
 
 export const UPDATE_CHECKPOINTS = 'UPDATE_CHECKPOINTS';
 export const TOGGLE_ONE_CHECKPOINT = 'TOGGLE_ONE_CHECKPOINT';
@@ -16,12 +16,16 @@ export interface InsertCheckpointAction extends Redux.Action {
   checkpoint: Checkpoints.Checkpoint;
 }
 
+function parseCheckpoint(data): Checkpoints.Checkpoint {
+  data.id = data._id;
+  delete data._id;
+  return data as Checkpoints.Checkpoint;
+}
+
 export function getCheckpoints() {
   return dispatch => {
-    return fetch('/api/checkpoint/user/7/checkpoints').then((res) => {
-      return res.json();
-    }).then(checkpoints => {
-      dispatch(updateCheckpoints(checkpoints.map(mapResponseCheckpoint)));
+    return checkpoints.getCheckpoints(7).then(checkpoints => {
+      return dispatch(updateCheckpoints(checkpoints));
     });
   }
 }
@@ -41,11 +45,8 @@ export function toggleOneCheckpoint(checkpoint: Checkpoints.Checkpoint) {
     ).then(res => {
       if (res.ok) {
         res.json().then((res) => {
-          dispatch(updateOneCheckpoint(mapResponseCheckpoint(res)));
+          dispatch(updateOneCheckpoint(parseCheckpoint(res)));
         });
-      } else {
-        //TODO: display error message
-        dispatch({});
       }
     });
   }
@@ -82,12 +83,6 @@ export function updateOneCheckpoint(checkpoint): ToggleOneCheckpointAction {
     type: TOGGLE_ONE_CHECKPOINT,
     checkpoint
   };
-}
-
-function mapResponseCheckpoint (checkpoint) {
-  checkpoint.id = checkpoint._id;
-  delete checkpoint._id;
-  return checkpoint;
 }
 
 export function insertCheckpoint(checkpoint): InsertCheckpointAction {

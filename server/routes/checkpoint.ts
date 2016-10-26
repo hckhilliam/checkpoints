@@ -37,15 +37,7 @@ api.post('/me/checkpoints/:_id/upload', (req: Request, res: Response, next) => {
 
 api.post('/', (req: Request, res: Response, next) => {
   const {title, description, isPrivate} = req['body'];
-  console.log(req);
-  checkpoint.createCheckpoint(7, title, description, !!isPrivate).then(checkpoint => {
-    res.json(checkpoint);
-  }).catch(error => {
-    res.status(500);
-    res.json({
-      error
-    });
-  })
+  createCheckpoint(res, 7, title, description, !!isPrivate);
 });
 
 api.get('/user/:user_id/checkpoints', (req: Request, res: Response, next) => {
@@ -64,7 +56,7 @@ api.get('/me/checkpoints/:_id', (req: Request, res: Response, next) => {
 
 });
 
-function getCheckpoints(res: Response, user_id: number) {
+export function getCheckpoints(res: Response, user_id: number) {
   checkpoint.getCheckpoints(user_id).then(checkpoints => {
     res.json(checkpoints);
   }).catch(error => {
@@ -75,7 +67,7 @@ function getCheckpoints(res: Response, user_id: number) {
   });
 }
 
-function getCheckpointById(res: Response, _id: number) {
+export function getCheckpointById(res: Response, _id: number) {
   checkpoint.getCheckpointById(_id).then(checkpoint => {
     res.json(checkpoint);
   }).catch(error => {
@@ -84,6 +76,17 @@ function getCheckpointById(res: Response, _id: number) {
       error
     });
   });
+}
+
+export function createCheckpoint(res: Response, user_id: number, title: string, description: string, isPrivate: boolean) {
+  checkpoint.createCheckpoint(user_id, title, description, isPrivate).then(checkpoint => {
+    res.json(checkpoint);
+  }).catch(error => {
+    res.status(500);
+    res.json({
+      error
+    });
+  })
 }
 
 api.put('/:_id', (req: Request, res: Response, next) => {
