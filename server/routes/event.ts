@@ -1,20 +1,16 @@
 import {Router, Request, Response} from 'express';
-
 import * as event from '../modules/event';
+import {eventCriteria} from '../modules/event'
 
 const api = Router();
 
 api.post('/', (req: Request, res: Response, next) => {
-  console.log(req);
-  console.log(req['body']);
-  console.log(req.params);
-  console.log(req.params['lng']);
-  console.log(req.params['lat']);
-  event.getFilteredEvents(
-    Number(req.params['lng']), 
-    Number(req.params['lat']), 
-    Number(req.params['distance']), 
-    req.params['filter'] ).then( (events) => {
+  let facebookToken: string = (req.headers["authorization"] as string).split(" ")[1];
+  
+  let criteria: eventCriteria = Object.assign({}, req['body'] as eventCriteria);
+  criteria.accessTokens = {"facebook": req['body'].FacebookToken};
+  
+  event.getFilteredEvents(criteria).then( (events) => {
       res.json({
         events
       });
