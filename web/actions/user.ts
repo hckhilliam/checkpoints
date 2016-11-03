@@ -1,11 +1,10 @@
-import * as Redux from 'redux';
-
+import { Action } from 'redux';
 import { getUserInfo } from '../lib/api/user';
 
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 export const CLEAR_USER_INFO = 'CLEAR_USER_INFO';
 
-export interface UpdateUserAction extends Redux.Action {
+export interface UpdateUserAction extends Action {
   user: Checkpoints.User
 }
 
@@ -22,7 +21,7 @@ export function updateInfo(user: Checkpoints.User): UpdateUserAction {
   };
 }
 
-export function clearInfo(): Redux.Action {
+export function clearInfo(): Action {
   return {
     type: CLEAR_USER_INFO
   };

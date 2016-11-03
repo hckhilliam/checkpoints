@@ -2,23 +2,24 @@ const debug = require('debug')('checkpoints:api');
 
 import { Router, Request, Response } from 'express';
 
-import auth from './auth';
 import user from './user';
 import checkpoint from './checkpoint';
+
+import auth from './auth';
 import me from './me';
+import users from './users';
+
+import error from '../handlers/error';
 
 import { authenticate } from '../auth/auth';
 
 const api = Router();
 
-api.get('/hello', (req: Request, res: Response, next) => {
-  debug('hello!');
-  res.send(':)');
-});
+api.use('/auth', auth, error);
+api.use('/user', user, error);
 
-api.use('/auth', auth);
-api.use('/user', user);
-api.use('/checkpoint', checkpoint);
-api.use('/me', authenticate, me);
+api.use('/auth', auth, error);
+api.use('/me', authenticate, me, error);
+api.use('/users', authenticate, users, error);
 
 export default api;

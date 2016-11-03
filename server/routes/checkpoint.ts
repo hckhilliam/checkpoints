@@ -48,14 +48,6 @@ api.get('/user/:user_id/checkpoints/:_id', (req: Request, res: Response, next) =
   getCheckpointById(res, Number(req.params['_id']));
 });
 
-api.get('/me/checkpoints', (req: Request, res: Response, next) => {
-
-});
-
-api.get('/me/checkpoints/:_id', (req: Request, res: Response, next) => {
-
-});
-
 export function getCheckpoints(res: Response, user_id: number) {
   checkpoint.getCheckpoints(user_id).then(checkpoints => {
     res.json(checkpoints);

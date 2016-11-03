@@ -48,9 +48,9 @@ export class Login extends React.Component<LoginProps, LoginState> {
         <div className="Login-separator">
           <p className="Login-separator-line"> OR </p>
         </div>
-        <div className="Login-email">Continue with email</div>
         <div className="Login-form">
           <Panel className="Login-panel">
+            <div className="Login-email">{this.state.login ? 'Continue with email' : 'New account'}</div>
             {form}
           </Panel>
           <div className="Login-actions">

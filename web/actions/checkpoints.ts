@@ -1,18 +1,20 @@
+import { Action } from 'redux';
+
 import * as checkpoints from '../lib/api/checkpoints';
 
 export const UPDATE_CHECKPOINTS = 'UPDATE_CHECKPOINTS';
 export const TOGGLE_ONE_CHECKPOINT = 'TOGGLE_ONE_CHECKPOINT';
 export const INSERT_CHECKPOINT = 'INSERT_CHECKPOINT';
 
-export interface UpdateCheckpointsAction extends Redux.Action {
+export interface UpdateCheckpointsAction extends Action {
   checkpoints: Checkpoints.Checkpoint[];
 }
 
-export interface ToggleOneCheckpointAction extends Redux.Action {
+export interface ToggleOneCheckpointAction extends Action {
   checkpoint: Checkpoints.Checkpoint;
 }
 
-export interface InsertCheckpointAction extends Redux.Action {
+export interface InsertCheckpointAction extends Action {
   checkpoint: Checkpoints.Checkpoint;
 }
 

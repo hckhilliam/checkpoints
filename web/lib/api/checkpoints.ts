@@ -12,8 +12,13 @@ function parseCheckpoints(data): Checkpoints.Checkpoint[] {
 
 export function getCheckpoints(userId?: number): Promise<Checkpoints.Checkpoint[]> {
   const url = userId
-    ? `/api/checkpoint/user/${userId}/checkpoints`
-    : '/api/me/checkpoints';
+    ? `/checkpoint/user/${userId}/checkpoints`
+    : '/me/checkpoints';
 
   return get(url).then(res => parseCheckpoints(res.body));
+}
+
+export function insertCheckpoint(checkpoint: Checkpoints.Checkpoint): Promise<Checkpoints.Checkpoint> {
+  const url = '/me/checkpoint';
+  return post(url).then(res => parseCheckpoints(res.body));
 }
