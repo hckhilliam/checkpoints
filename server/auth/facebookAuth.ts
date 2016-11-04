@@ -5,7 +5,7 @@ import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { createAccessToken } from './tokenAuth';
 const CustomStrategy = require('passport-custom');
 
-import * as FB from 'fb';
+const FB = require('fb');
 
 import User from '../mongoose/User';
 import FacebookUser from '../mongoose/FacebookUser';

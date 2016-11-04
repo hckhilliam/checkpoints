@@ -6,21 +6,17 @@ import { getUser } from '../modules/user';
 
 const api = Router();
 
-api.param('user_id', (req: Request, res: Response, next, userId) => {
+api.param('user_id', (req: Request & Checkpoints.Request, res: Response, next, userId) => {
   getUser(userId)
     .then(user => {
-      req['userParam'] = user;
+      req.customParams.user = user as any;
       next();
     })
     .catch(next);
 });
 
-api.get('/:user_id/info', (req: Request, res: Response, next) => {
-  const { _id, name } = req['userParam'];
-  res.json({
-    id: _id,
-    name
-  });
+api.get('/:user_id/info', (req: Request & Checkpoints.Request, res: Response, next) => {
+  res.json(req.customParams.user);
 });
 
 export default api;

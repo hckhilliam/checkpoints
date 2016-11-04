@@ -72,5 +72,8 @@ module.exports = {
       }
     },
     historyApiFallback: true
+  },
+  ts: {
+    configFileName: 'tsconfig.web.json'
   }
 };

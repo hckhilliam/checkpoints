@@ -17,6 +17,9 @@ export function getUser(userId: number) {
       if (!user) {
         throw new Error(`User (${userId}) not found`);
       }
-      return user;
+      return {
+        _id: user._id,
+        name: user['name']
+      } as Checkpoints.User;
     });
 }

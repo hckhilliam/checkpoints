@@ -18,12 +18,17 @@ function defaultHandler(req, res: Response, next) {
   res.sendStatus(200);
 }
 
+function init(req: Checkpoints.Request, res, next) {
+  req.customParams = {};
+  next();
+}
+
 const api = Router();
 
 api.use('/auth', auth);
 api.use('/user', user);
 
-api.all('*', authenticate);
+api.all('*', init, authenticate);
 api.use('/me', me);
 api.use('/users', users);
 
