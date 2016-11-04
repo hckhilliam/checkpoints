@@ -7,7 +7,7 @@ import { authenticatePublicClient } from '../auth/clientAuth';
 
 const api = Router();
 
-api.post('/register', authenticatePublicClient(), (req: Request, res: Response) => {
+api.post('/register', authenticatePublicClient(), (req: Request, res: Response, next) => {
   const { name, email, password } = req['body'];
   if (!(name && email && password))
     return res.status(400);
@@ -25,8 +25,7 @@ api.post('/register', authenticatePublicClient(), (req: Request, res: Response) 
     })
     .catch(err => {
       debug(err);
-      res.status(500);
-      res.json(err);
+      next(err);
     });
 });
 

@@ -9,3 +9,14 @@ export function createUser(name: string, email: string) {
   });
   return user.save();
 }
+
+export function getUser(userId: number) {
+  debug(`Finding user (${userId})`);
+  return User.findById(userId)
+    .then(user => {
+      if (!user) {
+        throw new Error(`User (${userId}) not found`);
+      }
+      return user;
+    });
+}

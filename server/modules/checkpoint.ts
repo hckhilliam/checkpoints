@@ -17,7 +17,7 @@ export function getCheckpoints(user_id: number) {
   return Checkpoint.find({user_id, isDeleted: false});
 }
 
-export function getCheckpointById(_id: number){
+export function getCheckpointById(_id: number) {
   debug(`Getting checkpoint (${_id})`);
   // NOTE: no security check on if checkpoint is deleted or not
   return Checkpoint.findById(_id);

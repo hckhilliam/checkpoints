@@ -13,13 +13,20 @@ import error from '../handlers/error';
 
 import { authenticate } from '../auth/auth';
 
+// Default success handler
+function defaultHandler(req, res: Response, next) {
+  res.sendStatus(200);
+}
+
 const api = Router();
 
-api.use('/auth', auth, error);
-api.use('/user', user, error);
+api.use('/auth', auth);
+api.use('/user', user);
 
-api.use('/auth', auth, error);
-api.use('/me', authenticate, me, error);
-api.use('/users', authenticate, users, error);
+api.all('*', authenticate);
+api.use('/me', me);
+api.use('/users', users);
+
+api.use(defaultHandler, error);
 
 export default api;

@@ -28,4 +28,7 @@ export const facebookLogin = [authenticateFacebook(), oauth2.errorHandler()];
 export const facebookCallback = [authenticateFacebook(), fbCallback, oauth2.errorHandler()];
 export const login = [authenticatePublicClient(), oauth2.token(), oauth2.errorHandler()];
 
-export const authenticate = authenticateToken;
+export const authenticate = [(req, res, next) => {
+  debug('begin authentication');
+  next();
+}, authenticateToken];
