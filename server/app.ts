@@ -1,4 +1,4 @@
-/// <reference path="./typings/global-server.d.ts" />
+/// <reference path="./typings/global.d.ts" />
 
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';

@@ -10,16 +10,15 @@ export function createUser(name: string, email: string) {
   return user.save();
 }
 
-export function getUser(userId: number) {
+export function getUser(userId: number): Promise<CheckpointsServer.User> {
   debug(`Finding user (${userId})`);
   return User.findById(userId)
     .then(user => {
-      if (!user) {
+      if (!user)
         throw new Error(`User (${userId}) not found`);
-      }
       return {
         _id: user._id,
         name: user['name']
-      } as Checkpoints.User;
+      };
     });
 }

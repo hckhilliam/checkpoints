@@ -7,7 +7,7 @@ export function createCheckpoint(user_id: number, title: string, description: st
     user_id,
     title,
     description,
-    isPrivate,
+    isPrivate
   });
   return checkpoint.save();
 }
@@ -23,8 +23,9 @@ export function getCheckpointById(_id: number) {
   return Checkpoint.findById(_id);
 }
 
-export function updateCheckpoint(_id: number, query: any) {
+export function updateCheckpoint(_id: number, query: CheckpointsServer.Checkpoint) {
   debug(`Updating checkpoint (${_id})`);
+  delete query._id;
   return Checkpoint.findOneAndUpdate({_id}, query, {new: true});
 }
 

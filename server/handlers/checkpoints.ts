@@ -5,9 +5,11 @@ const UUID = require('uuid-1345');
 import { Request, Response } from 'express';
 
 import * as checkpoint from '../modules/checkpoint';
+import { getUserId } from '../lib/request';
 
-export function getCheckpoints(req: Request, res: Response, next: any, userId: number) {
-  checkpoint.getCheckpointById(userId)
+export function getCheckpoints(req: Request, res: Response, next: any) {
+  const userId = getUserId(req);
+  checkpoint.getCheckpoints(userId)
     .then(checkpoints => res.json(checkpoints))
     .catch(next);
 }
@@ -18,27 +20,30 @@ export function getCheckpoint(req: Request, res: Response, next: any, checkpoint
     .catch(next);
 }
 
-export function createCheckpoint(req: Request, res: Response, next: any, userId: number) {
-  const { title, description, isPrivate } = req['body'];
+export function createCheckpoint(req: CheckpointsServer.Request, res: Response, next: any) {
+  const userId = getUserId(req);
+  const { title, description, isPrivate } = req.body as CheckpointsServer.Checkpoint;
   checkpoint.createCheckpoint(userId, title, description, !!isPrivate)
     .then(checkpoint => res.json(checkpoint))
     .catch(next);
 }
 
-export function updateCheckpoint(req: Request, res: Response, next: any, checkpointId: number) {
-  const checkpoint = req['body'];
-  checkpoint.updateCheckpoint(checkpointId, checkpoint)
+export function updateCheckpoint(req: CheckpointsServer.Request, res: Response, next: any, checkpointId: number) {
+  const body = req.body as CheckpointsServer.Checkpoint;
+  checkpoint.updateCheckpoint(checkpointId, body)
     .then(c => res.json(c))
     .catch(next);
 }
 
 export function deleteCheckpoint(req: Request, res: Response, next: any, checkpointId: number) {
   checkpoint.deleteCheckpoint(checkpointId)
-    .then(() => res.sendStatus(200))
+    .then(() => res.end())
     .catch(next);
 }
 
-export function uploadCheckpointImages(req: Request, res: Response, next: any, userId: number, checkpointId: number) {
+// todo separate image module?
+export function uploadCheckpointImages(req: Request, res: Response, next: any, checkpointId: number) {
+  const userId = getUserId(req);
   multer({
     storage: multer.diskStorage({
       destination: `./public/uploads/${userId}/${checkpointId}`,
@@ -50,6 +55,6 @@ export function uploadCheckpointImages(req: Request, res: Response, next: any, u
   }).array('image')(req, res, function (err) {
     if (err)
       return next('There was an error uploading the image(s)');
-    res.status(200).end('Image(s) uploaded successfully');
+    res.end();
   });
 }

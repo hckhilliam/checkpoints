@@ -3,7 +3,6 @@ const debug = require('debug')('checkpoints:api');
 import { Router, Request, Response } from 'express';
 
 import user from './user';
-import checkpoint from './checkpoint';
 
 import auth from './auth';
 import me from './me';
@@ -13,12 +12,7 @@ import error from '../handlers/error';
 
 import { authenticate } from '../auth/auth';
 
-// Default success handler
-function defaultHandler(req, res: Response, next) {
-  res.sendStatus(200);
-}
-
-function init(req: Checkpoints.Request, res, next) {
+function init(req: CheckpointsServer.Request, res, next) {
   req.customParams = {};
   next();
 }
@@ -32,6 +26,6 @@ api.all('*', init, authenticate);
 api.use('/me', me);
 api.use('/users', users);
 
-api.use(defaultHandler, error);
+api.use(error);
 
 export default api;
