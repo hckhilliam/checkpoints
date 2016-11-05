@@ -1,5 +1,7 @@
 import * as Cookie from 'js-cookie';
 
+import localStorage from './localStorage';
+
 const ACCESS_TOKEN = 'access_token';
 const FACEBOOK_TOKEN = 'facebook_token';
 
