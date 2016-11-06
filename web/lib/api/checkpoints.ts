@@ -1,4 +1,5 @@
-import { get, post, put } from './fetch';
+import { get, post, put, del } from './fetch';
+import { getUrl } from './utils';
 
 function parseCheckpoint(data): Checkpoints.Checkpoint {
   data.id = data._id;
@@ -11,14 +12,26 @@ function parseCheckpoints(data): Checkpoints.Checkpoint[] {
 }
 
 export function getCheckpoints(userId?: number): Promise<Checkpoints.Checkpoint[]> {
-  const url = userId
-    ? `/checkpoint/user/${userId}/checkpoints`
-    : '/me/checkpoints';
-
+  const url = getUrl('checkpoints', userId);
   return get(url).then(res => parseCheckpoints(res.body));
 }
 
-export function insertCheckpoint(checkpoint: Checkpoints.Checkpoint): Promise<Checkpoints.Checkpoint> {
-  const url = '/me/checkpoint';
-  return post(url).then(res => parseCheckpoints(res.body));
+export function getCheckpoint(checkpointId: number, userId?: number): Promise<Checkpoints.Checkpoint> {
+  const url = getUrl(`checkpoints/${checkpointId}`, userId);
+  return get(url).then(res => parseCheckpoint(res.body));
+}
+
+export function addCheckpoint(checkpoint: Checkpoints.Checkpoint): Promise<Checkpoints.Checkpoint> {
+  const url = getUrl('checkpoints');
+  return post(url, checkpoint).then(res => parseCheckpoint(res.body));
+}
+
+export function saveCheckpoint(checkpoint: Checkpoints.Checkpoint): Promise<Checkpoints.Checkpoint> {
+  const url = getUrl(`checkpoints/${checkpoint.id}`);
+  return put(url, checkpoint).then(res => parseCheckpoint(res.body));
+}
+
+export function deleteCheckpoint(checkpointId: number): Promise<void> {
+  const url = getUrl(`checkpoints/${checkpointId}`);
+  return del(url);
 }

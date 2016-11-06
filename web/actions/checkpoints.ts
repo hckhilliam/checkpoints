@@ -2,94 +2,77 @@ import { Action } from 'redux';
 
 import * as checkpoints from '../lib/api/checkpoints';
 
+// Action types
 export const UPDATE_CHECKPOINTS = 'UPDATE_CHECKPOINTS';
-export const TOGGLE_ONE_CHECKPOINT = 'TOGGLE_ONE_CHECKPOINT';
-export const INSERT_CHECKPOINT = 'INSERT_CHECKPOINT';
+export const UPDATE_CHECKPOINT = 'UPDATE_CHECKPOINT';
+export const REMOVE_CHECKPOINT = 'REMOVE_CHECKPOINT';
 
-export interface UpdateCheckpointsAction extends Action {
+export const ADD_CHECKPOINT = 'ADD_CHECKPOINT';
+export const SAVE_CHECKPOINT = 'SAVE_CHECKPOINT';
+export const DELETE_CHECKPOINT = 'DELETE_CHECKPOINT';
+
+// Actions
+export interface CheckpointAction extends Action {
+  checkpoint: Checkpoints.Checkpoint;
+}
+
+export interface CheckpointsAction extends Action {
   checkpoints: Checkpoints.Checkpoint[];
 }
 
-export interface ToggleOneCheckpointAction extends Action {
-  checkpoint: Checkpoints.Checkpoint;
+// Action creators
+function updateCheckpoint(checkpoint): CheckpointAction {
+  return {
+    type: UPDATE_CHECKPOINT,
+    checkpoint
+  };
 }
 
-export interface InsertCheckpointAction extends Action {
-  checkpoint: Checkpoints.Checkpoint;
-}
-
-function parseCheckpoint(data): Checkpoints.Checkpoint {
-  data.id = data._id;
-  delete data._id;
-  return data as Checkpoints.Checkpoint;
-}
-
-export function getCheckpoints() {
-  return dispatch => {
-    return checkpoints.getCheckpoints(7).then(checkpoints => {
-      return dispatch(updateCheckpoints(checkpoints));
-    });
-  }
-}
-
-export function toggleOneCheckpoint(checkpoint: Checkpoints.Checkpoint) {
-  return dispatch => {
-    return fetch(
-      `/api/checkpoint/${checkpoint.id}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body:JSON.stringify({isCompleted : !checkpoint.isCompleted})
-      }
-    ).then(res => {
-      if (res.ok) {
-        res.json().then((res) => {
-          dispatch(updateOneCheckpoint(parseCheckpoint(res)));
-        });
-      }
-    });
-  }
-}
-
-export function addCheckpoint(checkpoint) {
-  return dispatch => {
-    return fetch('/api/checkpoint/', {
-      method: 'POST',
-      body: JSON.stringify(checkpoint),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
-    }).then((res) => {
-      return res.json();
-    }).then(checkpoint => {
-      checkpoint.id = checkpoint._id;
-      delete checkpoint._id;
-      dispatch(insertCheckpoint(checkpoint));
-    });
-  }
-}
-
-export function updateCheckpoints(checkpoints): UpdateCheckpointsAction {
+function updateCheckpoints(checkpoints): CheckpointsAction {
   return {
     type: UPDATE_CHECKPOINTS,
     checkpoints
   };
 }
 
-export function updateOneCheckpoint(checkpoint): ToggleOneCheckpointAction {
+function removeCheckpoint(checkpoint): CheckpointAction {
   return {
-    type: TOGGLE_ONE_CHECKPOINT,
+    type: REMOVE_CHECKPOINT,
     checkpoint
   };
 }
 
-export function insertCheckpoint(checkpoint): InsertCheckpointAction {
-  return {
-      type: INSERT_CHECKPOINT,
-      checkpoint
+export function getCheckpoints() {
+  return dispatch => {
+    return checkpoints.getCheckpoints()
+      .then(checkpoints => dispatch(updateCheckpoints(checkpoints)));
+  }
+}
+
+export function getCheckpoint(checkpointId: number) {
+  return dispatch => {
+    return checkpoints.getCheckpoint(checkpointId)
+      .then(checkpoint => dispatch(updateCheckpoint(checkpoint)));
+  }
+}
+
+export function addCheckpoint(checkpoint: Checkpoints.Checkpoint) {
+  return dispatch => {
+    return checkpoints.addCheckpoint(checkpoint)
+      .then(checkpoint => dispatch(updateCheckpoint(checkpoint)));
+  };
+}
+
+export function saveCheckpoint(checkpoint: Checkpoints.Checkpoint) {
+  return dispatch => {
+    return checkpoints.saveCheckpoint(checkpoint)
+      .then(checkpoint => dispatch(updateCheckpoint(checkpoint)));
+  };
+}
+
+export function deleteCheckpoint(checkpointId: number) {
+  return dispatch => {
+    return checkpoints.deleteCheckpoint(checkpointId)
+      .then(() => dispatch(removeCheckpoint(checkpointId)));
   };
 }

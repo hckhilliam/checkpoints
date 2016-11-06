@@ -1,21 +1,21 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
-import { toggleOneCheckpoint } from '../actions/checkpoints'
+import { connect } from 'react-redux';
+import { saveCheckpoint } from '../actions/checkpoints';
 
 interface Props {
   item?: Checkpoints.Checkpoint;
-  toggleChecked?: () => void;
+  onToggle?: () => void;
 }
 
 export class CheckpointItem extends React.Component<Props, {}> {
-  onChanged = () => {
-    this.props.toggleChecked();
+  handleChange = () => {
+    this.props.onToggle();
   }
 
-  render(){
+  render() {
     return (
       <div>
-        <input type="checkbox" defaultChecked={this.props.item.isCompleted} onChange={this.onChanged.bind(this)} />
+        <input type="checkbox" defaultChecked={this.props.item.isCompleted} onChange={() => this.handleChange()} />
         {this.props.item.id}
         {this.props.item.title}
         {this.props.item.description}
@@ -34,8 +34,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    toggleChecked: () => {
-      dispatch(toggleOneCheckpoint(ownProps.item));
+    onToggle: () => {
+      const checkpoint = Object.assign({}, ownProps.item, {
+        isCompleted: !ownProps.item.isCompleted
+      });
+      dispatch(saveCheckpoint(checkpoint));
     }
   };
 }

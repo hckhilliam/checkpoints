@@ -21,6 +21,6 @@ api.get('/:user_id/info', (req: CheckpointsServer.Request, res: Response, next) 
   res.json(req.customParams.user);
 });
 
-api.use('/', common);
+api.use('/:user_id', common);
 
 export default api;

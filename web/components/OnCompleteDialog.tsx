@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-
 interface Props {
   checkpoint: Checkpoints.Checkpoint;
   clickYes: () => void;
@@ -16,7 +15,7 @@ export default class OnCompleteDialog extends React.Component<Props, {}> {
     this.props.clickCancel();
   }
 
-  render(){
+  render() {
     let checkpoint = this.props.checkpoint;
 
     if (checkpoint.isCompleted) {
