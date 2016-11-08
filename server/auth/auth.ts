@@ -21,7 +21,7 @@ function fbCallback(req, res) {
   const expires = new Date(Date.now() + 1000 * 3600);
   res.cookie('access_token', user.accessToken, { expires });
   res.cookie('facebook_token', user.facebookToken, { expires });
-  res.redirect('/');
+  res.redirect('/dashboard');
 }
 
 export const facebookLogin = [authenticateFacebook(), oauth2.errorHandler()];
