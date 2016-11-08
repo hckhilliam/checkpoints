@@ -1,35 +1,8 @@
-import { get, post } from './fetch';
+import { get } from './fetch';
+import { getUrl } from './utils';
 
-export function register(data: Checkpoints.Registration) {
-  const body = Object.assign({
-    client_id: process.env['CLIENT_ID']
-  }, data);
-  return post('/api/user/register', body)
-    .then(response => {
-      const token = response.body['access_token'];
-      return token;
-    });
-}
-
-export function login(data: Checkpoints.Login) {
-  const body = {
-    grant_type: 'password',
-    client_id: process.env['CLIENT_ID'],
-    username: data.email,
-    password: data.password
-  };
-  return post('/api/auth/login', body)
-    .then(response => {
-      const token = response.body['access_token'];
-      return token;
-    });
-}
-
-export function logout() {
-  return get('/api/auth/logout');
-}
-
-export function getUserInfo(): Promise<Checkpoints.User> {
-  return get('/api/me/info')
+export function getInfo(userId?: number): Promise<Checkpoints.User> {
+  const url = getUrl('info', userId);
+  return get(url)
     .then(response => response.body as Checkpoints.User);
 }

@@ -31,7 +31,7 @@ export class Router extends React.Component<Props, {}> {
   }
 
   handleEnter = (nextState, replace) => {
-    if (isLoggedIn)
+    if (isLoggedIn())
       this.props.onGetUser();
   }
 

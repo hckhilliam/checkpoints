@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { getUserInfo } from '../lib/api/user';
+import * as user from '../lib/api/user';
 
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 export const CLEAR_USER_INFO = 'CLEAR_USER_INFO';
@@ -10,7 +10,7 @@ export interface UpdateUserAction extends Action {
 
 export function getInfo() {
   return dispatch => {
-    return getUserInfo().then(user => dispatch(updateInfo(user)));
+    return user.getInfo().then(user => dispatch(updateInfo(user)));
   };
 }
 
