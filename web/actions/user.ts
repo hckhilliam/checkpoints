@@ -4,7 +4,7 @@ import * as user from '../lib/api/user';
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 export const CLEAR_USER_INFO = 'CLEAR_USER_INFO';
 
-export interface UpdateUserAction extends Action {
+export interface UserAction extends Action {
   user: Checkpoints.User
 }
 
@@ -14,7 +14,7 @@ export function getInfo() {
   };
 }
 
-export function updateInfo(user: Checkpoints.User): UpdateUserAction {
+export function updateInfo(user: Checkpoints.User): UserAction {
   return {
     type: UPDATE_USER_INFO,
     user

@@ -1,8 +1,6 @@
 /// <reference path="./typings/global.d.ts" />
 import './App.scss';
 
-import './lib/fb';
-
 import * as React from 'react';
 import { render } from 'react-dom';
 import { createStore, combineReducers, applyMiddleware } from 'redux';

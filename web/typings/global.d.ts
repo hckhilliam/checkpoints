@@ -14,6 +14,18 @@ declare namespace Checkpoints {
   interface User {
     id?: string;
     name?: string;
+    facebook?: FacebookUser;
+  }
+
+  interface FacebookUser {
+    id?: string;
+    picture?: FacebookPicture;
+  }
+
+  interface FacebookPicture {
+    width: number;
+    height: number;
+    url: string;
   }
 
   interface Checkpoint {

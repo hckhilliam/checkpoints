@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Router as ReactRouter, Route, IndexRoute } from 'react-router';
 
 import { isLoggedIn } from '../lib/auth';
-import { getInfo } from '../actions/user';
+import { getInfo as getUserInfo } from '../actions/user';
 
 import Root from './Root';
 import UserRoot from './UserRoot';
@@ -12,6 +12,7 @@ import Dashboard from './Dashboard';
 
 interface Props {
   history: ReactRouterRedux.ReactRouterReduxHistory;
+  shouldGetUser?: boolean;
   onGetUser?: () => void;
 }
 
@@ -22,6 +23,7 @@ export class Router extends React.Component<Props, {}> {
       history.replaceState
         ? history.replaceState(null, null, window.location.href.split('#')[0])
         : window.location.hash = '';
+      return;
     }
   }
 
@@ -31,7 +33,7 @@ export class Router extends React.Component<Props, {}> {
   }
 
   handleEnter = (nextState, replace) => {
-    if (isLoggedIn())
+    if (isLoggedIn() && !this.props.shouldGetUser)
       this.props.onGetUser();
   }
 
@@ -56,12 +58,14 @@ export class Router extends React.Component<Props, {}> {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    shouldGetUser: !state.user
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetUser: () => dispatch(getInfo())
+    onGetUser: () => dispatch(getUserInfo())
   };
 };
 
