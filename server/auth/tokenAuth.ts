@@ -59,13 +59,11 @@ export function upsertAccessToken(userId, clientId, expires) {
 export function useBearerStrategy() {
   passport.use(new Strategy(
     (token, done) => {
-      debug('checking token', token);
       AccessToken.findOne({ token }).populate('user_id')
         .then(accessToken => {
           if (!accessToken)
             return done(null, false);
           const user = accessToken['user_id'];
-          debug('token', token);
           debug('user', user);
           done(null, user);
         })

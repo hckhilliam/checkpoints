@@ -4,7 +4,7 @@
   "description": "Checkpoints!",
   "private": true,
   "scripts": {
-    "server": "set DEBUG=*&&node ./server/dist/www",
+    "server": "set DEBUG=checkpoints:*&&node ./server/dist/www",
     "webpack-web": "webpack-dev-server  --progress --colors --hot --inline --content-base web/dist/ --config webpack.web.config.js",
     "webpack-server": "webpack -d --progress --watch --config webpack.node.config.js",
     "build-web": "webpack --progress --config webpack.web.config.js",

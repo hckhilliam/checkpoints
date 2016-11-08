@@ -73,7 +73,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onSubmitSuccess: () => {
-      dispatch(getInfo()).then(dispatch(dashboard()))
+      dispatch(dispatch(dashboard()));
     }
   };
 };

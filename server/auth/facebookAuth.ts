@@ -43,7 +43,6 @@ function upsertUser(profile) {
           debug('existing user', res);
           return upsertFacebookUser(res._id, profile)
             .then(facebookUser => {
-              debug('upsert facebook user', facebookUser);
               resolve({
                 user: res,
                 facebookUser
@@ -54,7 +53,6 @@ function upsertUser(profile) {
           return newUser.save().then(user => {
             debug('new user', user);
             return upsertFacebookUser(user._id, profile).then(facebookUser => {
-              debug('upsert facebook user', facebookUser);
               resolve({
                 user,
                 facebookUser
@@ -82,8 +80,8 @@ export function useFacebookStrategy() {
     profileFields: ['id', 'email', 'displayName']
   },
   (accessToken, refreshToken, profile, done) => {
-    debug('accessToken', accessToken);
-    debug('profile', profile);
+    debug('fb accessToken', accessToken);
+    debug('fb profile', profile);
 
     FB.api('oauth/access_token', {
       client_id: process.env['FACEBOOK_APP_ID'],
@@ -109,7 +107,7 @@ export function useFacebookStrategy() {
             user_id: user['_id'],
             facebook_id: facebookUser['_id'],
             expires: Date.now() + expires * 1000
-          })
+          });
           return facebookToken.save().then(fbToken => {
             return done(null, {
               user,
@@ -118,7 +116,7 @@ export function useFacebookStrategy() {
               accessToken: fbToken['access_token']
             });
           });
-        })
+        });
       }).catch(err => {
         debug('err', err);
         done(err)

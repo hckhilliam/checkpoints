@@ -33,7 +33,7 @@ export class Router extends React.Component<Props, {}> {
   }
 
   handleEnter = (nextState, replace) => {
-    if (isLoggedIn() && !this.props.shouldGetUser)
+    if (isLoggedIn() && nextState.pathname != '/')
       this.props.onGetUser();
   }
 
@@ -58,9 +58,7 @@ export class Router extends React.Component<Props, {}> {
 }
 
 const mapStateToProps = state => {
-  return {
-    shouldGetUser: !state.user
-  };
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {

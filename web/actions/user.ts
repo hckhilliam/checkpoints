@@ -9,8 +9,10 @@ export interface UserAction extends Action {
 }
 
 export function getInfo() {
-  return dispatch => {
-    return user.getInfo().then(user => dispatch(updateInfo(user)));
+  return (dispatch, getState) => {
+    const state = getState();
+    if (_.isEmpty(state.user))
+      return user.getInfo().then(user => dispatch(updateInfo(user)));
   };
 }
 
