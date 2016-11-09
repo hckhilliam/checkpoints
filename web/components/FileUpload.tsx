@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-
+import * as classnames from 'classnames';
 import * as Dropzone from 'react-dropzone';
 
+import Button from './Button';
+
+import './FileUpload.scss';
+
 interface Props {
-  title: string;
-  description: string;
-  onDrop?: (file) => void ;
-  // onDrop: (file) => void ; diff between ? and
+  handleUpload: () => void;
 }
 
 interface State {
@@ -21,25 +22,23 @@ export default class FileUpload extends React.Component<Props, State> {
     files: []
   }
 
-  addFile = (file) => {
+  addFile = (files) => {
     console.log("hello");
-    console.log(file);
-
+    console.log(files);
     this.setState({
-      files: file
+      files: files
     });
-    // this.props.onDrop()
   }
+
   render() {
-    const { title, description } = this.props;
+    const { handleUpload } = this.props;
+    const cssClass = classnames('FileUpload');
     return (
-      <div>
+      <div className={cssClass}>
         <Dropzone onDrop={this.addFile}>
-          <div> {description} </div>
+          <div className="DropText"> Drop Files Here </div>
         </Dropzone>
-                {this.state.files.length > 0 ? <div>
-                <h2>Uploading {this.state.files.length} files...</h2>
-                </div> : null}
+        <Button onClick={handleUpload} primary>Upload</Button>
       </div>
     );
   }
@@ -47,14 +46,10 @@ export default class FileUpload extends React.Component<Props, State> {
 
 const mapStateToProps = state => {
   return {
-
   };
 };
 const mapDispatchToProps = dispatch => {
   return  {
-    onUploadFiles: (files) => {
-      // dispatch(uploadFiles(files));
-    }
   };
 };
 export const FileUploader = connect(mapStateToProps, mapDispatchToProps)(FileUpload);
