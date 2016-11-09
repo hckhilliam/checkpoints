@@ -3,6 +3,7 @@ const debug = require('debug')('checkpoints:commonRoute');
 import { Router, Request, Response } from 'express';
 
 import * as checkpoints from '../handlers/checkpoints';
+import * as authenticator from '../handlers/authenticator';
 
 const api = Router();
 
@@ -29,7 +30,7 @@ api.delete('/:id', (req, res, next) => {
   checkpoints.deleteCheckpoint(req, res, next, id);
 });
 
-api.post('/:id/upload', (req, res, next) => {
+api.post('/:id/upload', authenticator.isSelf, (req, res, next) => {
   const id = req.params['id'];
   checkpoints.uploadCheckpointImages(req, res, next, id);
 });

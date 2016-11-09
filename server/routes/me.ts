@@ -3,6 +3,7 @@ const debug = require('debug')('checkpoints:meRoute');
 import { Router, Request, Response } from 'express';
 
 import common from './common';
+import friends from './friends';
 
 const api = Router();
 
@@ -20,5 +21,6 @@ api.get('/info', (req: CheckpointsServer.Request, res: Response) => {
 });
 
 api.use('/', common);
+api.use('/', friends);
 
 export default api;
