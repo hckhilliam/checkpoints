@@ -1,12 +1,19 @@
 const debug = require('debug')('checkpoints:friend');
 import User from '../mongoose/User';
 
+function genericUserData() {
+  return {
+    _id: 1,
+    name: 1
+  };
+}
+
 export function getFriends(user_id: number) {
   debug(`Getting all friends for user (${user_id})`);
   return new Promise((resolve, reject) => {
     User.findById(user_id, { friends: 1 }).then(user => {
       debug(user['friends']);
-      User.find({ _id: { $in: user['friends'] } }).then(resolve);
+      User.find({ _id: { $in: user['friends'] } }, genericUserData()).then(resolve);
     });
   });
 }
@@ -18,7 +25,7 @@ export function getFriendRequests(user_id: number) {
       .then(user => {
         if (!user)
           return reject(new Error('User not found'));
-        User.find({ _id: { $in: user['friendRequests'] } }).then(resolve);
+        User.find({ _id: { $in: user['friendRequests'] } }, genericUserData()).then(resolve);
       });
   });
 }
@@ -50,7 +57,7 @@ export function acceptFriend(user_id: number, friend_id: number) {
 export function rejectFriend(user_id: number, friend_id: number) {
   debug(`Rejecting friend request from ${friend_id} as ${user_id}`);
   return new Promise(resolve => {
-    User.findByIdAndUpdate(user_id, { $pull: { friendRequests: friend_id } })
+    User.findByIdAndUpdate(user_id, { $pull: { friendRequests: friend_id } }).then(resolve);
   });
 }
 

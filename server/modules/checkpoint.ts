@@ -14,7 +14,14 @@ export function createCheckpoint(user_id: number, title: string, description: st
 
 export function getCheckpoints(user_id: number) {
   debug(`Getting all checkpoints for user (${user_id})`);
-  return Checkpoint.find({user_id, isDeleted: false});
+  return Checkpoint.find({user_id, isDeleted: false}, {
+    _id: 1,
+    user_id: 1,
+    title: 1,
+    description: 1,
+    isPrivate: 1,
+    isCompleted: 1
+  });
 }
 
 export function getCheckpointById(_id: number) {

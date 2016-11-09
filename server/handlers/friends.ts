@@ -13,7 +13,7 @@ export function addFriend(req: Request, res: Response, next: any) {
 
 export function getFriends(req: Request, res: Response, next: any) {
   friend.getFriends(getUserId(req))
-    .then(() => res.end())
+    .then(friends => res.json(friends))
     .catch(next);
 }
 
@@ -24,6 +24,7 @@ export function getFriendRequests(req: Request, res: Response, next: any) {
 }
 
 export function respondToRequest(req: Request, res: Response, next: any) {
+  debug(`accept param is ${req.params['accept']}`);
   if (req.params['accept']) {
     friend.acceptFriend(getUserId(req), Number(req.params['_id']))
       .then(() => res.end())

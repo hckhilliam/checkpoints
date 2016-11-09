@@ -21,6 +21,6 @@ api.get('/info', (req: CheckpointsServer.Request, res: Response) => {
 });
 
 api.use('/', common);
-api.use('/', friends);
+api.use('/friends', friends);
 
 export default api;
