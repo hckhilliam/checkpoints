@@ -4,7 +4,7 @@ const oauth2orize = require('oauth2orize');
 import * as passport from 'passport';
 
 import { checkUser } from './userAuth';
-import { createAccessToken } from './tokenAuth';
+import * as accesstoken from '../modules/accesstoken';
 
 const server = oauth2orize.createServer();
 
@@ -21,8 +21,8 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
       if (!user)
         return done(reject());
 
-      return createAccessToken(user['_id'], client._id, 60 * 24 * 3600)
-        .then(token => done(null, token))
+      return accesstoken.getToken(user['_id'], client._id)
+        .then(token => done(null, token.token))
         .catch(err => done(reject()));
     })
     .catch(err => done(reject()));

@@ -8,8 +8,13 @@ declare namespace CheckpointsServer {
   }
 
   interface User {
-    _id: number;
-    name: string;
+    _id?: number;
+    name?: string;
+    email?: string;
+    password?: string;
+    friends?: number[];
+    friendRequests?: number[];
+    facebook?: string;
   }
 
   interface Checkpoint {
@@ -21,5 +26,12 @@ declare namespace CheckpointsServer {
     comments: string[];
     pictures: string[];
     isCompleted: boolean;
+  }
+
+  interface Token {
+    token: string;
+    user_id: number;
+    client_id: string;
+    expires: Date;
   }
 }

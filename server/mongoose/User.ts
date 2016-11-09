@@ -7,7 +7,8 @@ const schema = {
   password: String,
   name: { type: String, required: true },
   friends: [Number],
-  friendRequests: [Number]
+  friendRequests: [Number],
+  facebook_id: { type: String, required: false, unique: true }
 };
 
 const userSchema = new mongoose.Schema(schema);

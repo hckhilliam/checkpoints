@@ -70,10 +70,11 @@ const mapStateToProps = state => {
   return {};
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onSubmitSuccess: () => {
-      dispatch(dispatch(dashboard()));
+      dispatch(getInfo());
+      dispatch(dashboard());
     }
   };
 };

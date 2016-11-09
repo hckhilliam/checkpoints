@@ -4,11 +4,7 @@ import * as passport from 'passport';
 import { Strategy } from 'passport-local';
 import * as bcrypt from 'bcrypt-nodejs';
 
-import User from '../mongoose/User';
-
-function getUser(email) {
-  return User.findOne({ email });
-}
+import * as user from '../modules/user';
 
 function hash(password) {
   return new Promise((resolve, reject) => {
@@ -22,37 +18,29 @@ function hash(password) {
 
 export function createUser(email, password, name) {
   return new Promise((resolve, reject) => {
-    getUser(email)
-      .then(user => {
-        if (user && user['password'])
+    user.getUserByEmail(email)
+      .then(u => {
+        if (u)
           return reject(`Email already exists`);
 
-        hash(password)
-          .then(hashedPassword => {
-            if (user) {
-              user.update({
-                password: hashedPassword
-              }).then(u => resolve(u));
-            } else {
-              const newUser = new User({
-                email,
-                password: hashedPassword,
-                name
-              });
-              newUser.save().then(u => resolve(u));
-            }
-          })
-          .catch(err => {
-            reject(err);
-          });
+        hash(password).then(hashedPassword => {
+          user.createUser({
+            name,
+            email,
+            password: hashedPassword as string
+          }).then(resolve);
         })
+        .catch(err => reject(err));
+      })
       .catch(err => reject(err));
   });
 }
 
 export function checkUser(email, password) {
   return new Promise((resolve, reject) => {
-    getUser(email)
+    if (!password)
+      return reject('Invalid credentials');
+    user.getUserByEmail(email)
       .then(user => {
         if (!user)
           return reject('Invalid credentials');
@@ -64,42 +52,6 @@ export function checkUser(email, password) {
         });
       })
       .catch(err => reject(err));
-  });
-}
-
-export function useLocalStrategy() {
-  passport.use(new Strategy((username, password, done) => {
-    debug('local');
-    getUser(username)
-      .then(user => {
-        if (!user)
-          return done(null, false);
-
-        bcrypt.compare(password, user['password'], (err, res) => {
-          if (err)
-            return done(err);
-
-          return res
-            ? done(null, user)
-            : done(null, false);
-        });
-      })
-      .catch(err => done(err));
-  }));
-
-  passport.serializeUser((user, done) => {
-    debug('serialize');
-    debug(user);
-    done(null, user.email);
-  });
-
-  passport.deserializeUser((email, done) => {
-    debug('deserializeUser');
-    getUser(email)
-      .then(user => {
-        user ? done(null, user) : done(null, false);
-      })
-      .catch(err => done(err, null));
   });
 }
 

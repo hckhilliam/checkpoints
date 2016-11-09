@@ -2,7 +2,6 @@ const debug = require('debug')('checkpoints:facebookAuth');
 
 import * as passport from 'passport';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
-import { createAccessToken } from './tokenAuth';
 const CustomStrategy = require('passport-custom');
 
 const FB = require('fb');
@@ -10,6 +9,8 @@ const FB = require('fb');
 import User from '../mongoose/User';
 import FacebookUser from '../mongoose/FacebookUser';
 import FacebookToken from '../mongoose/FacebookToken';
+import * as facebook from '../modules/facebook';
+import * as accesstoken from '../modules/accesstoken';
 
 function upsertFacebookUser(userId, profile) {
   const fbUser = {
@@ -95,15 +96,13 @@ export function useFacebookStrategy() {
       }
 
       const { access_token, expires } = res;
-      debug(res);
-
       upsertUser(profile).then(res => {
         const { user, facebookUser } = res as any;
         debug(user, facebookUser);
-        return createAccessToken(user['_id'], 'facebook', 60 * 24 * 3600).then(token => {
+        return accesstoken.getToken(user['_id'], 'facebook').then(token => {
           const facebookToken = new FacebookToken({
             facebook_token: access_token,
-            access_token: token,
+            access_token: token.token,
             user_id: user['_id'],
             facebook_id: facebookUser['_id'],
             expires: Date.now() + expires * 1000

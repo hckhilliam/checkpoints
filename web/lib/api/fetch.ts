@@ -51,7 +51,7 @@ function fetch(url: string, init: RequestInit = {}): Promise<Checkpoints.Respons
 }
 
 function setJsonResponse(init: RequestInit) {
-  let headers = init.headers as Headers || new Headers();
+  const headers = init.headers as Headers || new Headers();
   if (!headers.has('Accept'))
     headers.set('Accept', 'application/json');
   if (!headers.has('Content-Type'))
