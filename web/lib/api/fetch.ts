@@ -50,6 +50,15 @@ function fetch(url: string, init: RequestInit = {}): Promise<Checkpoints.Respons
   });
 }
 
+function setJsonResponse(init: RequestInit) {
+  let headers = init.headers as Headers || new Headers();
+  if (!headers.has('Accept'))
+    headers.set('Accept', 'application/json');
+  if (!headers.has('Content-Type'))
+    headers.set('Content-Type', 'application/json');
+  init.headers = headers;
+}
+
 export function get(url: string, params?: { [key: string]: string }, init?: RequestInit): Promise<Checkpoints.Response> {
   init = Object.assign({}, init, {
     method: 'GET'
@@ -66,24 +75,18 @@ export function get(url: string, params?: { [key: string]: string }, init?: Requ
 export function post(url: string, body?: any, init?: RequestInit): Promise<Checkpoints.Response> {
   init = Object.assign({}, init, {
     method: 'POST',
-    body: JSON.stringify(body),
-    headers: new Headers({
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    })
+    body: JSON.stringify(body)
   });
+  setJsonResponse(init);
   return fetch(url, init);
 }
 
 export function put(url: string, body?: any, init?: RequestInit): Promise<Checkpoints.Response> {
   init = Object.assign({}, init, {
     method: 'PUT',
-    body: JSON.stringify(body),
-    headers: new Headers({
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    })
+    body: JSON.stringify(body)
   });
+  setJsonResponse(init);
   return fetch(url, init);
 }
 
