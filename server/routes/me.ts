@@ -9,6 +9,7 @@ const api = Router();
 
 api.all('*', (req: Request & CheckpointsServer.Request, res: Response, next) => {
   req.customParams.user = req.user;
+  debug(req.user);
   next();
 });
 

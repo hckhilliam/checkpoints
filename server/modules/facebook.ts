@@ -2,28 +2,44 @@ const debug = require('debug')('checkpoints:facebookModule');
 
 const FB = require('fb');
 
-import FacebookUser from '../mongoose/FacebookUser';
 import FacebookToken from '../mongoose/FacebookToken';
 
-function api(url: string) {
-  return FB.api(url);
+interface FBToken {
+  token: string;
+  expires: Date;
 }
 
-export function upsertFacebookUser(userId, profile) {
-  const fbUser = {
-    _id: profile.id,
-    user_id: userId,
-    email: profile.emails[0].value,
-    name: profile.displayName
-  };
-
+export function exchangeFacebookToken(exchangeToken: string): Promise<FBToken> {
   return new Promise((resolve, reject) => {
-    FacebookUser.findOneAndUpdate(
-      { _id: fbUser._id },
-      fbUser,
-      { upsert: true, new: true }
-    ).then(facebookUser => {
-      resolve(facebookUser);
-    }).catch(err => reject(err));
+    FB.api('oauth/access_token', {
+      client_id: process.env['FACEBOOK_APP_ID'],
+      client_secret: process.env['FACEBOOK_APP_SECRET'],
+      grant_type: 'fb_exchange_token',
+      fb_exchange_token: exchangeToken
+    }, res => {
+      if (!res || res.error) {
+        debug('facebook error', !res ? 'error' : res.error);
+        return reject(new Error(JSON.stringify(!res ? 'error' : res.error.message)));
+      }
+      resolve({
+        token: res.access_token,
+        expires: Date.now() + res.expires * 1000
+      });
+    });
   });
+}
+
+export function saveFacebookToken(facebookId: string, token: string, expires: Date): Promise<FBToken> {
+  return FacebookToken.findOne({ facebookId })
+    .then(res => {
+      let deferred;
+      if (res) {
+        res.set('token', token);
+        res.set('expires', expires);
+        deferred = res.save();
+      } else {
+        deferred = FacebookToken.create({ facebookId, token, expires})
+      }
+      return deferred.then(res => _.pick(res, 'token', 'expires'));
+    });
 }

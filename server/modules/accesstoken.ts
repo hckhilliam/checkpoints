@@ -10,7 +10,7 @@ function generateToken(): Promise<string> {
   return uid(192);
 }
 
-export function getToken(userId: string, clientId: string): Promise<CheckpointsServer.Token> {
+export function getToken(userId: number, clientId: string): Promise<CheckpointsServer.Token> {
   return AccessToken.findOne({ user_id: userId, client_id: clientId }).then(doc => {
     const expires = Date.now() + (60 * 24 * 3600) * 1000; // 60 days
     if (doc) {
@@ -33,10 +33,10 @@ export function getToken(userId: string, clientId: string): Promise<CheckpointsS
 }
 
 export function getUserFromToken(token: string): Promise<CheckpointsServer.User> {
-  return AccessToken.findOne({ token })
+  return AccessToken.findOne({ token }).populate('user_id')
     .then(accesstoken => {
       if (!accesstoken)
         throw new Error(`Invalid token ${token}`);
-      return accesstoken.execPopulate().then(token => token['user_id']);
+      return accesstoken['user_id'];
     });
 }

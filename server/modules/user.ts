@@ -17,5 +17,22 @@ export function getUser(userId: number): Promise<CheckpointsServer.User> {
 
 export function getUserByEmail(email: string): Promise<CheckpointsServer.User> {
   debug(`Finding user by email (${email})`);
-  return User.findOne({ email }).then(parseUser);
+  return getUserByQuery({ email });
+}
+
+export function getUserByQuery(query: any): Promise<CheckpointsServer.User> {
+  debug(`Finding user by query (${JSON.stringify(query)})`);
+  return User.findOne(query).then(parseUser);
+}
+
+export function updateUser(user: CheckpointsServer.User): Promise<CheckpointsServer.User> {
+  return User.findByIdAndUpdate(user._id, user).then(parseUser);
+}
+
+export function setFacebookUser(userId: number, user: CheckpointsServer.FacebookUser): Promise<CheckpointsServer.User> {
+  return User.findByIdAndUpdate(userId, {
+    'accounts.facebook': {
+      $set: user
+    }
+  }).then(parseUser);
 }

@@ -14,7 +14,22 @@ declare namespace CheckpointsServer {
     password?: string;
     friends?: number[];
     friendRequests?: number[];
-    facebook?: string;
+    accounts?: {
+      facebook?: FacebookUser;
+    };
+    picture?: UserPicture;
+  }
+
+  interface UserPicture {
+    width: number;
+    height: number;
+    url: string;
+  }
+
+  interface FacebookUser {
+    id?: string;
+    email: string;
+    name: string;
   }
 
   interface Checkpoint {

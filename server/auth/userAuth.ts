@@ -22,7 +22,6 @@ export function createUser(email, password, name) {
       .then(u => {
         if (u)
           return reject(`Email already exists`);
-
         hash(password).then(hashedPassword => {
           user.createUser({
             name,

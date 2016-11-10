@@ -8,5 +8,8 @@ const schema = {
 };
 
 const accessTokenSchema = new mongoose.Schema(schema);
+
+accessTokenSchema.index({ expires: 1 }, { expireAfterSeconds: 0 });
+
 const AccessToken = mongoose.model('AccessToken', accessTokenSchema);
 export default AccessToken;

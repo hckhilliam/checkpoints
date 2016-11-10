@@ -28,6 +28,9 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      _: "lodash"
+    }),
     new webpack.DefinePlugin({
       "process.env": {
         "FACEBOOK_CALLBACK": JSON.stringify('http://localhost:8080/api/auth/facebook/callback'),

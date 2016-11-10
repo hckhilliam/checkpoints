@@ -1,11 +1,12 @@
 import * as mongoose from 'mongoose';
 
 const schema = new mongoose.Schema({
-  facebook_token: { type: String, required: true, unique: true },
-  access_token: { type: String, required: true },
-  user_id: { type: Number, required: true },
-  facebook_id: { type: Number, required: true },
+  facebookId: { type: String, required: true, unique: true },
+  token: { type: String, required: true },
   expires: { type: Date, required: true }
 });
+
+schema.index({ expires: 1 }, { expireAfterSeconds: 0 });
+
 const FacebookToken = mongoose.model('FacebookToken', schema);
 export default FacebookToken;
