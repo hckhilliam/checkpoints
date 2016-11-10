@@ -31,10 +31,14 @@
       font-weight: 400;
     }
 
-    &-picture img {
-      width: 40px;
-      padding: 8px;
-      border-radius: 50%;
+    &-picture {
+      margin-right: 4px;
+
+      img {
+        width: 40px;
+        padding: 8px;
+        border-radius: 50%;
+      }
     }
   }
 
