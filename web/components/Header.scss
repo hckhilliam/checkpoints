@@ -22,10 +22,20 @@
   }
 
   &-user {
+    display: flex;
     margin-left: auto;
     margin-right: 16px;
-    font-size: 18px;
-    font-weight: 400;
+
+    &-name {
+      font-size: 18px;
+      font-weight: 400;
+    }
+
+    &-picture img {
+      width: 40px;
+      padding: 8px;
+      border-radius: 50%;
+    }
   }
 
   &-logout {

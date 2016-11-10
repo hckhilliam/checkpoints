@@ -14,11 +14,20 @@ interface HeaderProps {
 export class Header extends React.Component<HeaderProps, {}> {
   render() {
     const { user, onLogout } = this.props;
+
+    const pictureUrl = _.get(user, 'picture.url') as string;
+    const picture = pictureUrl ? <img src={pictureUrl} /> : null;
+
     return (
       <div className="Header">
         <div className="Header-content">
           <h1 className="Header-title">Checkpoints</h1>
-          <h2 className="Header-user">{user.name}</h2>
+          <div className="Header-user">
+            <div className="Header-user-picture">
+              {picture}
+            </div>
+            <h2 className="Header-user-name">{user.name}</h2>
+          </div>
           <a className="Header-logout" href="javascript://" onClick={onLogout}>Logout</a>
         </div>
       </div>

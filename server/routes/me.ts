@@ -14,11 +14,8 @@ api.all('*', (req: Request & CheckpointsServer.Request, res: Response, next) => 
 });
 
 api.get('/info', (req: CheckpointsServer.Request, res: Response) => {
-  const { _id, name } = req.customParams.user;
-  res.json({
-    id: _id,
-    name
-  });
+  const user = _.pick(req.customParams.user, '_id', 'name', 'picture');
+  res.json(user);
 });
 
 api.use('/', common);
