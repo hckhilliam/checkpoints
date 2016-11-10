@@ -37,7 +37,7 @@ const RegistrationReduxForm = reduxForm({
   onSubmit: (values: Checkpoints.Registration) => {
     return new Promise((resolve, reject) => {
       register(values)
-        .then((resolve))
+        .then(resolve)
         .catch(err => {
           reject(new SubmissionError({ _error: err }));
         });
