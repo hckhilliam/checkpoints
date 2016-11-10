@@ -1,22 +1,24 @@
 import * as mongoose from 'mongoose';
 const autoIncrement = require('mongoose-auto-increment');
 
+const pictureSchema = new mongoose.Schema({
+  _id: false,
+  width: { type: Number, required: true },
+  height: { type: Number, required: true },
+  url: { type: String, required: true }
+});
+
 const facebookUserSchema = new mongoose.Schema({
   _id: false,
   id: String,
   email: String,
-  name: String
+  name: String,
+  picture: pictureSchema
 });
 
 const accountsSchema = new mongoose.Schema({
   _id: false,
   facebook: facebookUserSchema
-});
-
-const pictureSchema = new mongoose.Schema({
-  width: { type: Number, required: true },
-  height: { type: Number, required: true },
-  url: { type: String, required: true }
 });
 
 const schema = {

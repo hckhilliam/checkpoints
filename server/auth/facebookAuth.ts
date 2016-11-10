@@ -40,9 +40,11 @@ export function useFacebookStrategy() {
           .then(u => {
             if (u) {
               // set facebook user
+              debug('existing facebook user');
               return user.setFacebookUser(u._id, fbUser)
             } else {
               // new user
+              debug('new facebook user');
               return user.createUser({
                 name: fbUser.name,
                 email: fbUser.email,
@@ -52,16 +54,22 @@ export function useFacebookStrategy() {
               });
             }
           })
-          .then(u => {
-            return Promise.all([
-              accesstoken.getToken(u._id, 'web'),
-              facebook.saveFacebookToken(fbUser.id, token.token, token.expires)
-            ]).then(values => {
-              done(null, {
-                user: u,
-                accessToken: values[0].token,
-                facebookToken: values[1].token
-              })
+          .then(u => Promise.all([
+            accesstoken.getToken(u._id, 'web'),
+            facebook.saveFacebookToken(fbUser.id, token.token, token.expires),
+            u
+          ]))
+          .then(values => {
+            // update user picture
+            const user = values[2];
+            const overwrite = !(user.picture && user.picture.url);
+            return facebook.updateFacebookPicture(fbUser.id, overwrite).then(() => values)
+          })
+          .then(values => {
+            done(null, {
+              user: values[2],
+              accessToken: values[0].token,
+              facebookToken: values[1].token
             });
           });
       })

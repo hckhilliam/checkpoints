@@ -3,11 +3,17 @@ const debug = require('debug')('checkpoints:facebookModule');
 const FB = require('fb');
 
 import FacebookToken from '../mongoose/FacebookToken';
+import User from '../mongoose/User';
+import * as user from './user';
 
 interface FBToken {
   token: string;
   expires: Date;
 }
+
+function fb(token: string) {
+  return FB.withAccessToken(token);
+};
 
 export function exchangeFacebookToken(exchangeToken: string): Promise<FBToken> {
   return new Promise((resolve, reject) => {
@@ -29,9 +35,14 @@ export function exchangeFacebookToken(exchangeToken: string): Promise<FBToken> {
   });
 }
 
+export function getFacebookToken(facebookId: string): Promise<FBToken> {
+  return FacebookToken.findOne({ facebookId }).then(token => token as any);
+}
+
 export function saveFacebookToken(facebookId: string, token: string, expires: Date): Promise<FBToken> {
-  return FacebookToken.findOne({ facebookId })
-    .then(res => {
+  return getFacebookToken(facebookId)
+    .then((res: any) => {
+      res = res as Document;
       let deferred;
       if (res) {
         res.set('token', token);
@@ -42,4 +53,33 @@ export function saveFacebookToken(facebookId: string, token: string, expires: Da
       }
       return deferred.then(res => _.pick(res, 'token', 'expires'));
     });
+}
+
+export function updateFacebookPicture(facebookId: string, overwriteUserPicture = true): Promise<CheckpointsServer.UserPicture> {
+  return Promise.all([
+    user.getUserByFacebookId(facebookId),
+    getFacebookToken(facebookId)
+  ]).then(values => {
+    const [user, token] = values;
+    if (!user)
+      throw new Error(`Facebook user (${facebookId}) not found`);
+    if (!token)
+      throw new Error(`Facebook token (${facebookId}) not found`);
+
+    return new Promise((resolve, reject) => {
+      fb(token.token).api('/me/picture', { width: 200, redirect: 0 }, res => {
+        if (res && res.error)
+          return reject(new Error(res.error.code));
+        const picture = _.pick(res.data, 'width', 'height', 'url') as CheckpointsServer.UserPicture;
+        let update = {
+          'accounts.facebook.picture': picture
+        };
+        if (overwriteUserPicture)
+          update['picture'] = picture;
+        User.findByIdAndUpdate(user._id, {
+          $set: update
+        }).then(() => resolve(picture));
+      });
+    });
+  });
 }

@@ -29,10 +29,23 @@ export function updateUser(user: CheckpointsServer.User): Promise<CheckpointsSer
   return User.findByIdAndUpdate(user._id, user).then(parseUser);
 }
 
+export function getUserByFacebookId(facebookId: string): Promise<CheckpointsServer.User> {
+  return getUserByQuery({ 'accounts.facebook.id': facebookId });
+}
+
 export function setFacebookUser(userId: number, user: CheckpointsServer.FacebookUser): Promise<CheckpointsServer.User> {
+  debug('setting facebook user', user);
   return User.findByIdAndUpdate(userId, {
-    'accounts.facebook': {
-      $set: user
+    $set: {
+      'accounts.facebook': user
+    }
+  }).then(parseUser);
+}
+
+export function updatePicture(userId: number, picture: CheckpointsServer.UserPicture) {
+  return User.findByIdAndUpdate(userId, {
+    $set: {
+      picture
     }
   }).then(parseUser);
 }
