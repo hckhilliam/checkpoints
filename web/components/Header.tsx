@@ -4,7 +4,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { clearInfo } from '../actions/user';
-import { logout } from '../lib/login';
+import { logout } from '../lib/auth';
 
 interface HeaderProps {
   user?: Checkpoints.User;

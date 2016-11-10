@@ -3,7 +3,7 @@ import './RegistrationForm.scss';
 import * as React from 'react';
 import { reduxForm, FormProps, SubmissionError } from 'redux-form';
 
-import { register, validate } from '../lib/registration';
+import { register, validate } from '../lib/forms/registration';
 
 import Input, { InputField } from './Input';
 import Button from './Button';

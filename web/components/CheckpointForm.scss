@@ -1,0 +1,11 @@
+@import "../styles/variables";
+
+.CheckpointForm {
+  &-buttons {
+    display: flex;
+  }
+
+  &-button {
+    margin-left: auto;
+  }
+}

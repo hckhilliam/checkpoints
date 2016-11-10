@@ -4,7 +4,7 @@ import * as React from 'react';
 import { reduxForm, FormProps, SubmissionError } from 'redux-form';
 import * as classnames from 'classnames';
 
-import { login, validate } from '../lib/login';
+import { login, validate } from '../lib/forms/login';
 
 import { InputField } from './Input';
 import Button from './Button';

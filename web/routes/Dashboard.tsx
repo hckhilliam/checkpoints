@@ -1,6 +1,6 @@
 import * as React from 'react';
 import CheckpointsMain, { CheckpointsMainContainer } from '../components/CheckpointsMain'
-import CheckpointsForm from '../components/CheckpointsForm';
+import CheckpointForm from '../components/CheckpointForm';
 
 interface Props {
   imageUrl: string;
@@ -11,7 +11,7 @@ interface Props {
 const Dashboard = props => {
   return (
     <div>
-      <CheckpointsForm />
+      <CheckpointForm />
       <CheckpointsMainContainer />
     </div>
   );

@@ -1,7 +1,7 @@
 import * as validator from 'validator';
 
-import * as auth from './api/auth';
-import { setAccessToken } from './auth';
+import * as auth from '../api/auth';
+import { setAccessToken } from '../auth';
 
 export function register(data: Checkpoints.Forms.Registration) {
   return auth.register(data).then(token => {

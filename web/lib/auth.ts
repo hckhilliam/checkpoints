@@ -45,3 +45,8 @@ export function clear() {
   localStorage.removeItem(ACCESS_TOKEN);
   localStorage.removeItem(FACEBOOK_TOKEN);
 }
+
+export function logout() {
+  clear();
+  window.location.href = '/';
+}
