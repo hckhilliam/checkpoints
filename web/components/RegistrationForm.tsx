@@ -9,7 +9,7 @@ import Input, { InputField } from './Input';
 import Button from './Button';
 import FormMessage from './FormMessage';
 
-interface RegistrationFormProps extends FormProps<Checkpoints.Registration, {}> {
+interface RegistrationFormProps extends FormProps<Checkpoints.Forms.Registration, {}> {
   onSubmitSuccess: () => void;
 }
 
@@ -34,7 +34,7 @@ export class RegistrationForm extends React.Component<RegistrationFormProps, {}>
 const RegistrationReduxForm = reduxForm({
   form: 'RegistrationForm',
   validate: validate as any,
-  onSubmit: (values: Checkpoints.Registration) => {
+  onSubmit: (values: Checkpoints.Forms.Registration) => {
     return new Promise((resolve, reject) => {
       register(values)
         .then(resolve)

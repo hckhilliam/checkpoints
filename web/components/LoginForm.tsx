@@ -6,11 +6,11 @@ import * as classnames from 'classnames';
 
 import { login, validate } from '../lib/login';
 
-import Input, { InputField } from './Input';
+import { InputField } from './Input';
 import Button from './Button';
 import FormMessage from './FormMessage';
 
-interface LoginFormProps extends FormProps<Checkpoints.Login, {}> {
+interface LoginFormProps extends FormProps<Checkpoints.Forms.Login, {}> {
   onSubmitSuccess: () => void;
 }
 
@@ -36,7 +36,7 @@ export class LoginForm extends React.Component<LoginFormProps, {}> {
 const LoginReduxForm = reduxForm({
   form: 'LoginForm',
   validate: validate as any,
-  onSubmit: (values: Checkpoints.Login) => {
+  onSubmit: (values: Checkpoints.Forms.Login) => {
     return new Promise((resolve, reject) => {
       return login(values)
         .then(resolve)

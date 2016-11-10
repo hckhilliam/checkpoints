@@ -3,7 +3,7 @@ import * as validator from 'validator';
 import * as auth from './api/auth';
 import { setAccessToken } from './auth';
 
-export function register(data: Checkpoints.Registration) {
+export function register(data: Checkpoints.Forms.Registration) {
   return auth.register(data).then(token => {
     setAccessToken(token);
     return token;
@@ -12,7 +12,7 @@ export function register(data: Checkpoints.Registration) {
   });
 }
 
-export function validate(data: Checkpoints.Registration) {
+export function validate(data: Checkpoints.Forms.Registration) {
   const errors = {};
 
   if (!data.name) {

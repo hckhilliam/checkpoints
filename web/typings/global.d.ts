@@ -34,17 +34,6 @@ declare namespace Checkpoints {
     isCompleted: boolean;
   }
 
-  interface Registration {
-    name: string;
-    email: string;
-    password: string;
-  }
-
-  interface Login {
-    email: string;
-    password: string;
-  }
-
   interface Response {
     response: HttpResponse;
     status: number;
@@ -56,5 +45,23 @@ declare namespace Checkpoints {
     width: number;
     height: number;
     url: string;
+  }
+
+  namespace Forms {
+    interface Registration {
+      name: string;
+      email: string;
+      password: string;
+    }
+
+    interface Login {
+      email: string;
+      password: string;
+    }
+
+    interface Checkpoint {
+      title: string;
+      description: string;
+    }
   }
 }

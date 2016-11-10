@@ -1,6 +1,6 @@
 import { get, post } from './fetch';
 
-export function register(data: Checkpoints.Registration) {
+export function register(data: Checkpoints.Forms.Registration) {
   const body = Object.assign({
     client_id: process.env['CLIENT_ID']
   }, data);
@@ -11,7 +11,7 @@ export function register(data: Checkpoints.Registration) {
     });
 }
 
-export function login(data: Checkpoints.Login) {
+export function login(data: Checkpoints.Forms.Login) {
   const body = {
     grant_type: 'password',
     client_id: process.env['CLIENT_ID'],

@@ -3,7 +3,7 @@ import * as validator from 'validator';
 import * as auth from './api/auth';
 import { setAccessToken, clear } from './auth';
 
-export function login(data: Checkpoints.Login) {
+export function login(data: Checkpoints.Forms.Login) {
   return auth.login(data).then(token => {
     setAccessToken(token);
     return token;
@@ -17,7 +17,7 @@ export function logout() {
   });
 }
 
-export function validate(data: Checkpoints.Login) {
+export function validate(data: Checkpoints.Forms.Login) {
   const errors = {};
 
   if (!data.email) {

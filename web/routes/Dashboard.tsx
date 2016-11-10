@@ -1,17 +1,17 @@
 import * as React from 'react';
-import {Profile} from '../components/Profile';
-import CheckpointsMain, {CheckpointsMainContainer} from '../components/CheckpointsMain'
+import CheckpointsMain, { CheckpointsMainContainer } from '../components/CheckpointsMain'
+import CheckpointsForm from '../components/CheckpointsForm';
 
 interface Props {
   imageUrl: string;
   name: string;
-  checkpoints: [Checkpoints.Checkpoint]
+  checkpoints: Checkpoints.Checkpoint[]
 }
 
 const Dashboard = props => {
   return (
     <div>
-      <Profile imageUrl="put image URL here" name="insert profile name here" />
+      <CheckpointsForm />
       <CheckpointsMainContainer />
     </div>
   );
