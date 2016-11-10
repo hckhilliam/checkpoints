@@ -67,7 +67,7 @@ export function updateFacebookPicture(facebookId: string, overwriteUserPicture =
       throw new Error(`Facebook token (${facebookId}) not found`);
 
     return new Promise((resolve, reject) => {
-      fb(token.token).api('/me/picture', { width: 200, redirect: 0 }, res => {
+      fb(token.token).api('/me/picture', { width: 200, height: 200, redirect: 0 }, res => {
         if (res && res.error)
           return reject(new Error(res.error.code));
         const picture = _.pick(res.data, 'width', 'height', 'url') as CheckpointsServer.UserPicture;
