@@ -13,6 +13,7 @@ import { addCheckpoint, validate } from '../lib/forms/checkpoint';
 import { getCheckpoints } from '../actions/checkpoints';
 
 interface Props extends FormProps<Checkpoints.Forms.Checkpoint, {}> {
+  className?: string;
   onSubmitSuccess?: () => void;
 }
 
@@ -31,11 +32,13 @@ export class CheckpointForm extends React.Component<Props, {}> {
   }
 
   render() {
-    const { handleSubmit, pristine, invalid, submitting, error } = this.props;
+    const { className, handleSubmit, pristine, invalid, submitting, error } = this.props;
     const disabled = pristine || invalid || submitting;
 
+    const cssClass = classnames('CheckpointForm', className);
+
     return (
-      <form className="CheckpointForm" onSubmit={handleSubmit(this.handleSubmit)} autoComplete="off">
+      <form className={className} onSubmit={handleSubmit(this.handleSubmit)} autoComplete="off">
         <InputField label="Title" name="title" />
         <TextAreaField label="Description" name="description" />
         <div className="CheckpointForm-buttons">

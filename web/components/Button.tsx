@@ -16,7 +16,7 @@ interface ButtonState {
   hover?: boolean;
 }
 
-export default class Button extends React.Component<ButtonProps, ButtonState> {
+export class Button extends React.Component<ButtonProps, ButtonState> {
   static defaultProps: ButtonProps = {
     type: 'button',
     raised: false,
@@ -55,8 +55,9 @@ export default class Button extends React.Component<ButtonProps, ButtonState> {
     return (
       <button className={cssClass} {...other} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
         {children}
-        <InkRipple disabled={this.props.disabled} />
       </button>
     );
   }
 }
+
+export default InkRipple(Button);

@@ -18,6 +18,7 @@ interface Ripple {
   id: number;
   x: number;
   y: number;
+  anchor: string;
 }
 
 const RippleElement = ({ ripple }: { ripple: Ripple }) => {
@@ -25,15 +26,16 @@ const RippleElement = ({ ripple }: { ripple: Ripple }) => {
     top: ripple.y,
     left: ripple.x
   };
+  const cssClass = classnames('RippleElement', `RippleElement--${ripple.anchor}`);
   return (
-    <div className="RippleElement" style={style} />
+    <div className={cssClass} style={style} />
   )
 }
 
-const enterDuration = 300;
+const enterDuration = 400;
 const leaveDuration = 200;
 
-export default class InkRipple extends React.Component<InkRippleProps, InkRippleState> {
+export class InkRippleElement extends React.Component<InkRippleProps, InkRippleState> {
   static defaultProps: InkRippleProps = {
     disabled: false
   }
@@ -50,7 +52,7 @@ export default class InkRipple extends React.Component<InkRippleProps, InkRipple
   node: HTMLDivElement;
   counter = 0;
 
-  startRipple(x: number, y: number) {
+  startRipple(x: number, y: number, anchor: string = 'center') {
     const counter = ++this.counter;
     window.setTimeout(() => {
       this.setState({
@@ -61,7 +63,8 @@ export default class InkRipple extends React.Component<InkRippleProps, InkRipple
     const ripple: Ripple = {
       id: counter,
       x,
-      y
+      y,
+      anchor
     };
     const ripples = update(this.state.ripples, {
       $push: [ripple]
@@ -73,14 +76,20 @@ export default class InkRipple extends React.Component<InkRippleProps, InkRipple
     if (this.props.disabled)
       return;
 
-    let x = 0, y = 0;
     if (this.node) {
+      let x = 0, y = 0;
       const rect = this.node.getBoundingClientRect();
-      const { top, left } = rect;
+      const { top, left, width } = rect;
       x = event.clientX - left;
       y = event.clientY - top;
+
+      const anchor = x < width / 3
+        ? 'left'
+        : x > width / 3 * 2
+          ? 'right'
+          : 'center';
+      this.startRipple(x, y, anchor);
     }
-    this.startRipple(x, y);
   }
 
   handleRef = (node: HTMLDivElement) => {
@@ -136,3 +145,20 @@ export default class InkRipple extends React.Component<InkRippleProps, InkRipple
     );
   }
 }
+
+/**
+ * Adds a ripple effect to the component.
+ * Position must be absolute or relative, and must render props.children.
+ */
+export function InkRipple<P>(WrappedComponent: React.ComponentClass<P>): React.ComponentClass<P> {
+  return class extends React.Component<P, {}> {
+    render() {
+      const { children } = this.props;
+      const other = _.omit(this.props, 'children');
+
+      return <WrappedComponent {...other}>{children}<InkRippleElement disabled={this.props['disabled']} /></WrappedComponent>
+    }
+  } as any;
+}
+
+export default InkRipple;

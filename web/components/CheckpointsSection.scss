@@ -1,0 +1,25 @@
+@import "../styles/variables";
+
+.CheckpointsSection {
+  padding: 32px 30%; // temp
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .Panel {
+    margin: 8px;
+  }
+
+  &-form {
+
+  }
+
+  &-list {
+    padding: 0;
+
+    h1 {
+      padding: 16px;
+    }
+  }
+}

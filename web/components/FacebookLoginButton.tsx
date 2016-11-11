@@ -7,14 +7,16 @@ import InkRipple from './InkRipple';
 
 const logo = require('../assets/facebook-login.png');
 
-const FacebookLoginButton = (props: React.HTMLAttributes) => {
-  const cssClass = classnames('FacebookLoginButton', props.className);
+class FacebookLoginButton extends React.Component<React.HTMLAttributes, {}> {
+  render() {
+    const cssClass = classnames('FacebookLoginButton', this.props.className);
 
-  return (
-    <a href="/api/auth/facebook" {...this.props} className={cssClass}>
-      <img src={logo} />
-      <InkRipple />
-    </a>
-  );
+    return (
+      <a href="/api/auth/facebook" {...this.props} className={cssClass}>
+        <img src={logo} />
+        {this.props.children}
+      </a>
+    );
+  }
 };
-export default FacebookLoginButton;
+export default InkRipple(FacebookLoginButton);
