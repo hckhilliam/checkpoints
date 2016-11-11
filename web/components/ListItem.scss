@@ -1,5 +1,21 @@
+@import "../styles/variables";
+
 .ListItem {
   position: relative;
   padding: 8px;
   line-height: 32px;
+  background-color: $md-grey-50;
+  @include shadow;
+  @include text-ellipsis;
+}
+
+.ExpandableListItem {
+  user-select: none;
+  margin: 0 32px;
+  transition: margin 0.3s ease;
+
+  &--selected {
+    margin: 16px 0;
+    padding: 12px;
+  }
 }

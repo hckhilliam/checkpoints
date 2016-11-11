@@ -31,6 +31,7 @@ declare namespace Checkpoints {
     comments: string[];
     pictures: string[];
     isCompleted: boolean;
+    loaded: boolean;
   }
 
   interface Response {

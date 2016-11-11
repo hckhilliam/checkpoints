@@ -1,1 +1,11 @@
 @import "../../node_modules/material-colors/dist/colors";
+
+@mixin shadow {
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12); // Angular Material Whiteframe
+}
+
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

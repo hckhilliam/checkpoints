@@ -50,9 +50,13 @@ export function getCheckpoints() {
 }
 
 export function getCheckpoint(checkpointId: number) {
-  return dispatch => {
-    return checkpoints.getCheckpoint(checkpointId)
-      .then(checkpoint => dispatch(updateCheckpoint(checkpoint)));
+  return (dispatch, getState: () => Checkpoints.State) => {
+    const state = getState();
+    const index = state.checkpoints.findIndex(c => c.id == checkpointId);
+
+    if (index < 0 || !state.checkpoints[index].loaded)
+      return checkpoints.getCheckpoint(checkpointId)
+        .then(checkpoint => dispatch(updateCheckpoint(checkpoint)));
   }
 }
 

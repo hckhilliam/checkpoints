@@ -12,7 +12,13 @@ export default function reducer(state: Checkpoints.Checkpoint[] = [], action: Re
       return (action as CheckpointsAction).checkpoints;
     case UPDATE_CHECKPOINT:
       const checkpoint = (action as CheckpointAction).checkpoint;
-      return state.filter(c => c.id != checkpoint.id).concat([checkpoint]);
+      const index = _.findIndex(state, c => c.id == checkpoint.id);
+      if (index < 0) {
+        return state.concat(checkpoint);
+      } else {
+        state[index] = checkpoint;
+        return [].concat(state);
+      }
     case REMOVE_CHECKPOINT:
       const id = (action as CheckpointAction).checkpoint.id;
       return state.filter(c => c.id != id);

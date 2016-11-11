@@ -3,9 +3,10 @@ import './List.scss';
 import * as React from 'react';
 import * as classnames from 'classnames';
 
-import { ListItem as LI, SelectableListItem as SLI } from './ListItem';
+import { ListItem as LI, SelectableListItem as SLI, ExpandableListItem as ELI } from './ListItem';
 export const ListItem = LI;
 export const SelectableListItem = SLI;
+export const ExpandableListItem = ELI;
 
 export class List extends React.Component<React.HTMLAttributes, {}> {
   render() {
@@ -16,7 +17,7 @@ export class List extends React.Component<React.HTMLAttributes, {}> {
 
     return (
       <ul className={cssClass} {...other}>
-        {React.Children.map(children, child => <li className="List-item">{child}</li>)}
+        {children}
       </ul>
     );
   }

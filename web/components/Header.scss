@@ -5,6 +5,7 @@
   width: 100%;
   background-color: $md-green-500;
   box-shadow: inset 0px 4px 8px -3px rgba(17, 17, 17, .16);
+  z-index: 1000;
 
   &-content {
     display: flex;

@@ -5,11 +5,15 @@
   margin: 0;
   padding: 0;
 
-  .List-item {
+  .ListItem {
     border-bottom: 1px solid $md-dark-text-dividers;
 
     &:first-child {
       border-top: 1px solid $md-dark-text-dividers;
     }
   }
+}
+
+.ExpandableList {
+
 }

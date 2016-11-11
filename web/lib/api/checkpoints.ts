@@ -4,11 +4,16 @@ import { getUrl } from './utils';
 function parseCheckpoint(data): Checkpoints.Checkpoint {
   data.id = data._id;
   delete data._id;
+  data.loaded = true;
   return data as Checkpoints.Checkpoint;
 }
 
 function parseCheckpoints(data): Checkpoints.Checkpoint[] {
-  return data.map(parseCheckpoint);
+  return data.map(d => {
+    d = parseCheckpoint(d);
+    d.loaded = false;
+    return d;
+  });
 }
 
 export function getCheckpoints(userId?: number): Promise<Checkpoints.Checkpoint[]> {
