@@ -9,6 +9,7 @@ $iconSize: 64px;
   .Event-icon {
     width: $iconSize;
     height: auto;
+    position: absolute;
   }
   .Event-details {
     margin-left: $iconSize;
