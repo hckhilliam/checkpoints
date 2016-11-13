@@ -26,7 +26,7 @@ export function getFilteredEvents(search: eventCriteria): Promise<Checkpoints.Ev
 
 export function getFBEventsByLocation(search: eventCriteria): Promise<Checkpoints.Event[]> {
   return getAppFacebookToken().then(accessToken => {
-    var eventQuery = new EventSearch({
+    const eventQuery = new EventSearch({
       lng: search.lng,
       lat: search.lat,
       distance: search.distance,
