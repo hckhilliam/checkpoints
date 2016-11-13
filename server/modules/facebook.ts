@@ -15,6 +15,25 @@ function fb(token: string) {
   return FB.withAccessToken(token);
 };
 
+export function getAppFacebookToken(): Promise<FBToken> {
+  return new Promise((resolve, reject) => {
+    FB.api('oauth/access_token', {
+      client_id: process.env['FACEBOOK_APP_ID'],
+      client_secret: process.env['FACEBOOK_APP_SECRET'],
+      grant_type: 'client_credentials'
+    }, res => {
+      if (!res || res.error) {
+        debug('facebook error', !res ? 'error' : res.error);
+        return reject(new Error(JSON.stringify(!res ? 'error' : res.error.message)));
+      }
+      resolve({
+        token: res.access_token,
+        expires: Date.now() + res.expires * 1000
+      });
+    });
+  });
+}
+
 export function exchangeFacebookToken(exchangeToken: string): Promise<FBToken> {
   return new Promise((resolve, reject) => {
     FB.api('oauth/access_token', {

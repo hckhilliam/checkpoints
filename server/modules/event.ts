@@ -1,11 +1,12 @@
 const EventSearch = require('facebook-events-by-location-core');
 
+import { getAppFacebookToken } from './facebook';
+
 export interface eventCriteria {
   lng: number;
   lat: number;
   distance: number;
   filter: string;
-  accessTokens: {[id: string] : string};
 }
 
 export function getFilteredEvents(search: eventCriteria): Promise<Checkpoints.Event[]> {
@@ -24,18 +25,22 @@ export function getFilteredEvents(search: eventCriteria): Promise<Checkpoints.Ev
 }
 
 export function getFBEventsByLocation(search: eventCriteria): Promise<Checkpoints.Event[]> {
-  var eventQuery = new EventSearch({ 
-    lng: search.lng,
-    lat: search.lat,
-    distance: search.distance,
-    accessToken: search.accessTokens["facebook"]
+  return getAppFacebookToken().then(accessToken => {
+    var eventQuery = new EventSearch({
+      lng: search.lng,
+      lat: search.lat,
+      distance: search.distance,
+      accessToken: accessToken.token 
+    });
+    return eventQuery.search().then((events) => {
+      return events.events.map(normalizeFacebookEvent) ;
+    });
   });
-  return eventQuery.search().then((events) => {
-    return events.events.map(normalizeFacebookEvent) ;
-  });
+  
 }
 
 function normalizeFacebookEvent(fbEvent): Checkpoints.Event {
   fbEvent.eventSource = "Facebook";
+  fbEvent.pictureURL = fbEvent.profilePicture;
   return fbEvent;
 }

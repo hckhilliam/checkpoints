@@ -1,25 +1,33 @@
+import './Event.scss'
+
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { getEvents } from '../actions/events';
+import * as dateformat from 'dateformat';
 
+interface Props {
+  event: Checkpoints.Event; 
+}
 
-export default class Event extends React.Component<{}, {}> {
-
-  componentDidMount() {
-    // console.log('componentDidMount on events was run');
-    // getEvents();
+export const Event = (props: Props) => {
+  const event = props.event;
+  let dateDisplay;
+  if (event.startTime.toDateString() === event.endTime.toDateString()) { // checks if the date is the same
+    dateDisplay = dateformat(event.startTime, 'mmmm dS h:MM') + ' - ' + dateformat(event.endTime, 'h:MM');
+  } else {
+    dateDisplay = dateformat(event.startTime, 'mmmm dS h:MM') + ' - ' + dateformat(event.endTime, 'mmmm dS h:MM');
   }
-
-  tryFunction = () => {
-    console.log("tryFunction was run");
-    getEvents();
-  }
-
-  render() {
-    return (
-      <div>
-        <button onClick={this.tryFunction}>events</button>
+  return (
+    <div className="Event">
+      {/* <p>{event.description}</p>
+      <p>{event.distance}?</p>
+      <p>{event.eventSource}</p>*/ }
+      <img className="Event-icon" src={event.pictureURL}/>
+      <div className="Event-details">
+        <div className="Event-name" >{event.name}</div>
+        <div className="Event-date">{ dateDisplay }</div>
       </div>
-    );
-  };
-}  
+      <div style={{clear: 'both'}} />
+    </div>
+  );
+}
+
+ export default Event;

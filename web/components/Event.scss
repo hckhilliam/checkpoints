@@ -1,0 +1,22 @@
+$iconSize: 64px; 
+
+.Event {
+  height: $iconSize;
+
+  // & > * {
+  //   float: left;
+  // }
+  .Event-icon {
+    width: $iconSize;
+    height: auto;
+  }
+  .Event-details {
+    margin-left: $iconSize;
+    // overflow: hidden;
+    .Event-name, .Event-date{
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}

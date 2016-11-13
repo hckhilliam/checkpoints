@@ -1,17 +1,26 @@
-import {post} from '../lib/api/fetch' 
-import {getFacebookToken} from '../lib/auth'
+import {post} from '../lib/api/fetch'; 
+import {Action} from 'redux';
+import {getFacebookToken} from '../lib/auth';
+import * as events from '../lib/api/events';
 
 export const UPDATE_EVENTS = 'UPDATE_EVENTS'; 
 
-export function getEvents() {
-  // return dispatch => {
-    let body = {
-      "lat": 40.710803,
-      "lng": -73.964040,
-      "FacebookToken": getFacebookToken()
-    }
-    return post('/api/events', body).then((res) => {
-      console.log(res);
+
+export interface EventsAction extends Action {
+  events: Checkpoints.Event[];
+} 
+
+export function getEvents(search: Checkpoints.eventSearch) {
+  return dispatch => {
+    return events.getEvents(search).then(events => {
+      dispatch(updateEvents(events));
     });
-  // }
+  }
+}
+
+function updateEvents (events: Checkpoints.Event[]) {
+  return {
+    type: UPDATE_EVENTS,
+    events
+  }
 }

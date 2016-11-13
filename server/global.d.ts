@@ -6,5 +6,6 @@ declare namespace Checkpoints {
     endTime: Date;
     distance?: number;
     eventSource: string;
+    pictureURL: string;
   }
 }

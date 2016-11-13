@@ -14,6 +14,7 @@ import Router from './routes/Router';
 
 import checkpoints from './reducers/checkpointsReducer';
 import user from './reducers/userReducer';
+import events from './reducers/eventsReducer';
 
 import { initializeAuth } from './lib/auth';
 
@@ -23,7 +24,8 @@ const reducer = combineReducers({
   checkpoints,
   user,
   routing,
-  form
+  form,
+  events
 });
 
 const reduxRouterMiddleware = routerMiddleware(browserHistory as any);

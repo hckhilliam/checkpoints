@@ -6,6 +6,23 @@ declare module "fb" {
 type HttpResponse = Response;
 
 declare namespace Checkpoints {
+  interface Event {
+    name: string;
+    description: string;
+    startTime: Date;
+    endTime: Date;
+    distance?: number;
+    eventSource: string;
+    pictureURL: string;
+  }
+
+  interface eventSearch {
+    lng: number;
+    lat: number;
+    distance: number;
+    filter: string;
+  }
+
   interface State {
     checkpoints?: Checkpoint[];
     user?: User;
