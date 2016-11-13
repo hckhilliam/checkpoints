@@ -1,34 +1,29 @@
 import './RegistrationForm.scss';
 
 import * as React from 'react';
-import { reduxForm, FormProps, SubmissionError } from 'redux-form';
+import { reduxForm, SubmissionError } from 'redux-form';
 
 import { register, validate } from '../lib/forms/registration';
 
-import LinearProgress from './LinearProgress';
+import Form from './Form';
 import Input, { InputField } from './Input';
 import Button from './Button';
-import FormMessage from './FormMessage';
+import FormButtons from './FormButtons';
 
-interface RegistrationFormProps extends FormProps<Checkpoints.Forms.Registration, {}> {
-  onSubmitSuccess: () => void;
-}
-
-export class RegistrationForm extends React.Component<RegistrationFormProps, {}> {
+export class RegistrationForm extends React.Component<React.HTMLAttributes, {}> {
   render() {
-    const { handleSubmit, pristine, invalid, submitting, error } = this.props;
-    const disabled = pristine || invalid || submitting;
+    const { submitting } = this.props;
     return (
-      <form className="RegistrationForm" onSubmit={handleSubmit} autoComplete="off">
+      <Form className="RegistrationForm" {...this.props}>
         <InputField type="text" label="Name" name="name" />
         <InputField type="text" label="Email" name="email" />
         <InputField type="password" label="Password" name="password" />
-        <Button className="RegistrationForm-button" type="submit" primary disabled={disabled}>
-          {submitting ? 'Creating account' : 'Register'}
-        </Button>
-        <FormMessage type="Error">{(!submitting && error) ? error : null}</FormMessage>
-        <LinearProgress enabled={submitting} />
-      </form>
+        <FormButtons align="center">
+          <Button className="RegistrationForm-button" type="submit" primary>
+            {submitting ? 'Creating account' : 'Register'}
+          </Button>
+        </FormButtons>
+      </Form>
     );
   }
 }

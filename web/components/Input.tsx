@@ -106,7 +106,7 @@ const renderInputField = (props: InputProps & WrappedFieldProps) => {
   const { touched, error } = props.meta;
   const errorText = touched && error as string;
 
-  return <Input {...props.input} {...inputProps} errorText={errorText} />;
+  return <Input {...props.input} {...inputProps} disabled={props.disabled} errorText={errorText} />;
 }
 
 export const InputField = (props: InputProps) => <Field component={renderInputField} {...props} />;
@@ -117,7 +117,7 @@ const renderTextAreaField = (props: InputProps & WrappedFieldProps) => {
   const { touched, error } = props.meta;
   const errorText = touched && error as string;
 
-  return <TextArea {...props.input} {...inputProps} errorText={errorText} />;
+  return <TextArea {...props.input} {...inputProps} disabled={props.disabled} errorText={errorText} />;
 }
 
 export const TextAreaField = (props: InputProps) => <Field component={renderTextAreaField} {...props} />;

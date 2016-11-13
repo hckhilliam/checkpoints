@@ -1,78 +1,46 @@
 import './CheckpointForm.scss';
 
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { reduxForm, FormProps, SubmissionError } from 'redux-form';
+import { reduxForm, SubmissionError, reset } from 'redux-form';
 import * as classnames from 'classnames';
 
-import LinearProgress from './LinearProgress';
+import Form from './Form';
 import { InputField, TextAreaField } from './Input';
 import Button from './Button';
-import FormMessage from './FormMessage';
+import FormButtons from './FormButtons';
 
 import { addCheckpoint, validate } from '../lib/forms/checkpoint';
 import { getCheckpoints } from '../actions/checkpoints';
 
-interface Props extends FormProps<Checkpoints.Forms.Checkpoint, {}> {
-  className?: string;
-  onSubmitSuccess?: () => void;
-}
-
-export class CheckpointForm extends React.Component<Props, {}> {
-  static defaultProps: Props = {
-    onSubmitSuccess: () => {}
-  }
-
-  handleSubmit = (values: Checkpoints.Forms.Checkpoint) => {
-    return addCheckpoint(values)
-      .then(() => {
-        this.props.reset();
-        this.props.onSubmitSuccess();
-      })
-      .catch(err => new SubmissionError({ _error: err }));
-  }
-
+export class CheckpointForm extends React.Component<React.HTMLAttributes, {}> {
   render() {
-    const { className, handleSubmit, pristine, invalid, submitting, error } = this.props;
-    const disabled = pristine || invalid || submitting;
-
+    const { className, submitting } = this.props;
+    const other = _.omit(this.props, className);
+    const buttonText = submitting ? 'Creating' : 'Create';
     const cssClass = classnames('CheckpointForm', className);
-
     return (
-      <form className={cssClass} onSubmit={handleSubmit(this.handleSubmit)} autoComplete="off">
+      <Form className={cssClass} {...other}>
         <InputField label="Title" name="title" />
         <TextAreaField label="Description" name="description" />
-        <div className="CheckpointForm-buttons">
-          <Button className="CheckpointForm-button" type="submit" primary disabled={disabled}>
-            {submitting ? 'Creating' : 'Create'}
-          </Button>
-        </div>
-        <FormMessage type="Error">{(!submitting && error) ? error : null}</FormMessage>
-        <LinearProgress enabled={submitting} />
-      </form>
-    )
+        <FormButtons>
+          <Button type="submit" primary>{submitting ? 'Creating' : 'Create'}</Button>
+        </FormButtons>
+      </Form>
+    );
   }
 }
 
 const CheckpointsReduxForm = reduxForm({
   form: 'CheckpointForm',
-  validate: validate as any
+  validate: validate as any,
+  onSubmit: (values: Checkpoints.Forms.Checkpoint, dispatch) => {
+    return addCheckpoint(values)
+      .then(() => {
+        dispatch(reset('CheckpointForm'));
+        dispatch(getCheckpoints());
+      })
+      .catch(err => new SubmissionError({ _error: err }));
+  }
 })(CheckpointForm);
 
-const mapStateToProps = state => {
-  return {};
-};
-
-const mapDispatchToProps = (dispatch, ownProps: Props) => {
-  return {
-    onSubmitSuccess: () => {
-      dispatch(getCheckpoints());
-      const { onSubmitSuccess } = ownProps;
-      onSubmitSuccess && onSubmitSuccess();
-    }
-  }
-}
-
-const CheckpointsFormContainer = connect(mapStateToProps, mapDispatchToProps)(CheckpointsReduxForm);
-
-export default CheckpointsFormContainer;
+export default CheckpointsReduxForm;

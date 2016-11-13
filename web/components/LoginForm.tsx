@@ -1,36 +1,28 @@
 import './LoginForm.scss';
 
 import * as React from 'react';
-import { reduxForm, FormProps, SubmissionError } from 'redux-form';
-import * as classnames from 'classnames';
+import { reduxForm, SubmissionError } from 'redux-form';
 
 import { login, validate } from '../lib/forms/login';
 
-import LinearProgress from './LinearProgress';
+import Form from './Form';
 import { InputField } from './Input';
 import Button from './Button';
-import FormMessage from './FormMessage';
+import FormButtons from './FormButtons';
 
-interface LoginFormProps extends FormProps<Checkpoints.Forms.Login, {}> {
-  onSubmitSuccess: () => void;
-}
-
-export class LoginForm extends React.Component<LoginFormProps, {}> {
+export class LoginForm extends React.Component<React.HTMLAttributes, {}> {
   render() {
-    const { handleSubmit, pristine, invalid, submitting, error } = this.props;
-    const disabled = pristine || invalid || submitting;
-    const cssClass = classnames('LoginForm');
-
+    const { submitting } = this.props;
     return (
-      <form className={cssClass} onSubmit={handleSubmit} autoComplete="off">
+      <Form className="LoginForm" {...this.props}>
         <InputField type="text" label="Email" name="email" />
         <InputField type="password" label="Password" name="password" />
-        <Button className="LoginForm-button" type="submit" primary disabled={disabled}>
-          {submitting ? 'Logging in' : 'Login'}
-        </Button>
-        <FormMessage type="Error">{(!submitting && error) ? error : null}</FormMessage>
-        <LinearProgress enabled={submitting} />
-      </form>
+        <FormButtons align="center">
+          <Button className="LoginForm-button" type="submit" primary>
+            {submitting ? 'Logging in' : 'Login'}
+          </Button>
+        </FormButtons>
+      </Form>
     );
   }
 }

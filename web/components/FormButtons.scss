@@ -1,0 +1,11 @@
+.FormButtons {
+  display: flex;
+
+  &-center .Button {
+    width: 100%;
+  }
+
+  &-right .Button:first-child {
+    margin-left: auto;
+  }
+}
