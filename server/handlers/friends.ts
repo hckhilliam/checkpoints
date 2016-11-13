@@ -1,4 +1,4 @@
-const debug = require('debug')('checkpoints:checkpointsHandler');
+const debug = require('debug')('checkpoints:friendsHandler');
 
 import { Request, Response } from 'express';
 
@@ -24,8 +24,8 @@ export function getFriendRequests(req: Request, res: Response, next: any) {
 }
 
 export function respondToRequest(req: Request, res: Response, next: any) {
-  debug(`accept param is ${req.params['accept']}`);
-  if (req.params['accept']) {
+  debug(`accept param is ${req.query['accept']}`);
+  if (req.query['accept']) {
     friend.acceptFriend(getUserId(req), Number(req.params['_id']))
       .then(() => res.end())
       .catch(next);

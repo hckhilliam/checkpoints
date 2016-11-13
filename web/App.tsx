@@ -15,6 +15,7 @@ import Router from './routes/Router';
 import checkpoints from './reducers/checkpointsReducer';
 import user from './reducers/userReducer';
 import events from './reducers/eventsReducer';
+import friends from './reducers/friendsReducer';
 
 import { initializeAuth } from './lib/auth';
 
@@ -23,6 +24,7 @@ initializeAuth();
 const reducer = combineReducers({
   checkpoints,
   user,
+  friends,
   routing,
   form,
   events

@@ -34,6 +34,11 @@ declare namespace Checkpoints {
     picture?: Picture;
   }
 
+  interface Friend {
+    id: number;
+    name: string;
+  }
+
   interface FacebookPicture {
     width: number;
     height: number;

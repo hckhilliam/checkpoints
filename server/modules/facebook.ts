@@ -102,3 +102,32 @@ export function updateFacebookPicture(facebookId: string, overwriteUserPicture =
     });
   });
 }
+
+// export function getFacebookFriends(facebookId: string) {
+//   return Promise.all([
+//     user.getUserByFacebookId(facebookId),
+//     getFacebookToken(facebookId)
+//   ]).then(values => {
+//     const [user, token] = values;
+//     if (!user)
+//       throw new Error(`Facebook user (${facebookId}) not found`);
+//     if (!token)
+//       throw new Error(`Facebook token (${facebookId}) not found`);
+
+//     return new Promise((resolve, reject) => {
+//       fb(token.token).api('/me/friends', res => {
+//         if (res && res.error)
+//           return reject(new Error(res.error.code));
+//         const picture = _.pick(res.data, 'width', 'height', 'url') as CheckpointsServer.UserPicture;
+//         let update = {
+//           'accounts.facebook.picture': picture
+//         };
+//         if (overwriteUserPicture)
+//           update['picture'] = picture;
+//         User.findByIdAndUpdate(user._id, {
+//           $set: update
+//         }).then(() => resolve(picture));
+//       });
+//     });
+//   });
+// }
