@@ -33,9 +33,28 @@ export class CheckpointsSection extends React.Component<Props, State> {
     this.props.onComponentDidMount();
   }
 
+  componentWillReceiveProps(nextProps: Props) {
+    const checkpoints = this.props.checkpoints;
+    const newCheckpoints = nextProps.checkpoints;
+    const { checkpoint } = this.state;
+
+    // Unselect if selected checkpoint unloaded
+    if (checkpoint && checkpoints != newCheckpoints) {
+      const c1 = checkpoints.find(c => c.id == checkpoint.id);
+      const c2 = newCheckpoints.find(c => c.id == checkpoint.id);
+      if (!c2 || (c1.loaded && !c2.loaded))
+        this.setState({ checkpoint: {} as Checkpoints.Checkpoint });
+    }
+  }
+
   handleSelectCheckpoint(checkpoint: Checkpoints.Checkpoint) {
-    this.setState({ checkpoint });
-    this.props.onSelectCheckpoint(checkpoint);
+    const c = this.state.checkpoint;
+    if (c && c.id == checkpoint.id) {
+      this.setState({ checkpoint: {} as Checkpoints.Checkpoint });
+    } else {
+      this.setState({ checkpoint });
+      this.props.onSelectCheckpoint(checkpoint);
+    }
   }
 
   render() {
@@ -54,10 +73,12 @@ export class CheckpointsSection extends React.Component<Props, State> {
         <List>
           {
             checkpoints.filter(c => !c.isCompleted).map(c => {
+              const selected = c.id == checkpoint.id;
               return (
                 <ExpandableListItem
                   key={c.id}
-                  selected={c.id == checkpoint.id}
+                  selected={selected}
+                  loading={selected && !c.loaded}
                   onClick={() => this.handleSelectCheckpoint(c)}
                 >
                   {c.title} — {c.description}

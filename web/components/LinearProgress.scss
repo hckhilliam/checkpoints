@@ -1,0 +1,54 @@
+@import "../styles/variables";
+
+@keyframes linear-progress {
+  0% {
+    width: 20%;
+    left: -20%;
+  }
+
+  100% {
+    width: 20%;
+    left: 100%;
+  }
+}
+
+.LinearProgress {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background-color: $md-green-200;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  overflow: hidden;
+
+  &--enabled {
+    opacity: 1;
+    transition: none;
+  }
+
+  &-progress {
+    position: absolute;
+    width: 0;
+    height: 100%;
+    background-color: $md-green-500;
+
+    animation-name: linear-progress;
+    animation-duration: 2.25s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+
+    &:first-child {
+      animation-delay: 0.75s;
+    }
+
+    &:last-child {
+      animation-delay: 1.5s;
+    }
+  }
+}
+
+.LinearProgress.WrappedLinearProgress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}

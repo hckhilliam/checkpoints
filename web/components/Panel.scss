@@ -1,6 +1,7 @@
 @import "../styles/variables";
 
 .Panel {
+  position: relative;
   padding: 16px;
   background-color: $md-grey-50;
   @include shadow;

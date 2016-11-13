@@ -5,6 +5,7 @@ import { reduxForm, FormProps, SubmissionError } from 'redux-form';
 
 import { register, validate } from '../lib/forms/registration';
 
+import LinearProgress from './LinearProgress';
 import Input, { InputField } from './Input';
 import Button from './Button';
 import FormMessage from './FormMessage';
@@ -26,6 +27,7 @@ export class RegistrationForm extends React.Component<RegistrationFormProps, {}>
           {submitting ? 'Creating account' : 'Register'}
         </Button>
         <FormMessage type="Error">{(!submitting && error) ? error : null}</FormMessage>
+        <LinearProgress enabled={submitting} />
       </form>
     );
   }

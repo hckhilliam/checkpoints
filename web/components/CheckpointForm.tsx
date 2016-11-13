@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { reduxForm, FormProps, SubmissionError } from 'redux-form';
 import * as classnames from 'classnames';
 
+import LinearProgress from './LinearProgress';
 import { InputField, TextAreaField } from './Input';
 import Button from './Button';
 import FormMessage from './FormMessage';
@@ -38,7 +39,7 @@ export class CheckpointForm extends React.Component<Props, {}> {
     const cssClass = classnames('CheckpointForm', className);
 
     return (
-      <form className={className} onSubmit={handleSubmit(this.handleSubmit)} autoComplete="off">
+      <form className={cssClass} onSubmit={handleSubmit(this.handleSubmit)} autoComplete="off">
         <InputField label="Title" name="title" />
         <TextAreaField label="Description" name="description" />
         <div className="CheckpointForm-buttons">
@@ -47,6 +48,7 @@ export class CheckpointForm extends React.Component<Props, {}> {
           </Button>
         </div>
         <FormMessage type="Error">{(!submitting && error) ? error : null}</FormMessage>
+        <LinearProgress enabled={submitting} />
       </form>
     )
   }

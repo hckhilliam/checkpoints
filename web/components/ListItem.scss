@@ -14,8 +14,17 @@
   margin: 0 32px;
   transition: margin 0.3s ease;
 
+  &-content {
+    @include text-ellipsis;
+  }
+
   &--selected {
-    margin: 16px 0;
+    margin: 32px 0;
+    padding: 0;
+    border-bottom: none !important;
+  }
+
+  &--selected &-content {
     padding: 12px;
   }
 }

@@ -3,6 +3,7 @@ import './ListItem.scss';
 import * as React from 'react';
 import * as classnames from 'classnames';
 
+import { AddLinearProgress } from './LinearProgress';
 import InkRipple from './InkRipple';
 
 export class ListItem extends React.Component<React.HTMLAttributes, {}> {
@@ -20,27 +21,33 @@ export class ListItem extends React.Component<React.HTMLAttributes, {}> {
   }
 }
 
-export const SelectableListItem = InkRipple(ListItem);
-
 interface ExpandableListItemProps extends React.HTMLAttributes {
   selected?: boolean;
 }
 
-export class ExpandableListItem extends React.Component<ExpandableListItemProps, {}> {
+class BaseExpandableListItem extends React.Component<ExpandableListItemProps, {}> {
+  static defaultProps: ExpandableListItemProps = {
+    selected: false
+  }
+
   render() {
-    const { className, children, selected } = this.props;
-    const other = _.omit(this.props, 'className', 'children', 'selected');
+    const { className, children, selected, loading } = this.props;
+    const other = _.omit(this.props, 'className', 'children', 'selected', 'loading');
 
     const cssClass = classnames('ExpandableListItem', className, {
       'ExpandableListItem--selected': selected
     });
 
     return (
-      <SelectableListItem className={cssClass} {...other}>
-        {children}
-      </SelectableListItem>
-    )
+      <ListItem className={cssClass} {...other}>
+        <div className="ExpandableListItem-content">
+          {children}
+        </div>
+      </ListItem>
+    );
   }
 }
+
+export const ExpandableListItem = AddLinearProgress(InkRipple(BaseExpandableListItem));
 
 export default ListItem;

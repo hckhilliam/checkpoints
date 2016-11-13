@@ -3,9 +3,8 @@ import './List.scss';
 import * as React from 'react';
 import * as classnames from 'classnames';
 
-import { ListItem as LI, SelectableListItem as SLI, ExpandableListItem as ELI } from './ListItem';
+import { ListItem as LI, ExpandableListItem as ELI } from './ListItem';
 export const ListItem = LI;
-export const SelectableListItem = SLI;
 export const ExpandableListItem = ELI;
 
 export class List extends React.Component<React.HTMLAttributes, {}> {

@@ -6,6 +6,7 @@ import * as classnames from 'classnames';
 
 import { login, validate } from '../lib/forms/login';
 
+import LinearProgress from './LinearProgress';
 import { InputField } from './Input';
 import Button from './Button';
 import FormMessage from './FormMessage';
@@ -28,6 +29,7 @@ export class LoginForm extends React.Component<LoginFormProps, {}> {
           {submitting ? 'Logging in' : 'Login'}
         </Button>
         <FormMessage type="Error">{(!submitting && error) ? error : null}</FormMessage>
+        <LinearProgress enabled={submitting} />
       </form>
     );
   }

@@ -150,15 +150,17 @@ export class InkRippleElement extends React.Component<InkRippleProps, InkRippleS
  * Adds a ripple effect to the component.
  * Position must be absolute or relative, and must render props.children.
  */
-export function InkRipple<P>(WrappedComponent: React.ComponentClass<P>): React.ComponentClass<P> {
-  return class extends React.Component<P, {}> {
+export function InkRipple<P>(WrappedComponent: React.ComponentClass<P>): React.ComponentClass<P & InkRippleProps> {
+  return class extends React.Component<P & InkRippleProps, {}> {
     render() {
-      const { children } = this.props;
-      const other = _.omit(this.props, 'children');
+      const { children, disabled } = this.props;
+      const other = _.omit(this.props, 'children', 'disabled');
+      if (!_.isUndefined(disabled))
+        other['disabled'] = disabled;
 
-      return <WrappedComponent {...other}>{children}<InkRippleElement disabled={this.props['disabled']} /></WrappedComponent>
+      return <WrappedComponent {...other}>{children}<InkRippleElement disabled={disabled} /></WrappedComponent>
     }
-  } as any;
+  };
 }
 
 export default InkRipple;
