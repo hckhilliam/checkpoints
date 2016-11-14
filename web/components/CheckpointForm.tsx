@@ -23,7 +23,7 @@ export class CheckpointForm extends React.Component<React.HTMLAttributes, {}> {
         <InputField label="Title" name="title" />
         <TextAreaField label="Description" name="description" />
         <FormButtons>
-          <Button type="submit" primary>{submitting ? 'Creating' : 'Create'}</Button>
+          <Button type="submit" primary>{buttonText}</Button>
         </FormButtons>
       </Form>
     );

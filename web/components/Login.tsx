@@ -23,15 +23,15 @@ interface LoginState {
 export class Login extends React.Component<LoginProps, LoginState> {
   state: LoginState = {
     login: true
-  }
+  };
 
   handleLogin = () => {
     this.setState({ login: true });
-  }
+  };
 
   handleRegister = () => {
     this.setState({ login: false });
-  }
+  };
 
   render() {
     const { className, onSubmitSuccess } = this.props;

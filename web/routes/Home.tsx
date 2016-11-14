@@ -13,5 +13,5 @@ const Home = props => {
       <Login className="Home-login" />
     </div>
   );
-}
+};
 export default Home;

@@ -1,6 +1,4 @@
-import {post} from '../lib/api/fetch'; 
-import {Action} from 'redux';
-import {getFacebookToken} from '../lib/auth';
+import { Action } from 'redux';
 import * as events from '../lib/api/events';
 
 export const UPDATE_EVENTS = 'UPDATE_EVENTS'; 

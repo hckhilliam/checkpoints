@@ -11,5 +11,5 @@ const Dashboard = props => {
       <FriendsSection />
     </div>
   );
-}
+};
 export default Dashboard;

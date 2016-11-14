@@ -18,5 +18,5 @@ const FormMessage = (props: FormMessageProps) => {
       {children}
     </div>
   );
-}
+};
 export default FormMessage;

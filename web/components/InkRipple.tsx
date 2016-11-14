@@ -30,7 +30,7 @@ const RippleElement = ({ ripple }: { ripple: Ripple }) => {
   return (
     <div className={cssClass} style={style} />
   )
-}
+};
 
 const enterDuration = 400;
 const leaveDuration = 200;
@@ -38,7 +38,7 @@ const leaveDuration = 200;
 export class InkRippleElement extends React.Component<InkRippleProps, InkRippleState> {
   static defaultProps: InkRippleProps = {
     disabled: false
-  }
+  };
 
   state: InkRippleState = {
     ripples: [],
@@ -47,7 +47,7 @@ export class InkRippleElement extends React.Component<InkRippleProps, InkRippleS
       height: '100%',
       position: 'relative'
     }
-  }
+  };
 
   node: HTMLDivElement;
   counter = 0;
@@ -90,7 +90,7 @@ export class InkRippleElement extends React.Component<InkRippleProps, InkRippleS
           : 'center';
       this.startRipple(x, y, anchor);
     }
-  }
+  };
 
   handleRef = (node: HTMLDivElement) => {
     this.node = node;
@@ -122,7 +122,7 @@ export class InkRippleElement extends React.Component<InkRippleProps, InkRippleS
         transform
       }
     });
-  }
+  };
 
   render() {
     const { className } = this.props;

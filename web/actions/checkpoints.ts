@@ -7,10 +7,6 @@ export const UPDATE_CHECKPOINTS = 'UPDATE_CHECKPOINTS';
 export const UPDATE_CHECKPOINT = 'UPDATE_CHECKPOINT';
 export const REMOVE_CHECKPOINT = 'REMOVE_CHECKPOINT';
 
-export const ADD_CHECKPOINT = 'ADD_CHECKPOINT';
-export const SAVE_CHECKPOINT = 'SAVE_CHECKPOINT';
-export const DELETE_CHECKPOINT = 'DELETE_CHECKPOINT';
-
 // Actions
 export interface CheckpointAction extends Action {
   checkpoint: Checkpoints.Checkpoint;

@@ -20,11 +20,11 @@ interface State {
 export class FriendsSection extends React.Component<Props, State> {
     static defaultProps: Props = {
         onComponentDidMount: () => {},
-    }
+    };
 
     state: State = {
 
-    }
+    };
 
     componentDidMount() {
         this.props.onComponentDidMount();
@@ -58,7 +58,7 @@ const mapStateToProps = state => {
     return {
         friends: state.friends
     };
-}
+};
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -66,7 +66,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(getFriends());
         }
     };
-}
+};
 
 const FriendsSectionContainer = connect(mapStateToProps, mapDispatchToProps)(FriendsSection);
 export default FriendsSectionContainer;

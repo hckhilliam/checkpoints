@@ -4,7 +4,8 @@ import User from '../mongoose/User';
 function genericUserData() {
   return {
     _id: 1,
-    name: 1
+    name: 1,
+    url: 1
   };
 }
 

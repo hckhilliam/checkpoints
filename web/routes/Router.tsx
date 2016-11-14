@@ -30,17 +30,17 @@ export class Router extends React.Component<Props, {}> {
   requireAuth = (nextState, replace) => {
     if (!isLoggedIn())
       replace('/');
-  }
+  };
 
   handleEnter = (nextState, replace) => {
     if (isLoggedIn() && nextState.pathname != '/')
       this.props.onGetUser();
-  }
+  };
 
   handleEnterHome = (nextState, replace) => {
     if (isLoggedIn())
       replace('/dashboard');
-  }
+  };
 
   render() {
     const { history } = this.props;

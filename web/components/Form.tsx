@@ -14,7 +14,7 @@ type Props<P> = P & FormProps<any, any> & React.HTMLAttributes;
 export default class Form<P> extends React.Component<P & React.HTMLAttributes, {}> {
   static defaultProps = {
     submitting: false
-  }
+  };
 
   disabled() {
     const { pristine, invalid, submitting } = this.props;

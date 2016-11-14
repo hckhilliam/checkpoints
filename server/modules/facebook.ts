@@ -13,7 +13,7 @@ interface FBToken {
 
 function fb(token: string) {
   return FB.withAccessToken(token);
-};
+}
 
 export function getAppFacebookToken(): Promise<FBToken> {
   return new Promise((resolve, reject) => {

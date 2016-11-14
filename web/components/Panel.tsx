@@ -15,5 +15,5 @@ const Panel = (props: PanelProps) => {
       {props.children}
     </div>
   );
-}
+};
 export default Panel;

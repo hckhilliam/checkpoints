@@ -13,5 +13,5 @@ const Root = props => {
       </div>
     </div>
   );
-}
+};
 export default Root;

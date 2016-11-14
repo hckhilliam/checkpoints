@@ -42,7 +42,7 @@ const App = () => {
       <Router history={history} />
     </Provider>
   );
-}
+};
 
 // render
 render(<App />, document.getElementById('app'));

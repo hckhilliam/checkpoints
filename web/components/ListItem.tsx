@@ -28,7 +28,7 @@ interface ExpandableListItemProps extends React.HTMLAttributes {
 class BaseExpandableListItem extends React.Component<ExpandableListItemProps, {}> {
   static defaultProps: ExpandableListItemProps = {
     selected: false
-  }
+  };
 
   render() {
     const { className, children, selected, loading } = this.props;

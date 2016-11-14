@@ -10,7 +10,7 @@ interface Props {
 export class CheckpointItem extends React.Component<Props, {}> {
   handleChange = () => {
     this.props.onToggle();
-  }
+  };
 
   render() {
     return (
@@ -30,7 +30,7 @@ export class CheckpointItem extends React.Component<Props, {}> {
 
 const mapStateToProps = (state) => {
   return {};
-}
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
@@ -41,6 +41,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(saveCheckpoint(checkpoint));
     }
   };
-}
+};
 
 export const CheckpointItemContainer = connect(mapStateToProps, mapDispatchToProps)(CheckpointItem);

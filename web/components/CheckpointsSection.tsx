@@ -23,11 +23,11 @@ export class CheckpointsSection extends React.Component<Props, State> {
   static defaultProps: Props = {
     onComponentDidMount: () => {},
     onSelectCheckpoint: () => {}
-  }
+  };
 
   state: State = {
     checkpoint: {} as Checkpoints.Checkpoint
-  }
+  };
 
   componentDidMount() {
     this.props.onComponentDidMount();
@@ -96,7 +96,7 @@ const mapStateToProps = state => {
   return {
     checkpoints: state.checkpoints
   };
-}
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -107,7 +107,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(getCheckpoint(checkpoint.id));
     }
   };
-}
+};
 
 const CheckpointsSectionContainer = connect(mapStateToProps, mapDispatchToProps)(CheckpointsSection);
 export default CheckpointsSectionContainer;

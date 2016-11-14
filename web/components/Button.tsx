@@ -22,19 +22,19 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
     raised: false,
     primary: false,
     disabled: false
-  }
+  };
 
   state: ButtonState = {
     hover: false
-  }
+  };
 
   handleMouseOver = () => {
     this.setState({ hover: true });
-  }
+  };
 
   handleMouseOut = () => {
     this.setState({ hover: false });
-  }
+  };
 
   getClassNames() {
     return {

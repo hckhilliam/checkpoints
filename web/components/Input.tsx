@@ -24,12 +24,12 @@ function InputHOC(WrappedComponent: React.ComponentClass<React.HTMLAttributes>):
       float: true,
       value: '',
       errorText: ''
-    }
+    };
 
     state: InputState = {
       focused: false,
       hasValue: false
-    }
+    };
 
     componentWillMount() {
       this.updateValue(this.props.value);
@@ -48,12 +48,12 @@ function InputHOC(WrappedComponent: React.ComponentClass<React.HTMLAttributes>):
     handleFocus = () => {
       this.setState({ focused: true });
       this.props.onFocus && this.props.onFocus.apply(arguments);
-    }
+    };
 
     handleBlur = () => {
       this.setState({ focused: false });
       this.props.onBlur && this.props.onBlur.apply(arguments);
-    }
+    };
 
     getClassNames() {
       return {
@@ -107,7 +107,7 @@ const renderInputField = (props: InputProps & WrappedFieldProps) => {
   const errorText = touched && error as string;
 
   return <Input {...props.input} {...inputProps} disabled={props.disabled} errorText={errorText} />;
-}
+};
 
 export const InputField = (props: InputProps) => <Field component={renderInputField} {...props} />;
 
@@ -118,7 +118,7 @@ const renderTextAreaField = (props: InputProps & WrappedFieldProps) => {
   const errorText = touched && error as string;
 
   return <TextArea {...props.input} {...inputProps} disabled={props.disabled} errorText={errorText} />;
-}
+};
 
 export const TextAreaField = (props: InputProps) => <Field component={renderTextAreaField} {...props} />;
 

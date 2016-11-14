@@ -12,6 +12,6 @@ export const Profile = (props: Props) => {
       {props.name}
     </div>
   );
-}
+};
 
 export default Profile;

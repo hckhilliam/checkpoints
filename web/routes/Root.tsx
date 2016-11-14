@@ -6,5 +6,5 @@ const Root = props => {
       {props.children}
     </div>
   );
-}
+};
 export default Root;

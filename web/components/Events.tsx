@@ -22,7 +22,7 @@ export class Events extends React.Component<Props, State> {
 
   state: State = {
     selectEventID: ''
-  }
+  };
 
   // id is just a concat of an event's name, description and eventSource
   getSelectEventID(event: Checkpoints.Event) {
@@ -36,7 +36,7 @@ export class Events extends React.Component<Props, State> {
       distance: 1000,
       filter: undefined
     } as Checkpoints.eventSearch;
-  }
+  };
 
   onClickEvent(id: string) {
     let prevSelected = this.state.selectEventID;

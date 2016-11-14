@@ -20,7 +20,7 @@ export default class FileUpload extends React.Component<Props, State> {
 
   state: State = {
     files: []
-  }
+  };
 
   addFile = (files) => {
     console.log("hello");
@@ -28,7 +28,7 @@ export default class FileUpload extends React.Component<Props, State> {
     this.setState({
       files: files
     });
-  }
+  };
 
   render() {
     const { handleUpload } = this.props;
