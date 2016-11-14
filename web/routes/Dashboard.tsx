@@ -7,7 +7,7 @@ const Dashboard = props => {
   return (
     <div>
       <CheckpointsSection />
-      <Events />
+      {/*<Events />*/}
       <FriendsSection />
     </div>
   );

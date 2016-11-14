@@ -4,6 +4,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import Panel from './Panel';
+import Checkpoint from './Checkpoint';
 import CheckpointForm from './CheckpointForm';
 import { List, ExpandableListItem } from './List';
 
@@ -79,9 +80,11 @@ export class CheckpointsSection extends React.Component<Props, State> {
                   key={c.id}
                   selected={selected}
                   loading={selected && !c.loaded}
+                  expanded={c.loaded}
+                  body={<Checkpoint checkpoint={c} />}
                   onClick={() => this.handleSelectCheckpoint(c)}
                 >
-                  {c.title} — {c.description}
+                  <span style={{ fontWeight: 500 }}>{c.title}</span> — {c.description}
                 </ExpandableListItem>
               );
             })

@@ -23,25 +23,53 @@ export class ListItem extends React.Component<React.HTMLAttributes, {}> {
 
 interface ExpandableListItemProps extends React.HTMLAttributes {
   selected?: boolean;
+  expanded?: boolean;
+  body?: JSX.Element;
 }
 
-class BaseExpandableListItem extends React.Component<ExpandableListItemProps, {}> {
+interface ExpandableListItemState {
+  bodyHeight?: number;
+}
+
+class BaseExpandableListItem extends React.Component<ExpandableListItemProps, ExpandableListItemState> {
   static defaultProps: ExpandableListItemProps = {
-    selected: false
+    selected: false,
+    expanded: false
   };
 
-  render() {
-    const { className, children, selected, loading } = this.props;
-    const other = _.omit(this.props, 'className', 'children', 'selected', 'loading');
+  state: ExpandableListItemState = {
+    bodyHeight: 0
+  };
 
+  body: HTMLDivElement;
+
+  componentWillReceiveProps(nextProps: ExpandableListItemProps) {
+    if (this.body && !this.props.expanded && nextProps.expanded) {
+      const bodyHeight = this.body.clientHeight;
+      if (this.state.bodyHeight != bodyHeight)
+        this.setState({ bodyHeight });
+    }
+  }
+
+  render() {
+    const { className, children, selected, expanded, body } = this.props;
+    const other = _.omit(this.props, 'className', 'children', 'selected', 'expanded', 'body', 'style');
     const cssClass = classnames('ExpandableListItem', className, {
-      'ExpandableListItem--selected': selected
+      'ExpandableListItem--selected': selected,
+      'ExpandableListItem--expanded': selected && expanded
     });
 
+    const style = Object.assign({}, this.props.style);
+    if (selected && expanded)
+      style.paddingBottom = this.state.bodyHeight;
+
     return (
-      <ListItem className={cssClass} {...other}>
+      <ListItem className={cssClass} style={style} {...other}>
         <div className="ExpandableListItem-content">
           {children}
+        </div>
+        <div className="ExpandableListItem-body" ref={n => this.body = n}>
+          {body}
         </div>
       </ListItem>
     );
