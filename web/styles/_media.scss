@@ -1,0 +1,40 @@
+$xs-min: 30 * 16 - 1px;
+$sm-min: 48 * 16 - 1px;
+$md-min: 64 * 16 - 1px;
+$lg-min: 75 * 16 - 1px;
+
+@mixin max-sm {
+  @media (max-width: #{$sm-min}) {
+    @content;
+  }
+}
+
+@mixin max-md {
+  @media (max-width: #{$md-min}) {
+    @content;
+  }
+}
+
+@mixin max-lg {
+  @media (max-width: #{$lg-min}) {
+    @content;
+  }
+}
+
+@mixin min-sm {
+  @media (min-width: #{$sm-min + 1px}) {
+    @content;
+  }
+}
+
+@mixin min-md {
+  @media (min-width: #{$md-min + 1px}) {
+    @content;
+  }
+}
+
+@mixin min-lg {
+  @media (min-width: #{$lg-min + 1px}) {
+    @content;
+  }
+}
