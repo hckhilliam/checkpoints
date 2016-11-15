@@ -27,7 +27,7 @@ export class Events extends React.Component<Props, State> {
 
   // id is just a stringified version of the event
   getSelectEventID(event: Checkpoints.Event) {
-    return event.name + event.description + event.eventSource;
+    return JSON.stringify(event);
   }
 
   getSearchQuery = () => {
