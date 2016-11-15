@@ -73,6 +73,7 @@ export class InkRippleElement extends React.Component<InkRippleProps, InkRippleS
   }
 
   handleRipple = (event: React.MouseEvent) => {
+    event.stopPropagation();
     if (this.props.disabled)
       return;
 

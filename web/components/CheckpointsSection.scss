@@ -10,12 +10,13 @@
     font-size: 28px;
   }
 
-  .Panel, .List {
+  .Panel {
     margin: 8px;
   }
 
-  &-list {
+  &-list.Panel {
     padding: 0;
+    margin: 0 32px;
 
     h1 {
       padding: 16px;
