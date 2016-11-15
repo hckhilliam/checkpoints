@@ -1,0 +1,65 @@
+@import "../styles/common";
+
+$mobileWidth: 850px;
+
+@media (min-width: $mobileWidth) {
+
+  .UserRoot .UserRoot-content { //duplictate style selector to put in flex display style
+    display: flex;
+  }
+
+  .Dashboard {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    
+    
+    ::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #FF0000;
+    }
+
+    .CheckpointsSection {
+      flex-grow: 1;
+      margin: 16px;
+
+      overflow: scroll;
+      overflow-x: hidden;
+      
+    
+    }
+    .DashboardRight{
+      margin: 16px;
+      display: flex;
+      flex-direction: column;
+
+      @media (max-width: 1150px) {
+        width: 350px;
+      }
+      @media (min-width: 1150px) {
+        width: 500px;
+      }
+
+      /*.FriendsSection {}*/
+      .Events {
+        margin-top: 16px;
+      }
+    }
+  }
+}
+@media (max-width: $mobileWidth) {
+  .Dashboard {
+    width: 100%;
+  }
+  .FriendsSection {
+    margin-top: 16px;
+  }
+  .Events {
+    margin-top: 16px;
+  }
+}

@@ -1,14 +1,21 @@
+import './Dashboard.scss'; 
+
 import * as React from 'react';
 import CheckpointsSection from '../components/CheckpointsSection';
 import Events from '../components/Events'
 import FriendsSection from '../components/FriendsSection';
 
+
 const Dashboard = props => {
-  return (
-    <div>
+  return ( 
+    <div className="Dashboard">
       <CheckpointsSection />
-      {/*<Events />*/}
-      <FriendsSection />
+      <div className="DashboardRight">
+        <FriendsSection />
+        
+        {/* <div className="Events" /> */}
+        <Events />
+      </div>
     </div>
   );
 };

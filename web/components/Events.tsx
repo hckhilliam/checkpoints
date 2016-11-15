@@ -4,6 +4,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { getEvents } from '../actions/events';
 import Event from './Event';
+import Panel from './Panel';
 import { List, ExpandableListItem } from './List';
 
 interface Props {
@@ -26,14 +27,14 @@ export class Events extends React.Component<Props, State> {
 
   // id is just a stringified version of the event
   getSelectEventID(event: Checkpoints.Event) {
-    return JSON.stringify(event);
+    return event.name + event.description + event.eventSource;
   }
 
   getSearchQuery = () => {
     return {
       lat: 43.4761238,
       lng: -80.5378432,
-      distance: 1000,
+      distance: 700,
       filter: undefined
     } as Checkpoints.eventSearch;
   };
@@ -50,24 +51,29 @@ export class Events extends React.Component<Props, State> {
 
   render() {
     return (
-      <List className="Events">
-      {
-        this.props.events.map((event) => {
-          let id = this.getSelectEventID(event);
-          const selected = id == this.state.selectEventID;
-          return (
-            <ExpandableListItem
-              selected={selected}
-              key={id}
-              loading={false}
-              onClick={() => this.onClickEvent(id)}
-            >
-              <Event event={event} />
-            </ExpandableListItem>
-          )
-        })
-      }
-      </List>
+      <div className="Events">
+        <Panel>
+          <h1>Suggested Events</h1>
+        </Panel>
+        <List >
+        {
+          this.props.events.map((event) => {
+            let id = this.getSelectEventID(event);
+            const selected = id == this.state.selectEventID;
+            return (
+              <ExpandableListItem
+                selected={selected}
+                key={id}
+                loading={false}
+                onClick={() => this.onClickEvent(id)}
+              >
+                <Event event={event} />
+              </ExpandableListItem>
+            )
+          })
+        }
+        </List>
+      </div>
     );
   };
 }
