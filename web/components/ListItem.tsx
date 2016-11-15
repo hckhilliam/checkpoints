@@ -77,5 +77,6 @@ class BaseExpandableListItem extends React.Component<ExpandableListItemProps, Ex
 }
 
 export const ExpandableListItem = AddLinearProgress(InkRipple(BaseExpandableListItem));
+export const ClickableListItem = InkRipple(ListItem);
 
 export default ListItem;

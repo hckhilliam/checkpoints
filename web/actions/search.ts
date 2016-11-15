@@ -7,12 +7,12 @@ export const SEARCH_RESULTS = "SEARCH_RESULTS"
 
 // Actions
 export interface SearchAction extends Action {
-    results: SearchResults[];
+    results: Checkpoints.SearchResults[];
 }
 
 // Action creators
 // ?? do i need this
-function updateResults(results: SearchResults[]) {
+function updateResults(results: Checkpoints.SearchResults[]) {
     return {
         type: SEARCH_RESULTS,
         results

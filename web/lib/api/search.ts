@@ -1,13 +1,13 @@
 import { get } from './fetch' // needed for later...
 
-export function searchGeneral(query: string): SearchResults[] {
-    let mockData: SearchResults[] = [
+export function searchGeneral(query: string): Checkpoints.SearchResults[] {
+    let mockData: Checkpoints.SearchResults[] = [
         {
-            type: "Event",
+            type: "event",
             name: "Some event 1"
         },
         {
-            type: "friend",
+            type: "user",
             name: "Some friend 1"
         }
     ];

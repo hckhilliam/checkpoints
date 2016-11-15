@@ -86,9 +86,10 @@ declare namespace Checkpoints {
       description: string;
     }
   }
+
+  interface SearchResults {
+    type: string;
+    name: string;
+  }
 }
 
-interface SearchResults {
-  type: string;
-  name: string;
-}
