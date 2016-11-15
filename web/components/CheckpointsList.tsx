@@ -77,7 +77,7 @@ export class CheckpointsList extends React.Component<Props, State> {
                 loading={selected && !c.loaded}
                 expanded={c.loaded}
                 body={<Checkpoint checkpoint={c} />}
-                onMouseUp={() => this.handleSelectCheckpoint(c)}
+                onClick={() => this.handleSelectCheckpoint(c)}
               >
                 <span style={{ fontWeight: 500 }}>{c.title}</span> — {c.description}
               </ExpandableListItem>
