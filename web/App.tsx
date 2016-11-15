@@ -16,6 +16,7 @@ import checkpoints from './reducers/checkpointsReducer';
 import user from './reducers/userReducer';
 import events from './reducers/eventsReducer';
 import friends from './reducers/friendsReducer';
+import search from './reducers/searchReducer';
 
 import { initializeAuth } from './lib/auth';
 
@@ -27,7 +28,8 @@ const reducer = combineReducers({
   friends,
   routing,
   form,
-  events
+  events,
+  search
 });
 
 const reduxRouterMiddleware = routerMiddleware(browserHistory as any);

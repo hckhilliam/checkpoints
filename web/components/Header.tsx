@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { clearInfo } from '../actions/user';
 import { logout } from '../lib/auth';
 
+import SearchBar from './SearchBar';
+
 interface HeaderProps {
   user?: Checkpoints.User;
   onLogout?: () => void;
@@ -22,6 +24,7 @@ export class Header extends React.Component<HeaderProps, {}> {
       <div className="Header">
         <div className="Header-content">
           <h1 className="Header-title">Checkpoints</h1>
+          <SearchBar />
           <div className="Header-user">
             <div className="Header-user-picture">
               {picture}

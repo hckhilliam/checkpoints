@@ -1,0 +1,22 @@
+@import "../styles/variables";
+
+.SearchBar {
+    display: flex;
+    flex-direction: row;
+    margin-top:8px;
+    margin-bottom:8px;
+    background-color: white;
+    line-height: 16px;
+    .Input {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        width: 95%;
+        .input {
+            padding-bottom: 10px
+        }
+    }
+    .Button {
+        background-color: #e0e0e0;
+        color: $md-light-green-700 !important;
+    }
+}

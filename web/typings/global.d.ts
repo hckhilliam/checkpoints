@@ -87,3 +87,8 @@ declare namespace Checkpoints {
     }
   }
 }
+
+interface SearchResults {
+  type: string;
+  name: string;
+}
