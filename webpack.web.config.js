@@ -69,6 +69,10 @@ module.exports = {
       "/api": {
         target: "http://localhost:3000",
         secure: false
+      },
+      "/static": {
+        target: "http://localhost:3000",
+        secure: false
       }
     },
     historyApiFallback: true

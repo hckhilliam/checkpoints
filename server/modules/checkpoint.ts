@@ -1,5 +1,6 @@
 const debug = require('debug')('checkpoints:checkpoint');
 import Checkpoint from '../mongoose/Checkpoint';
+import { GENERIC_CHECKPOINT_DATA } from '../lib/data';
 
 export function createCheckpoint(user_id: number, title: string, description: string, isPrivate: boolean = false) {
   debug(`Create checkpoint (${title}) (${description}) (${isPrivate})`);
@@ -14,14 +15,7 @@ export function createCheckpoint(user_id: number, title: string, description: st
 
 export function getCheckpoints(user_id: number) {
   debug(`Getting all checkpoints for user (${user_id})`);
-  return Checkpoint.find({ user_id, isDeleted: false }, {
-    _id: 1,
-    user_id: 1,
-    title: 1,
-    description: 1,
-    isPrivate: 1,
-    isCompleted: 1
-  });
+  return Checkpoint.find({ user_id, isDeleted: false }, GENERIC_CHECKPOINT_DATA);
 }
 
 export function getCheckpointById(_id: number) {

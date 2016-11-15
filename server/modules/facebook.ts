@@ -5,6 +5,7 @@ const FB = require('fb');
 import FacebookToken from '../mongoose/FacebookToken';
 import User from '../mongoose/User';
 import * as user from './user';
+import { GENERIC_USER_DATA } from '../lib/data';
 
 interface FBToken {
   token: string;
@@ -103,31 +104,26 @@ export function updateFacebookPicture(facebookId: string, overwriteUserPicture =
   });
 }
 
-// export function getFacebookFriends(facebookId: string) {
-//   return Promise.all([
-//     user.getUserByFacebookId(facebookId),
-//     getFacebookToken(facebookId)
-//   ]).then(values => {
-//     const [user, token] = values;
-//     if (!user)
-//       throw new Error(`Facebook user (${facebookId}) not found`);
-//     if (!token)
-//       throw new Error(`Facebook token (${facebookId}) not found`);
+export function getFacebookFriends(facebookId: string) {
+  debug(`grabbing facebook friends for fbid: ${facebookId}`);
+  if (!facebookId) {
+    debug(`no fb id specified. returning empty array...`);
+    return Promise.resolve([]);
+  } else {
+    return getFacebookToken(facebookId).then(token => {
+      debug(`fb token found: ${token}`);
+      if (!token)
+        throw new Error(`Facebook token (${facebookId}) not found`);
 
-//     return new Promise((resolve, reject) => {
-//       fb(token.token).api('/me/friends', res => {
-//         if (res && res.error)
-//           return reject(new Error(res.error.code));
-//         const picture = _.pick(res.data, 'width', 'height', 'url') as CheckpointsServer.UserPicture;
-//         let update = {
-//           'accounts.facebook.picture': picture
-//         };
-//         if (overwriteUserPicture)
-//           update['picture'] = picture;
-//         User.findByIdAndUpdate(user._id, {
-//           $set: update
-//         }).then(() => resolve(picture));
-//       });
-//     });
-//   });
-// }
+      return new Promise((resolve, reject) => {
+        fb(token.token).api('/me/friends', { fields: ['id'] }, res => {
+          if (res && res.error)
+            return reject(new Error(res.error.code));
+          
+          debug(_.map(res.data, 'id'));
+          User.find({ 'accounts.facebook.id': { $in: _.map(res.data, 'id') } }, GENERIC_USER_DATA).then(resolve);
+        });
+      });
+    });
+  }
+}

@@ -3,7 +3,8 @@ const debug = require('debug')('checkpoints:friendsHandler');
 import { Request, Response } from 'express';
 
 import * as friend from '../modules/friend';
-import { getUserId } from '../lib/request';
+import * as facebook from '../modules/facebook';
+import { getUserId, getFacebookId } from '../lib/request';
 
 export function addFriend(req: Request, res: Response, next: any) {
   friend.addFriend(getUserId(req), Number(req.params['_id']))
@@ -12,9 +13,22 @@ export function addFriend(req: Request, res: Response, next: any) {
 }
 
 export function getFriends(req: Request, res: Response, next: any) {
-  friend.getFriends(getUserId(req))
-    .then(friends => res.json(friends))
-    .catch(next);
+  Promise.all([
+    friend.getFriends(getUserId(req)),
+    facebook.getFacebookFriends(getFacebookId(req))
+  ]).then(values => {
+    const [friends, fbFriends] = values;
+    debug('Checkpoints Friends:');
+    debug(friends);
+    debug('Facebook Friends:');
+    debug(fbFriends);
+
+    res.json(fbFriends.concat(friends).sort(function (a, b) {
+      let cmp1 = a.name.toUpperCase();
+      let cmp2 = b.name.toUpperCase(); 
+      return Number(cmp1 > cmp2) - Number(cmp1 < cmp2);
+    }));
+  }).catch(next);
 }
 
 export function getFriendRequests(req: Request, res: Response, next: any) {

@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { eventCriteria, getFilteredEvents } from '../modules/event';
-import { getLocation} from '../modules/location';
+import { getLocation } from '../modules/location';
 
 
 const api = Router();

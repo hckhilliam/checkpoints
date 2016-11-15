@@ -40,9 +40,12 @@ export class FriendsSection extends React.Component<Props, State> {
                     <List>
                         {
                             friends.map(f => {
+                                const pictureUrl = _.get(f, 'picture.url') as string;
+                                const picture = pictureUrl ? <img src={pictureUrl} /> : null;
                                 return (
                                     <ListItem key={f.id}>
-                                        {f.name}
+                                        <div>{picture}</div>
+                                        <div>{f.name}</div>
                                     </ListItem>
                                 );
                             })

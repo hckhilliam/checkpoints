@@ -3,9 +3,9 @@ const autoIncrement = require('mongoose-auto-increment');
 
 const pictureSchema = new mongoose.Schema({
   _id: false,
-  width: { type: Number, required: true },
-  height: { type: Number, required: true },
-  url: { type: String, required: true }
+  width: { type: Number, required: true, default: 200 },
+  height: { type: Number, required: true, default: 200 },
+  url: { type: String, required: true, default: 'static/default.png' }
 });
 
 const facebookUserSchema = new mongoose.Schema({
@@ -29,7 +29,7 @@ const schema = {
   friends: [Number],
   friendRequests: [Number],
   accounts: accountsSchema,
-  picture: pictureSchema
+  picture: { type: pictureSchema, default: pictureSchema }
 };
 
 const userSchema = new mongoose.Schema(schema);
