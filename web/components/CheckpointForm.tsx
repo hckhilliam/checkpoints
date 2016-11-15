@@ -7,6 +7,7 @@ import * as classnames from 'classnames';
 import Form from './Form';
 import { InputField, TextAreaField } from './Input';
 import Button from './Button';
+import { CheckboxField } from './Checkbox';
 import FormButtons from './FormButtons';
 
 import { addCheckpoint, validate } from '../lib/forms/checkpoint';
@@ -22,6 +23,7 @@ export class CheckpointForm extends React.Component<React.HTMLAttributes, {}> {
       <Form className={cssClass} {...other}>
         <InputField label="Title" name="title" />
         <TextAreaField label="Description" name="description" />
+        <CheckboxField label="Private" name="private" />
         <FormButtons>
           <Button type="submit" primary>{buttonText}</Button>
         </FormButtons>
@@ -34,6 +36,7 @@ const CheckpointsReduxForm = reduxForm({
   form: 'CheckpointForm',
   validate: validate as any,
   onSubmit: (values: Checkpoints.Forms.Checkpoint, dispatch) => {
+    console.log(values);
     return addCheckpoint(values)
       .then(() => {
         dispatch(reset('CheckpointForm'));
