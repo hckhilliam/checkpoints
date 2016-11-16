@@ -36,7 +36,7 @@ export default class IconButton extends React.Component<IconButtonProps, {}> {
     return (
       <button className={cssClass} {...other}>
         {children}
-        <InkRippleElement duration="Slow" shade="Normal" center={true} disabled={disabled} />
+        <InkRippleElement duration="Slow" shade="Normal" center={true} size={40} disabled={disabled} />
       </button>
     );
   }

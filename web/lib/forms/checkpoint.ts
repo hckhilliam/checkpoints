@@ -1,7 +1,12 @@
 import * as checkpoints from '../api/checkpoints';
 
 export function addCheckpoint(data: Checkpoints.Forms.Checkpoint) {
-  return checkpoints.addCheckpoint(data as Checkpoints.Checkpoint)
+  const checkpoint: Checkpoints.Checkpoint = {
+    title: data.title,
+    description: data.description,
+    isPrivate: data.private
+  };
+  return checkpoints.addCheckpoint(checkpoint)
     .catch(err => {
       throw err.error.error;
     });

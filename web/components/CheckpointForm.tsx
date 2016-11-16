@@ -36,7 +36,6 @@ const CheckpointsReduxForm = reduxForm({
   form: 'CheckpointForm',
   validate: validate as any,
   onSubmit: (values: Checkpoints.Forms.Checkpoint, dispatch) => {
-    console.log(values);
     return addCheckpoint(values)
       .then(() => {
         dispatch(reset('CheckpointForm'));

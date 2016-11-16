@@ -3,19 +3,76 @@
 .CheckpointsSection {
   margin: 0 auto;
 
-  h1 {
-    font-size: 28px;
-  }
-  .Panel {
-    margin: 8px;
-  }
-
-  &-list.Panel {
-    padding: 0;
+  &-header {
+    min-height: 66px; // todo standardize (maybe 72px), background?
     margin: 0 32px;
+    position: relative;
+    background-color: $md-grey-50;
+
+    .Panel {
+      padding: 0;
+    }
 
     h1 {
+      font-size: 28px;
       padding: 16px;
     }
+
+    .Button, .IconButton {
+      margin: auto;
+      margin-right: 0;
+    }
+  }
+
+  &-title, &-form-title {
+    display: flex;
+  }
+
+  &-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+
+    &.Panel {
+      padding-right: 16px;
+    }
+  }
+
+  &-form {
+    overflow: hidden;
+
+    &-title {
+      padding-right: 8px;
+      border-bottom: 1px solid $md-dark-text-dividers;
+    }
+
+    .CheckpointForm {
+      padding: 16px;
+      padding-top: 8px;
+    }
+  }
+
+  /* Header transitions */
+  &-title {
+    opacity: 1;
+    transition: all 0.15s ease-in-out 0.2s;
+  }
+
+  &--add &-title {
+    opacity: 0;
+    transition: all 0.15s ease-in-out;
+  }
+
+  &-form {
+    max-height: 0;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+  }
+
+  &--add &-form {
+    max-height: 352px;
+    opacity: 1;
+    margin-bottom: 8px;
+    transition: all 0.3s ease-in-out 0.1s;
   }
 }

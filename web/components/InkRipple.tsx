@@ -174,15 +174,17 @@ export class InkRippleElement extends React.Component<InkRippleProps, InkRippleS
 
     const cssClass = classnames('InkRipple', className, `InkRipple--${shade}`);
     const style = _.pick(this.state.style, 'position', 'width', 'height');
+    const baseStyle = {};
 
     if (!_.isUndefined(size)) {
       style['width'] = style['height'] = size;
       style['top'] = style['left'] = '50%';
       style['transform'] = 'translate(-50%, -50%)';
+      baseStyle['overflow'] = 'visible';
     }
 
     return (
-      <div className={cssClass} {...other} onMouseDown={_.isUndefined(toggle) ? this.handleRipple : undefined}>
+      <div className={cssClass} {...other} style={baseStyle} onMouseDown={_.isUndefined(toggle) ? this.handleRipple : undefined}>
         <div ref={this.handleRef} style={style}>
           <ReactCSSTransitionGroup
             transitionName="ripple"

@@ -4,7 +4,6 @@
   display: block;
   margin: 8px 0;
   user-select: none;
-  cursor: pointer;
 
   input[type="checkbox"] {
     display: none;
@@ -12,6 +11,8 @@
 
   &-label {
     display: flex;
+    margin: 4px 0;
+    padding: 4px 0;
     font-size: 16px;
     color: $md-dark-text-primary;
     cursor: pointer;

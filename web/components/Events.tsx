@@ -55,7 +55,7 @@ export class Events extends React.Component<Props, State> {
         <Panel>
           <h1>Suggested Events</h1>
         </Panel>
-        <List >
+        <List>
         {
           this.props.events.map((event) => {
             let id = this.getSelectEventID(event);

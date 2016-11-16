@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as dateformat from 'dateformat';
 
 interface Props {
-  event: Checkpoints.Event; 
+  event: Checkpoints.Event;
 }
 
 export const Event = (props: Props) => {
@@ -22,7 +22,7 @@ export const Event = (props: Props) => {
       <p>{event.eventSource}</p>*/ }
       <img className="Event-icon" src={event.pictureURL}/>
       <div className="Event-details">
-        <div className="Event-name" >{event.name}</div>
+        <div className="Event-name">{event.name}</div>
         <div className="Event-date">{ dateDisplay }</div>
       </div>
       <div style={{clear: 'both'}} />

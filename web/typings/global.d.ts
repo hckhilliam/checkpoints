@@ -46,14 +46,14 @@ declare namespace Checkpoints {
   }
 
   interface Checkpoint {
-    id: number;
-    title: string;
-    description: string;
-    isPrivate: boolean;
-    comments: string[];
-    pictures: string[];
-    isCompleted: boolean;
-    loaded: boolean;
+    id?: number;
+    title?: string;
+    description?: string;
+    isPrivate?: boolean;
+    comments?: string[];
+    pictures?: string[];
+    isCompleted?: boolean;
+    loaded?: boolean;
   }
 
   interface Response {
@@ -84,6 +84,7 @@ declare namespace Checkpoints {
     interface Checkpoint {
       title: string;
       description: string;
+      private: boolean;
     }
   }
 
