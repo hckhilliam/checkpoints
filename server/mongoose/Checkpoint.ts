@@ -1,3 +1,5 @@
+const debug = require('debug')('checkpoints:mongooseCheckpoint');
+
 import * as mongoose from 'mongoose';
 const autoIncrement = require('mongoose-auto-increment');
 
@@ -28,7 +30,9 @@ const checkpointSchema = new mongoose.Schema({
   pictures: [Number],                                             // pictures attached to this checkpoint
   comments: [commentSchema],                                      // user comments on this checkpoint
   likes: Number,                                                  // number of likes on this checkpoint
-  isDeleted: {type: Boolean, required: true, default: false}      // flag for soft deletion of a checkpoint
+  isDeleted: {type: Boolean, required: true, default: false},     // flag for soft deletion of a checkpoint
+  createdOn: Date,
+  completedOn: Date
 });
 
 checkpointSchema.plugin(autoIncrement.plugin, {
@@ -36,6 +40,29 @@ checkpointSchema.plugin(autoIncrement.plugin, {
   startAt: 1,
   incrementBy: 1
 });
+
+checkpointSchema.pre('save', function (next) {
+  this.createdOn = new Date();
+  next();
+});
+
+function completeDate(next) {
+  let self = this._update;
+  debug(self.isCompleted);
+  if (_.isBoolean(self.isCompleted)) {
+    if (self.isCompleted) {
+      self.completedOn = new Date();
+    } else {
+      self.completedOn = null;
+    }
+  }
+  next();
+}
+
+checkpointSchema.pre('update', completeDate)
+      .pre('findOneAndUpdate', completeDate)
+      .pre('findByIdAndUpdate', completeDate);
+
 
 const Checkpoint = mongoose.model('Checkpoint', checkpointSchema);
 export default Checkpoint;
