@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as classnames from 'classnames';
 import { Field, WrappedFieldProps } from 'redux-form';
 
-import InkRipple from './InkRipple';
+import { InkRippleElement } from './InkRipple';
 
 interface Props extends React.HTMLAttributes {
   label?: string;
@@ -23,11 +23,10 @@ let CheckboxIcon = (props: CheckboxIconProps & React.HTMLAttributes) => {
   return (
     <div className={cssClass}>
       <div className="CheckboxIcon-icon" />
-      {children}
+      <InkRippleElement toggle={checked} duration="Fast" shade="Dark" size={32} />
     </div>
   );
 };
-CheckboxIcon = InkRipple(CheckboxIcon as any) as any;
 
 export default class Checkbox extends React.Component<Props, {}> {
   static defaultProps: Props = {

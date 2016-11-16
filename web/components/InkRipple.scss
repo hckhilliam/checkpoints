@@ -6,21 +6,38 @@
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   cursor: pointer;
 }
 
 .RippleElement {
-  background: radial-gradient(circle, rgba($md-green-200, 0.3), rgba($md-green-200, 0));
   position: absolute;
   transform: translate(-50%, -50%);
   border-radius: 50%;
+
+  .InkRipple--Normal & {
+    background: radial-gradient(circle, rgba($md-green-300, 0.4), rgba($md-green-300, 0));
+  }
+
+  .InkRipple--Light & {
+    background: radial-gradient(circle, rgba($md-green-100, 0.4), rgba($md-green-100, 0));
+  }
+
+  .InkRipple--Dark & {
+    background: radial-gradient(circle, rgba($md-green-500, 0.6), rgba($md-green-500, 0));
+  }
 
   &.ripple-enter {
     opacity: 0.01;
     width: 0;
     height: 0;
-    transition: all 400ms ease;
+
+    &.RippleElement--Slow {
+      transition: all 400ms ease;
+    }
+
+    &.RippleElement--Fast {
+      transition: all 200ms ease;
+    }
 
     &-active {
       opacity: 1;
@@ -33,7 +50,15 @@
     opacity: 1;
     width: 120%;
     height: 120%;
-    transition: all 200ms ease;
+
+    &.RippleElement--Slow {
+      transition: all 200ms ease;
+    }
+
+    &.RippleElement--Fast {
+      transition: all 100ms ease;
+    }
+
 
     &-active {
       opacity: 0;

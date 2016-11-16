@@ -3,7 +3,7 @@ import './Button.scss';
 import * as React from 'react';
 import * as classnames from 'classnames';
 
-import InkRipple from './InkRipple';
+import { AdvancedInkRipple } from './InkRipple';
 
 interface ButtonProps extends React.HTMLAttributes {
   type?: string;
@@ -60,4 +60,6 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
   }
 }
 
-export default InkRipple(Button);
+export default AdvancedInkRipple({
+  shade: 'Light'
+})(Button);

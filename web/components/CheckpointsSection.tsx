@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import Panel from './Panel';
 import CheckpointForm from './CheckpointForm';
 import CheckpointsList from './CheckpointsList';
+import IconButton from './IconButton';
+import { MaterialIcon } from './Icon';
 
 interface Props {
 
@@ -29,6 +31,7 @@ export class CheckpointsSection extends React.Component<Props, State> {
         </Panel>
         <Panel className="CheckpointsSection-list">
           <h1>My Checkpoints</h1>
+          <IconButton onClick={() => console.log(123)}><MaterialIcon icon="add" /></IconButton>
         </Panel>
         <CheckpointsList />
       </div>
