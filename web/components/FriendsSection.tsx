@@ -4,7 +4,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import Panel from './Panel';
-import { List, ListItem } from './List';
+import FriendBox from './FriendBox';
 
 import { getFriends } from '../actions/friends';
 
@@ -42,14 +42,7 @@ export class FriendsSection extends React.Component<Props, State> {
           <div className="row">
             {
               friends.map(f => {
-                const pictureUrl = _.get(f, 'picture.url') as string;
-                const picture = pictureUrl ? <img className="display" src={pictureUrl} /> : null;
-                return (
-                  <div key={f.id} className="friend-box col-xs-3 col-sm-2 col-md-6 col-lg-3">
-                    <div>{picture}</div>
-                    <div className="name" title={f.name}>{f.name.split(' ')[0]}</div>
-                  </div>
-                );
+                return (<FriendBox key={f.id} friend={f} />);
               })
             }
           </div>

@@ -37,6 +37,7 @@ declare namespace Checkpoints {
   interface Friend {
     id: number;
     name: string;
+    picture: Picture;
   }
 
   interface FacebookPicture {

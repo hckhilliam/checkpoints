@@ -39,7 +39,6 @@ function removeFriend(friend): FriendAction {
 }
 
 export function getFriends() {
-  console.log('got here');
   return dispatch => {
     return friends.getFriends()
       .then(friends => dispatch(updateFriends(friends)));
