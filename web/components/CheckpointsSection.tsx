@@ -11,8 +11,11 @@ import Button from './Button';
 import IconButton from './IconButton';
 import { MaterialIcon } from './Icon';
 
-interface Props {
+import { requestOverlay, clearOverlay } from '../actions/overlay';
 
+interface Props {
+  onRequestShowOverlay?: (ref: any, onClose: () => void) => void;
+  onRequestHideOverlay?: () => void;
 }
 
 interface State {
@@ -24,8 +27,20 @@ export class CheckpointsSection extends React.Component<Props, State> {
 
   };
 
+  node: HTMLElement;
+
   state: State = {
     add: false
+  };
+
+  showAddForm = () => {
+    this.setState({ add: true });
+    this.props.onRequestShowOverlay(this.node, () => this.setState({ add: false }));
+  };
+
+  hideAddForm = () => {
+    this.setState({ add: false });
+    this.props.onRequestHideOverlay();
   };
 
   render() {
@@ -34,17 +49,17 @@ export class CheckpointsSection extends React.Component<Props, State> {
     });
     return (
       <div className={cssClass}>
-        <div className="CheckpointsSection-header">
+        <div className="CheckpointsSection-header" ref={n => (n ? this.node = n : null)}>
           <Panel className="CheckpointsSection-title">
             <h1>My Checkpoints</h1>
-            <Button onClick={() => this.setState({ add: true })} primary>New Checkpoint</Button>
+            <Button onClick={this.showAddForm} primary>New Checkpoint</Button>
           </Panel>
           <Panel className="CheckpointsSection-form">
             <div className="CheckpointsSection-form-title">
               <h1>Create a Checkpoint</h1>
-              <IconButton onClick={() => this.setState({ add: false })}><MaterialIcon icon="close" /></IconButton>
+              <IconButton onClick={this.hideAddForm}><MaterialIcon icon="close" /></IconButton>
             </div>
-            <CheckpointForm onSubmitSuccess={() => this.setState({ add: false })} />
+            <CheckpointForm onSubmitSuccess={this.hideAddForm} />
           </Panel>
         </div>
         <CheckpointsList />
@@ -61,7 +76,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    onRequestShowOverlay: (ref: any, onClose: () => void) => {
+      dispatch(requestOverlay(ref, {
+        onClose
+      }));
+    },
+    onRequestHideOverlay: () => {
+      dispatch(clearOverlay());
+    }
   };
 };
 

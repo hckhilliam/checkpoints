@@ -13,10 +13,11 @@ import { reducer as form } from 'redux-form';
 import Router from './routes/Router';
 
 import checkpoints from './reducers/checkpointsReducer';
-import user from './reducers/userReducer';
 import events from './reducers/eventsReducer';
 import friends from './reducers/friendsReducer';
+import overlay from './reducers/overlayReducer';
 import search from './reducers/searchReducer';
+import user from './reducers/userReducer';
 
 import { initializeAuth } from './lib/auth';
 
@@ -29,7 +30,8 @@ const reducer = combineReducers({
   routing,
   form,
   events,
-  search
+  search,
+  overlay
 });
 
 const reduxRouterMiddleware = routerMiddleware(browserHistory as any);
