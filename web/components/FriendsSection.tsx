@@ -35,23 +35,25 @@ export class FriendsSection extends React.Component<Props, State> {
 
     return (
       <div className="FriendsSection">
-        <Panel className="FriendsSection-list">
+        <Panel className="FriendsSection-heading">
           <h1>My Friends</h1>
         </Panel>
-        <List>
-          {
-            friends.map(f => {
-              const pictureUrl = _.get(f, 'picture.url') as string;
-              const picture = pictureUrl ? <img src={pictureUrl} /> : null;
-              return (
-                <ListItem key={f.id}>
-                  <div>{picture}</div>
-                  <div>{f.name}</div>
-                </ListItem>
-              );
-            })
-          }
-        </List>
+        <Panel className="FriendsSection-list">
+          <div className="row">
+            {
+              friends.map(f => {
+                const pictureUrl = _.get(f, 'picture.url') as string;
+                const picture = pictureUrl ? <img className="display" src={pictureUrl} /> : null;
+                return (
+                  <div key={f.id} className="friend-box col-xs-3 col-sm-2 col-md-6 col-lg-3">
+                    <div>{picture}</div>
+                    <div className="name" title={f.name}>{f.name.split(' ')[0]}</div>
+                  </div>
+                );
+              })
+            }
+          </div>
+        </Panel>
       </div>
     );
   }

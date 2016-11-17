@@ -1,6 +1,6 @@
 @import "../styles/common";
 
-$mobileWidth: 850px;
+$mobileWidth: 64em;
 
 @media (min-width: $mobileWidth) {
 
@@ -38,11 +38,11 @@ $mobileWidth: 850px;
       display: flex;
       flex-direction: column;
 
-      @media (max-width: 1150px) {
-        width: 350px;
+      @media (max-width: 75em) {
+        width: 256px;
       }
-      @media (min-width: 1150px) {
-        width: 500px;
+      @media (min-width: 75em) {
+        width: 512px;
       }
 
       /*.FriendsSection {}*/
@@ -55,6 +55,9 @@ $mobileWidth: 850px;
 @media (max-width: $mobileWidth) {
   .Dashboard {
     width: 100%;
+  }
+  .DashboardRight {
+    margin: 0 32px;
   }
   .FriendsSection {
     margin-top: 16px;
