@@ -1,0 +1,29 @@
+@import "../styles/variables";
+
+.CheckpointsListItem {
+  &-title {
+    font-weight: 500;
+  }
+
+  &-divider {
+    margin: 0 4px;
+  }
+
+  &-wrapper {
+    display: flex;
+  }
+
+  &-icons {
+    display: flex;
+    margin-left: auto;
+
+    .Icon {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  &-completed.Icon {
+    color: $md-green-300;
+  }
+}

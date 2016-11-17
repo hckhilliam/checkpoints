@@ -4,8 +4,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import * as classnames from 'classnames';
 
-import { List, ExpandableListItem } from './List';
-import Checkpoint from './Checkpoint';
+import { List } from './List';
+import CheckpointsListItem from './CheckpointsListItem';
 
 import { getCheckpoints, getCheckpoint } from '../actions/checkpoints';
 
@@ -71,16 +71,12 @@ export class CheckpointsList extends React.Component<Props, State> {
           checkpoints.filter(c => !c.isCompleted).map(c => {
             const selected = c.id == checkpoint.id;
             return (
-              <ExpandableListItem
+              <CheckpointsListItem
                 key={c.id}
+                checkpoint={c}
                 selected={selected}
-                loading={selected && !c.loaded}
-                expanded={c.loaded}
-                body={<Checkpoint checkpoint={c} />}
                 onClick={() => this.handleSelectCheckpoint(c)}
-              >
-                <span style={{ fontWeight: 500 }}>{c.title}</span> — {c.description}
-              </ExpandableListItem>
+              />
             );
           })
         }
