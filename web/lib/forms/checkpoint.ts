@@ -12,8 +12,24 @@ export function addCheckpoint(data: Checkpoints.Forms.Checkpoint) {
     });
 }
 
+export function editCheckpoint(data: Checkpoints.Forms.Checkpoint) {
+  const checkpoint: Checkpoints.Checkpoint = {
+    id: data.id,
+    title: data.title,
+    description: data.description,
+    isPrivate: data.private
+  };
+  return checkpoints.saveCheckpoint(checkpoint)
+    .catch(err => {
+      throw err.error.error;
+    });
+}
+
 export function validate(data: Checkpoints.Forms.Checkpoint) {
   const errors = {};
+
+  if (!data)
+    return errors;
 
   if (!data.title) {
     errors['title'] = 'Add a title';

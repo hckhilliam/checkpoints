@@ -53,7 +53,7 @@ export function getCheckpoint(checkpointId: number) {
     if (index < 0 || !state.checkpoints[index].loaded)
       return checkpoints.getCheckpoint(checkpointId)
         .then(checkpoint => dispatch(updateCheckpoint(checkpoint)));
-  }
+  };
 }
 
 export function addCheckpoint(checkpoint: Checkpoints.Checkpoint) {
@@ -74,5 +74,18 @@ export function deleteCheckpoint(checkpointId: number) {
   return dispatch => {
     return checkpoints.deleteCheckpoint(checkpointId)
       .then(() => dispatch(removeCheckpoint(checkpointId)));
+  };
+}
+
+export function completeCheckpoint(checkpointId: number, completed = true) {
+  return (dispatch, getState: () => Checkpoints.State) => {
+    const state = getState();
+    const checkpoint = state.checkpoints.find(c => c.id == checkpointId);
+    if (checkpoint && checkpoint.isCompleted != completed) {
+      const update = Object.assign({}, checkpoint, {
+        isCompleted: completed
+      });
+      return dispatch(saveCheckpoint(update));
+    }
   };
 }

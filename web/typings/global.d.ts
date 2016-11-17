@@ -83,6 +83,7 @@ declare namespace Checkpoints {
     }
 
     interface Checkpoint {
+      id?: number;
       title: string;
       description: string;
       private: boolean;

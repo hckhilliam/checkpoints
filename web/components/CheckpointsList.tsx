@@ -19,6 +19,35 @@ interface State {
   checkpoint?: Checkpoints.Checkpoint;
 }
 
+interface CheckpointsListSectionProps {
+  title: string;
+  checkpoints: Checkpoints.Checkpoint[];
+  selectedId: number;
+  onClick: (checkpoint: Checkpoints.Checkpoint) => void;
+}
+
+const CheckpointsListSection = (props: CheckpointsListSectionProps) => {
+  const { title, checkpoints, selectedId, onClick } = props;
+  return (
+    <div className="CheckpointsListSection">
+      <h2>{title}</h2>
+      {
+        checkpoints.map(c => {
+          const selected = c.id == selectedId;
+          return (
+            <CheckpointsListItem
+              key={c.id}
+              checkpoint={c}
+              selected={selected}
+              onClick={() => onClick(c)}
+            />
+          );
+        })
+      }
+    </div>
+  );
+};
+
 export class CheckpointsList extends React.Component<Props, State> {
   static defaultProps: Props = {
     onComponentDidMount: () => {},
@@ -47,7 +76,7 @@ export class CheckpointsList extends React.Component<Props, State> {
     }
   }
 
-  handleSelectCheckpoint(checkpoint: Checkpoints.Checkpoint) {
+  handleSelectCheckpoint = (checkpoint: Checkpoints.Checkpoint) => {
     const c = this.state.checkpoint;
     if (c && c.id == checkpoint.id) {
       this.setState({ checkpoint: {} as Checkpoints.Checkpoint });
@@ -55,7 +84,7 @@ export class CheckpointsList extends React.Component<Props, State> {
       this.setState({ checkpoint });
       this.props.onSelectCheckpoint(checkpoint);
     }
-  }
+  };
 
   render() {
     const { className, checkpoints } = this.props;
@@ -65,20 +94,30 @@ export class CheckpointsList extends React.Component<Props, State> {
 
     const cssClass = classnames('CheckpointsList', className);
 
+    const pending = checkpoints.filter(c => !c.isCompleted);
+    const complete = checkpoints.filter(c => c.isCompleted);
+
     return (
       <List className={cssClass} {...other}>
         {
-          checkpoints.filter(c => !c.isCompleted).map(c => {
-            const selected = c.id == checkpoint.id;
-            return (
-              <CheckpointsListItem
-                key={c.id}
-                checkpoint={c}
-                selected={selected}
-                onClick={() => this.handleSelectCheckpoint(c)}
+          pending.length
+            ? <CheckpointsListSection
+                title="In Progress"
+                checkpoints={pending}
+                selectedId={checkpoint.id}
+                onClick={this.handleSelectCheckpoint}
               />
-            );
-          })
+            : null
+        }
+        {
+          complete.length
+            ? <CheckpointsListSection
+                title="Complete"
+                checkpoints={complete}
+                selectedId={checkpoint.id}
+                onClick={this.handleSelectCheckpoint}
+              />
+            : null
         }
       </List>
     );

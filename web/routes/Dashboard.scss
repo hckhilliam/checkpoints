@@ -4,7 +4,7 @@ $mobileWidth: 64em;
 
 @media (min-width: $mobileWidth) {
 
-  .UserRoot .UserRoot-content { //duplictate style selector to put in flex display style
+  .UserRoot .UserRoot-content {
     display: flex;
   }
 
@@ -13,15 +13,15 @@ $mobileWidth: 64em;
     display: flex;
     flex-direction: row;
     width: 100%;
-    
-    
+
+    /* This only works on webkit browsers :( pls fix */
     ::-webkit-scrollbar {
-      width: 0px;
+      width: 4px;
       background: transparent;
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #FF0000;
+      background: rgba($md-green-500, 0.87);
     }
 
     .CheckpointsSection {
@@ -30,8 +30,8 @@ $mobileWidth: 64em;
 
       overflow: scroll;
       overflow-x: hidden;
-      
-    
+
+
     }
     .DashboardRight{
       margin: 16px;

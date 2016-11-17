@@ -1,3 +1,19 @@
+@import "../styles/variables";
+
 .CheckpointsList {
 
+}
+
+.CheckpointsListSection {
+  h2 {
+    font-size: 13px;
+    font-weight: 500;
+    color: $md-dark-text-secondary;
+
+    margin: 16px 32px;
+  }
+
+  .CheckpointsListItem:nth-child(2) {
+    margin-top: 0;
+  }
 }

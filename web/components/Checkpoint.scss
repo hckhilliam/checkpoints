@@ -1,7 +1,91 @@
+@import "../styles/variables";
+
 .Checkpoint {
+  position: relative;
   padding: 12px;
+  border-left: 4px solid $md-amber-500;
+
+  &--complete {
+    border-left-color: $md-green-500;
+  }
+
+  &--edit &-form {
+    display: block;
+  }
+
+  &-title {
+    display: flex;
+    align-items: center;
+
+    .IconButton {
+      margin-left: auto;
+    }
+
+    .CheckpointStatus {
+      margin-left: 8px;
+    }
+  }
+
+  &-description, &-visibility {
+    margin: 8px 0;
+  }
+
+  &-buttons {
+    display: flex;
+
+    .Button:first-child {
+      margin-left: auto;
+    }
+  }
 
   h1 {
     font-size: 20px;
+  }
+
+  h3 {
+    font-size: 13px;
+    font-weight: 500;
+    color: $md-dark-text-secondary;
+  }
+
+  &-form {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding: 12px;
+    z-index: 5;
+    background-color: $md-grey-50;
+    display: none;
+
+    &-header {
+      display: flex;
+      align-items: center;
+
+      .IconButton {
+        margin-left: auto;
+        margin-right: -8px;
+      }
+    }
+  }
+}
+
+.CheckpointStatus {
+  &-text {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+    padding: 4px;
+    margin: 4px 0;
+    border-radius: 4px;
+    border: 2px solid $md-amber-500;
+    color: $md-amber-a700;
+    background-color: $md-yellow-100;
+  }
+
+  &--complete &-text {
+    border-color: $md-green-500;
+    color: $md-green-700;
+    background-color: $md-light-green-100;
   }
 }

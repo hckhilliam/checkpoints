@@ -44,16 +44,27 @@ class BaseExpandableListItem extends React.Component<ExpandableListItemProps, Ex
   body: HTMLDivElement;
 
   componentWillReceiveProps(nextProps: ExpandableListItemProps) {
-    if (this.body && !this.props.expanded && nextProps.expanded) {
+    if (this.props.expanded && nextProps.expanded) {
+      this.updateBodyHeight();
+    }
+  }
+
+  updateBodyHeight() {
+    if (this.body) {
       const bodyHeight = this.body.clientHeight;
       if (this.state.bodyHeight != bodyHeight)
         this.setState({ bodyHeight });
     }
   }
 
+  handleBodyRef = node => {
+    this.body = node;
+    this.updateBodyHeight();
+  };
+
   render() {
-    const { className, children, selected, expanded, body } = this.props;
-    const other = _.omit(this.props, 'className', 'children', 'selected', 'expanded', 'body', 'style');
+    const { className, children, selected, expanded, body, onClick } = this.props;
+    const other = _.omit(this.props, 'className', 'children', 'selected', 'expanded', 'body', 'style', 'onClick');
     const cssClass = classnames('ExpandableListItem', className, {
       'ExpandableListItem--selected': selected,
       'ExpandableListItem--expanded': selected && expanded
@@ -65,12 +76,18 @@ class BaseExpandableListItem extends React.Component<ExpandableListItemProps, Ex
 
     return (
       <ListItem className={cssClass} style={style} {...other}>
-        <div className="ExpandableListItem-content">
+        <div className="ExpandableListItem-content" onClick={onClick}>
           {children}
         </div>
-        <div className="ExpandableListItem-body" ref={n => this.body = n}>
-          {body}
-        </div>
+        {
+          selected
+            ? (
+                <div className="ExpandableListItem-body" ref={this.handleBodyRef}>
+                  {body}
+                </div>
+            )
+            : null
+        }
       </ListItem>
     );
   }

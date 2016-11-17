@@ -1,7 +1,8 @@
 import './CheckpointForm.scss';
 
 import * as React from 'react';
-import { reduxForm, SubmissionError, reset } from 'redux-form';
+import { connect } from 'react-redux';
+import { reduxForm, SubmissionError, initialize, reset } from 'redux-form';
 import * as classnames from 'classnames';
 
 import Form from './Form';
@@ -10,14 +11,34 @@ import Button from './Button';
 import { CheckboxField } from './Checkbox';
 import FormButtons from './FormButtons';
 
-import { addCheckpoint, validate } from '../lib/forms/checkpoint';
+import { addCheckpoint, editCheckpoint, validate } from '../lib/forms/checkpoint';
 import { getCheckpoints } from '../actions/checkpoints';
 
-export class CheckpointForm extends React.Component<React.HTMLAttributes, {}> {
+interface CheckpointFormProps extends React.HTMLAttributes {
+  checkpointId?: number;
+  edit?: boolean;
+}
+
+const getButtonText = (submitting: boolean, edit: boolean) => {
+  if (edit) {
+    return submitting ? 'Saving' : 'Save';
+  } else {
+    return submitting ? 'Creating' : 'Create';
+  }
+};
+
+export class CheckpointForm extends React.Component<CheckpointFormProps, {}> {
+  componentDidMount() {
+    const { initialValues, initialize } = this.props;
+    if (initialValues) {
+      initialize(initialValues);
+    }
+  }
+
   render() {
-    const { className, submitting } = this.props;
-    const other = _.omit(this.props, className);
-    const buttonText = submitting ? 'Creating' : 'Create';
+    const { className, submitting, edit } = this.props;
+    const other = _.omit(this.props, 'className', 'edit');
+    const buttonText = getButtonText(submitting, edit);
     const cssClass = classnames('CheckpointForm', className);
     return (
       <Form className={cssClass} {...other}>
@@ -32,7 +53,7 @@ export class CheckpointForm extends React.Component<React.HTMLAttributes, {}> {
   }
 }
 
-const CheckpointsReduxForm = reduxForm({
+const CheckpointReduxForm = reduxForm({
   form: 'CheckpointForm',
   validate: validate as any,
   onSubmit: (values: Checkpoints.Forms.Checkpoint, dispatch) => {
@@ -45,4 +66,32 @@ const CheckpointsReduxForm = reduxForm({
   }
 })(CheckpointForm);
 
-export default CheckpointsReduxForm;
+export default CheckpointReduxForm;
+
+const EditCheckpointReduxForm = reduxForm({
+  form: 'EditCheckpointForm',
+  validate: validate as any,
+  onSubmit: (values: Checkpoints.Forms.Checkpoint, dispatch) => {
+    return editCheckpoint(values)
+      .then(() => {
+        dispatch(reset('EditCheckpointForm'));
+        dispatch(getCheckpoints());
+      })
+      .catch(err => new SubmissionError({ _error: err }));
+  },
+  edit: true
+} as any)(CheckpointForm);
+
+const mapStateToProps = (state: Checkpoints.State, ownProps) => {
+  const checkpoint = state.checkpoints.find(c => c.id == ownProps.checkpointId);
+  return {
+    initialValues: {
+      id: checkpoint.id,
+      title: checkpoint.title,
+      description: checkpoint.description,
+      private: checkpoint.isPrivate
+    }
+  };
+};
+
+export const EditCheckpointForm = connect(mapStateToProps)(EditCheckpointReduxForm);
