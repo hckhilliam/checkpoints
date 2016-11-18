@@ -8,7 +8,7 @@ import * as path from 'path';
 
 import { setRoutes } from './routes/router';
 import { initializeAuth } from './auth/auth';
-import { job, matchEvents } from './jobs/scheduler';
+import { job } from './jobs/scheduler';
 
 const app = express();
 
