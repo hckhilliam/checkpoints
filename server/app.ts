@@ -8,6 +8,7 @@ import * as path from 'path';
 
 import { setRoutes } from './routes/router';
 import { initializeAuth } from './auth/auth';
+import { job, matchEvents } from './jobs/scheduler';
 
 const app = express();
 
@@ -35,6 +36,8 @@ app.use(function(req, res, next) {
   (err as any).status = 404;
   next(err);
 });
+
+// job.start();
 
 // error handlers
 

@@ -12,11 +12,13 @@
     "build": "webpack --progress"
   },
   "dependencies": {
+    "@types/cron": "^1.0.30",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "classnames": "^2.2.5",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.1",
+    "cron": "^1.1.1",
     "dateformat": "^1.0.12",
     "debug": "^2.2.0",
     "express": "^4.14.0",

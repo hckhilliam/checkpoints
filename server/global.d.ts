@@ -1,5 +1,6 @@
 declare namespace Checkpoints {
   export interface Event {
+    id: number;
     name: string;
     description: string;
     startTime: Date;
