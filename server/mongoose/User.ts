@@ -1,3 +1,5 @@
+const debug = require('debug')('checkpoints:mongooseUser');
+
 import * as mongoose from 'mongoose';
 const autoIncrement = require('mongoose-auto-increment');
 
@@ -26,6 +28,7 @@ const schema = {
   email: { type: String, required: true, unique: true },
   password: String,
   name: { type: String, required: true },
+  insensitiveName: { type: String },
   friends: [Number],
   friendRequests: [Number],
   accounts: accountsSchema,
@@ -38,6 +41,25 @@ userSchema.plugin(autoIncrement.plugin, {
   startAt: 1,
   incrementBy: 1
 });
+
+function updateInsensitiveName(next) {
+  let self = this._update;
+  debug(self.name);
+  if (_.isString(self.name)) {
+    self.insensitiveName = self.name.toUpperCase();
+  }
+  next();
+}
+
+userSchema.pre('save', function (next) {
+  debug(this.insensitiveName);
+  this.insensitiveName = this.name.toUpperCase();
+  next();
+});
+
+userSchema.pre('update', updateInsensitiveName)
+  .pre('findOneAndUpdate', updateInsensitiveName)
+  .pre('findByIdAndUpdate', updateInsensitiveName);
 
 userSchema.index({ 'accounts.facebook.id': 'hashed' });
 

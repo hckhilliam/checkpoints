@@ -109,21 +109,49 @@ export function getFacebookFriends(facebookId: string) {
   if (!facebookId) {
     debug(`no fb id specified. returning empty array...`);
     return Promise.resolve([]);
-  } else {
-    return getFacebookToken(facebookId).then(token => {
-      debug(`fb token found: ${token}`);
-      if (!token)
-        throw new Error(`Facebook token (${facebookId}) not found`);
+  }
 
-      return new Promise((resolve, reject) => {
-        fb(token.token).api('/me/friends', { fields: ['id'] }, res => {
-          if (res && res.error)
-            return reject(new Error(res.error.code));
-          
-          debug(_.map(res.data, 'id'));
-          User.find({ 'accounts.facebook.id': { $in: _.map(res.data, 'id') } }, GENERIC_USER_DATA).then(resolve);
+  return getFacebookToken(facebookId).then(token => {
+    debug(`fb token found: ${token}`);
+    if (!token)
+      throw new Error(`Facebook token (${facebookId}) not found`);
+
+    return new Promise((resolve, reject) => {
+      fb(token.token).api('/me/friends', { fields: ['id'] }, res => {
+        if (res && res.error)
+          return reject(new Error(res.error.code));
+        
+        debug(_.map(res.data, 'id'));
+        User.find({ 'accounts.facebook.id': { $in: _.map(res.data, 'id') } }, GENERIC_USER_DATA).then(resolve);
+      });
+    });
+  });
+  
+}
+
+export function syncFacebookFriends(user_id: number, facebookId: string) {
+  debug(`syncing facebook friends for fbid: ${facebookId}`);
+  if (!facebookId) {
+    debug(`no fb id specified. returning...`);
+    return Promise.resolve();
+  }
+
+  return getFacebookFriends(facebookId).then(friends => {
+    return new Promise(resolve => {
+      debug(friends);
+      User.findByIdAndUpdate(user_id, {
+        $addToSet: { friends: { $each: _.map(friends, '_id') } }
+      }).then(resolve);
+
+      // do not need to wait for these to finish
+      friends.forEach(f => {
+        debug(`syncing friend for ${f._id}`);
+        User.findByIdAndUpdate(f._id, {
+          $addToSet: { friends: user_id }
+        }).then(function () {
+          debug(`finished syncing friend for ${f._id}`);
         });
       });
     });
-  }
+  });
 }

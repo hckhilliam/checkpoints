@@ -2,16 +2,18 @@ const debug = require('debug')('checkpoints:friend');
 import User from '../mongoose/User';
 import { GENERIC_USER_DATA } from '../lib/data';
 
-export function getFriends(user_id: number) {
+export function getFriends(user_id: number): Promise<CheckpointsServer.User[]> {
   return new Promise((resolve, reject) => {
     User.findById(user_id, { friends: 1 }).then(user => {
       debug(user['friends']);
-      User.find({ _id: { $in: user['friends'] } }, GENERIC_USER_DATA).then(resolve);
+      User.find({ _id: { $in: user['friends'] } }, GENERIC_USER_DATA)
+        .sort('insensitiveName')
+        .then(resolve);
     });
   });
 }
 
-export function getFriendRequests(user_id: number) {
+export function getFriendRequests(user_id: number): Promise<CheckpointsServer.User[]> {
   debug(`Getting all friend requests for user (${user_id})`);
   return new Promise((resolve, reject) => {
     User.findById(user_id, { friendRequests: 1 })
