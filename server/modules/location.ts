@@ -2,12 +2,7 @@ const debug = require('debug')('checkpoints:locationModule');
 import { Request } from 'express';
 var geoip = require('node-freegeoip');
 
-interface Location {
-  lng: Number;
-  lat: Number;
-}
-
-export function getLocation(req: Request): Promise<Location> {
+export function getLocation(req: Request): Promise<CheckpointsServer.Location> {
   let ip = req.headers['X-Forwarded-For'] ||
     req['connection'].remoteAddress ||
     req.socket.remoteAddress ||
@@ -18,6 +13,7 @@ export function getLocation(req: Request): Promise<Location> {
       if (err)
         return reject(err);
       resolve({
+        country: location.country_name, 
         lat: location.latitude,
         lng: location.longitude
       });

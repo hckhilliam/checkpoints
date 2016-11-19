@@ -10,6 +10,7 @@ import users from './users';
 
 import error from '../handlers/error';
 import event from './event';
+import flight from './flight';
 
 import { authenticate } from '../auth/auth';
 
@@ -27,6 +28,7 @@ api.all('*', init, authenticate);
 api.use('/me', me);
 api.use('/users', users);
 api.use('/events', event);
+api.use('/flights', flight);
 
 api.use(error);
 

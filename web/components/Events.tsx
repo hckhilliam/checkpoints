@@ -49,6 +49,7 @@ export class Events extends React.Component<Props, State> {
     }
   }
 
+
   render() {
     return (
       <div className="Events">
@@ -64,6 +65,7 @@ export class Events extends React.Component<Props, State> {
               <ExpandableListItem
                 selected={selected}
                 key={id}
+                body={<div>{event.description}</div>}
                 loading={false}
                 onClick={() => this.onClickEvent(id)}
               >

@@ -56,4 +56,23 @@ declare namespace CheckpointsServer {
     name: string;
     picture?: Picture;
   }
+  
+  interface Location {
+    lng: Number;
+    lat: Number;
+    country: String;
+  }
+
+  interface Flight {
+    price: number;
+    url: string;
+  }
+
+  interface FlightQuery {
+    origin: string;
+    destination: string;
+    originCode: string;
+    destinationCode: string; 
+    departureDate?: Date;
+  }
 }

@@ -1,3 +1,5 @@
+const debug = require('debug')('checkpoints:checkpointsEvents');
+
 import { Router, Request, Response } from 'express';
 import { eventCriteria, getFilteredEvents } from '../modules/event';
 import { getLocation } from '../modules/location';
@@ -10,6 +12,7 @@ api.post('/', (req: CheckpointsServer.Request & Request, res: Response, next) =>
 
   let deferred: Promise<eventCriteria> = Promise.resolve(criteria);
   if (!(criteria.lat && criteria.lng)) {
+    debug('lat and lng are not set');
     deferred = getLocation(req).then(location => {
       return Object.assign(criteria, {
         lat: location.lat,
