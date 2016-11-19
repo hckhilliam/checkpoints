@@ -54,6 +54,9 @@
 }
 
 .CheckpointStatus {
+  user-select: none;
+  cursor: default;
+
   &-text {
     font-size: 12px;
     font-weight: 500;

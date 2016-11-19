@@ -40,5 +40,10 @@
     position: absolute;
     width: 100%;
     white-space: normal;
+    user-select: initial;
+
+    h3 {
+      user-select: none;
+    }
   }
 }

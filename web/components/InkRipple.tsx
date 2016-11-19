@@ -14,6 +14,7 @@ interface InkRippleProps extends React.HTMLAttributes {
   size?: number; // size of ripple, leave empty for auto
   toggle?: boolean; // Change on toggle prop issues ripple on middle of element
   center?: boolean; // true: center on ripple, false: center on click (default)
+  event?: React.MouseEvent; // pass in mouse event to position ripple
 }
 
 interface InkRippleState {
@@ -74,7 +75,9 @@ export class InkRippleElement extends React.Component<InkRippleProps, InkRippleS
     const t1 = this.props.toggle;
     const t2 = nextProps.toggle;
     if (!_.isUndefined(t1 || t2) && t1 != t2) {
-      this.startCenterRipple();
+      nextProps.event
+        ? this.handleRipple(nextProps.event)
+        : this.startCenterRipple();
     }
   }
 
@@ -113,8 +116,6 @@ export class InkRippleElement extends React.Component<InkRippleProps, InkRippleS
   }
 
   handleRipple = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    event.preventDefault();
     if (this.props.disabled)
       return;
 
@@ -170,7 +171,7 @@ export class InkRippleElement extends React.Component<InkRippleProps, InkRippleS
 
   render() {
     const { className, shade, duration, toggle, size } = this.props;
-    const other = _.omit(this.props, 'className', 'shade', 'toggle', 'duration', 'size', 'center');
+    const other = _.omit(this.props, 'className', 'shade', 'toggle', 'duration', 'size', 'center', 'event');
 
     const cssClass = classnames('InkRipple', className, `InkRipple--${shade}`);
     const style = _.pick(this.state.style, 'position', 'width', 'height');
@@ -207,16 +208,40 @@ const defaultInkRippleOptions: InkRippleOptions = {
   shade: 'Normal'
 };
 
-export function AdvancedInkRipple<P>(options = defaultInkRippleOptions): (WrappedComponent: React.ComponentClass<P>) => (React.ComponentClass<P & InkRippleProps>) {
+export function AdvancedInkRipple<P extends React.HTMLAttributes>(options = defaultInkRippleOptions): (WrappedComponent: React.ComponentClass<P>) => (React.ComponentClass<P & InkRippleProps>) {
   return function InkRipple(WrappedComponent: React.ComponentClass<P>): React.ComponentClass<P & InkRippleProps> {
-    return class extends React.Component<P & InkRippleProps, {}> {
+    return class extends React.Component<P & InkRippleProps, { ripple?: boolean, event?: React.MouseEvent }> {
+      state = {
+        ripple: true,
+        event: null
+      }
+
+      handleRipple = (event: React.MouseEvent) => {
+        event.persist();
+        this.setState({
+          ripple: !this.state.ripple,
+          event
+        });
+
+        if (this.props.onMouseDown)
+          this.props.onMouseDown(event);
+      };
+
       render() {
         const { children, disabled } = this.props;
-        const other = _.omit(this.props, 'children', 'disabled');
+        const other = _.omit(this.props, 'children', 'disabled', 'onMouseDown');
         if (!_.isUndefined(disabled))
           other['disabled'] = disabled;
 
-        return <WrappedComponent {...other}>{children}<InkRippleElement disabled={disabled} {...options} /></WrappedComponent>
+        return (
+          <WrappedComponent
+            onMouseDown={this.handleRipple}
+            {...other}
+          >
+            {children}
+            <InkRippleElement disabled={disabled} toggle={this.state.ripple} event={this.state.event} {...options} />
+          </WrappedComponent>
+        );
       }
     };
   };

@@ -31,6 +31,15 @@ interface ExpandableListItemState {
   bodyHeight?: number;
 }
 
+const ExpandableListItemContentElement = (props: React.HTMLAttributes) => {
+  return (
+    <div className="ExpandableListItem-content" {...props}>
+      {props.children}
+    </div>
+  );
+};
+const ExpandableListItemContent = InkRipple(ExpandableListItemContentElement as any);
+
 class BaseExpandableListItem extends React.Component<ExpandableListItemProps, ExpandableListItemState> {
   static defaultProps: ExpandableListItemProps = {
     selected: false,
@@ -76,24 +85,21 @@ class BaseExpandableListItem extends React.Component<ExpandableListItemProps, Ex
 
     return (
       <ListItem className={cssClass} style={style} {...other}>
-        <div className="ExpandableListItem-content" onClick={onClick}>
+        <ExpandableListItemContent onClick={onClick}>
           {children}
-        </div>
+        </ExpandableListItemContent>
         {
-          selected
-            ? (
-                <div className="ExpandableListItem-body" ref={this.handleBodyRef}>
-                  {body}
-                </div>
-            )
-            : null
+          selected &&
+            <div className="ExpandableListItem-body" ref={this.handleBodyRef}>
+              {body}
+            </div>
         }
       </ListItem>
     );
   }
 }
 
-export const ExpandableListItem = AddLinearProgress(InkRipple(BaseExpandableListItem));
+export const ExpandableListItem = AddLinearProgress(BaseExpandableListItem);
 export const ClickableListItem = InkRipple(ListItem);
 
 export default ListItem;
