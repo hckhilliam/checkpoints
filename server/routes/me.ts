@@ -4,6 +4,7 @@ import { Router, Request, Response } from 'express';
 
 import common from './common';
 import friends from './friends';
+import search from './search';
 
 const api = Router();
 
@@ -20,5 +21,6 @@ api.get('/info', (req: CheckpointsServer.Request, res: Response) => {
 
 api.use('/', common);
 api.use('/friends', friends);
+api.use('/search', search);
 
 export default api;

@@ -5,6 +5,10 @@ function parseUser(user: any): CheckpointsServer.User {
   return user;
 }
 
+function parseUsers(users: any): CheckpointsServer.User[] {
+  return users;
+}
+
 export function createUser(user: CheckpointsServer.User): Promise<CheckpointsServer.User> {
   debug(`Create user (${user.name}) (${user.email})`);
   return User.create(user);
@@ -13,6 +17,11 @@ export function createUser(user: CheckpointsServer.User): Promise<CheckpointsSer
 export function getUser(userId: number): Promise<CheckpointsServer.User> {
   debug(`Finding user (${userId})`);
   return User.findById(userId).then(parseUser);
+}
+
+export function getAllUsers(): Promise<CheckpointsServer.User[]> {
+  debug('Finding all users');
+  return User.find().then(parseUsers);
 }
 
 export function getUserByEmail(email: string): Promise<CheckpointsServer.User> {

@@ -66,6 +66,10 @@ export function useFacebookStrategy() {
             return facebook.updateFacebookPicture(fbUser.id, overwrite).then(() => values)
           })
           .then(values => {
+            const user = values[2];
+            return facebook.syncFacebookFriends(user._id, fbUser.id).then(() => values)
+          })
+          .then(values => {
             done(null, {
               user: values[2],
               accessToken: values[0].token,

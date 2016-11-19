@@ -5,6 +5,7 @@ import { Request, Response } from 'express';
 import * as friend from '../modules/friend';
 import * as facebook from '../modules/facebook';
 import { getUserId, getFacebookId } from '../lib/request';
+import { userSort } from '../lib/sort';
 
 export function addFriend(req: Request, res: Response, next: any) {
   friend.addFriend(getUserId(req), Number(req.params['_id']))
@@ -13,21 +14,9 @@ export function addFriend(req: Request, res: Response, next: any) {
 }
 
 export function getFriends(req: Request, res: Response, next: any) {
-  Promise.all([
-    friend.getFriends(getUserId(req)),
-    facebook.getFacebookFriends(getFacebookId(req))
-  ]).then(values => {
-    const [friends, fbFriends] = values;
-    debug('Checkpoints Friends:');
+  friend.getFriends(getUserId(req)).then(friends => {
     debug(friends);
-    debug('Facebook Friends:');
-    debug(fbFriends);
-
-    res.json(fbFriends.concat(friends).sort(function (a, b) {
-      let cmp1 = a.name.toUpperCase();
-      let cmp2 = b.name.toUpperCase(); 
-      return Number(cmp1 > cmp2) - Number(cmp1 < cmp2);
-    }));
+    res.json(friends);
   }).catch(next);
 }
 

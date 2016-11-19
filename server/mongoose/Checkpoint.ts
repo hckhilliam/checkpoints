@@ -42,6 +42,7 @@ checkpointSchema.plugin(autoIncrement.plugin, {
 });
 
 checkpointSchema.pre('save', function (next) {
+  debug(`${this}`);
   this.createdOn = new Date();
   next();
 });
