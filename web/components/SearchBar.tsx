@@ -25,32 +25,32 @@ export class SearchBar extends React.Component<SearchProps, SearchState> {
     results: []
   };
 
-  search = (event) => {
-    this.props.deepSearch(event.target.value);
-    this.filter(event.target.value, this.state.results);
+  search = (searchQuery) => {
+    this.props.deepSearch(searchQuery);
+    this.filter(searchQuery, this.state.results);
   };
 
   filter = (searchQuery, results: Checkpoints.SearchResult[]) => {
     let searchRegEx = new RegExp('\\b' + searchQuery, 'i');
-    this.setState({ results: results.filter(r => {
+    this.setState({ results: results.map(r => {
         if (searchRegEx.test(r.name)) {
           r.show = true;
         } else {
           r.show = false;
         }
-        return true;
+        return r;
       })
     });
   }
 
   editSearch = (event) => {
     this.setState({ searchText: event.target.value });
-    this.search(event);
+    this.search(event.target.value);
   };
 
   onSubmit = (event) => {
     event.preventDefault();
-    this.search(event);
+    this.search(this.state.searchText);
   }
 
   selectResult = (event) => {
