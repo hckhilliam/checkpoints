@@ -13,6 +13,7 @@ import { reducer as form } from 'redux-form';
 import Router from './routes/Router';
 
 import checkpoints from './reducers/checkpointsReducer';
+import dialog from './reducers/dialogReducer';
 import events from './reducers/eventsReducer';
 import friends from './reducers/friendsReducer';
 import overlay from './reducers/overlayReducer';
@@ -31,7 +32,8 @@ const reducer = combineReducers({
   form,
   events,
   search,
-  overlay
+  overlay,
+  dialog
 });
 
 const reduxRouterMiddleware = routerMiddleware(browserHistory as any);

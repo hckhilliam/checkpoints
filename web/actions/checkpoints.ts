@@ -31,10 +31,10 @@ function updateCheckpoints(checkpoints): CheckpointsAction {
   };
 }
 
-function removeCheckpoint(checkpoint): CheckpointAction {
+function removeCheckpoint(checkpointId): CheckpointAction {
   return {
     type: REMOVE_CHECKPOINT,
-    checkpoint
+    checkpoint: { id: checkpointId }
   };
 }
 

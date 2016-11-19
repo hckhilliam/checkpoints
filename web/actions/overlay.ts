@@ -22,7 +22,7 @@ const defaultOptions: OverlayOptions = {
   onClose: () => {}
 };
 
-export function requestOverlay(node: any, options = defaultOptions): OverlayAction {
+export function showOverlay(node: any, options = defaultOptions): OverlayAction {
   if (options != defaultOptions)
     options = Object.assign({}, defaultOptions, options);
   options.node = node;
@@ -32,7 +32,7 @@ export function requestOverlay(node: any, options = defaultOptions): OverlayActi
   };
 }
 
-export function clearOverlay(): Action {
+export function hideOverlay(): Action {
   return {
     type: CLEAR_OVERLAY
   };

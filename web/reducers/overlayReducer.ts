@@ -2,20 +2,20 @@ import { REQUEST_OVERLAY, CLEAR_OVERLAY, OverlayAction, OverlayOptions } from '.
 
 type OverlayState = OverlayOptions[];
 
-function requestOverlay(state: OverlayState, options: OverlayOptions) {
+function showOverlay(state: OverlayState, options: OverlayOptions) {
   return state.concat([options]);
 }
 
-function clearOverlay(state: OverlayState) {
+function hideOverlay(state: OverlayState) {
   return state.slice(0, -1);
 }
 
 export default function reducer(state: OverlayState = [], action) {
   switch (action.type) {
     case REQUEST_OVERLAY:
-      return requestOverlay(state, (action as OverlayAction).options);
+      return showOverlay(state, (action as OverlayAction).options);
     case CLEAR_OVERLAY:
-      return clearOverlay(state);
+      return hideOverlay(state);
     default:
       return state;
   }

@@ -11,7 +11,7 @@ import Button from './Button';
 import IconButton from './IconButton';
 import { MaterialIcon } from './Icon';
 
-import { requestOverlay, clearOverlay } from '../actions/overlay';
+import { showOverlay, hideOverlay } from '../actions/overlay';
 
 interface Props {
   onRequestShowOverlay?: (ref: any, onClose: () => void) => void;
@@ -77,12 +77,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onRequestShowOverlay: (ref: any, onClose: () => void) => {
-      dispatch(requestOverlay(ref, {
+      dispatch(showOverlay(ref, {
         onClose
       }));
     },
     onRequestHideOverlay: () => {
-      dispatch(clearOverlay());
+      dispatch(hideOverlay());
     }
   };
 };

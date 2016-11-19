@@ -1,0 +1,80 @@
+@import "../styles/variables";
+
+.Dialogs {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 0;
+  transition: all 0.01s ease 0.2s;
+
+  &--active {
+    width: 100%;
+    transition: none;
+  }
+
+  .dialog-enter {
+    opacity: 0.01;
+  }
+
+  .dialog-enter.dialog-enter-active {
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  .dialog-leave {
+    opacity: 1;
+  }
+
+  .dialog-leave.dialog-leave-active {
+    opacity: 0.01;
+    transition: opacity 0.2s ease;
+  }
+}
+
+.Dialog {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  max-height: 100%;
+  background-color: $md-grey-50;
+  border-radius: 2px;
+  @include shadow;
+
+  &--Small {
+    min-width: 256px;
+    max-width: 384px;
+  }
+
+  &--Medium {
+    min-width: 512px;
+    max-width: 768px;
+  }
+
+  &--Large {
+    min-width: 768px;
+    max-width: 100%;
+  }
+
+  &-title {
+    display: flex;
+    align-items: center;
+    padding: 4px 12px 0;
+    height: 56px;
+
+    h1 {
+      font-size: 24px;
+    }
+
+    .IconButton {
+      margin-left: auto;
+      margin-right: -8px;
+    }
+  }
+
+  &-content {
+    padding: 0 12px 12px;
+  }
+}

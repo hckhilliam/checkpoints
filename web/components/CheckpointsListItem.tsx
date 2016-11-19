@@ -29,9 +29,11 @@ export default class CheckpointsListItem extends React.Component<Props, {}> {
         {...other}
       >
         <div className="CheckpointsListItem-wrapper">
-          <span className="CheckpointsListItem-title">{checkpoint.title}</span>
-          <span className="CheckpointsListItem-divider">—</span>
-          <span>{checkpoint.description}</span>
+          <div className="CheckpointsListItem-text">
+            <span className="CheckpointsListItem-title">{checkpoint.title}</span>
+            <span className="CheckpointsListItem-divider">—</span>
+            <span>{checkpoint.description}</span>
+          </div>
           <div className="CheckpointsListItem-icons">
             {checkpoint.isPrivate ? <MaterialIcon icon="visibility_off" /> : null}
             {checkpoint.isCompleted ? <MaterialIcon className="CheckpointsListItem-completed" icon="check_circle" /> : null}

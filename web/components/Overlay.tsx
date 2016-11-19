@@ -2,10 +2,11 @@ import './Overlay.scss';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
 import * as classnames from 'classnames';
 
-import { clearOverlay, OverlayOptions } from '../actions/overlay';
+import { hideOverlay, OverlayOptions } from '../actions/overlay';
 
 interface OverlayProps {
   overlays?: OverlayOptions[];
@@ -16,6 +17,8 @@ interface OverlayElementProps {
   options: OverlayOptions;
   zIndex: number;
 }
+
+const DURATION = 200;
 
 const Overlay = (props: OverlayElementProps) => {
   const { options, zIndex } = props;
@@ -38,18 +41,19 @@ class Overlays extends React.Component<OverlayProps, {}> {
 
   componentWillReceiveProps(nextProps: OverlayProps) {
     if (nextProps.overlays != this.props.overlays) {
-      let difference = _.difference(nextProps.overlays, this.props.overlays);
-      difference.forEach(overlay => {
+      nextProps.overlays.forEach((overlay, i) => {
         if (overlay.node) {
           const node = ReactDOM.findDOMNode(overlay.node) as HTMLElement;
-          node.style.zIndex = '6000';
+          node.style.zIndex = (5000 + i * 2 + 1).toString();
         }
       });
-      difference = _.difference(this.props.overlays, nextProps.overlays);
+      const difference = _.difference(this.props.overlays, nextProps.overlays);
       difference.forEach(overlay => {
         if (overlay.node) {
           const node = ReactDOM.findDOMNode(overlay.node) as HTMLElement;
-          node.style.zIndex = null;
+          setTimeout(() => {
+            node.style.zIndex = null;
+          }, DURATION);
           overlay.onClose();
         }
       });
@@ -83,11 +87,20 @@ class Overlays extends React.Component<OverlayProps, {}> {
     const cssClass = classnames('Overlays', {
       'Overlays--active': !!overlays.length
     });
+    // I think setting key as index should be ok in this case, since we only push/pop overlays
     return (
-      <div className={cssClass} onClick={this.handleClick}>
-        {
-          overlays.map((overlay, i) => <Overlay key={i} options={overlay} zIndex={5000 + i} />)
-        }
+      <div className={cssClass} style={{ zIndex: 5000 + (overlays.length - 1) * 2 }} onClick={this.handleClick}>
+        <ReactCSSTransitionGroup
+          transitionName="overlay"
+          transitionEnter={true}
+          transitionEnterTimeout={DURATION}
+          transitionLeave={true}
+          transitionLeaveTimeout={DURATION}
+        >
+          {
+            overlays.map((overlay, i) => <Overlay key={i} options={overlay} zIndex={5000 + i * 2} />)
+          }
+        </ReactCSSTransitionGroup>
       </div>
     );
   }
@@ -102,7 +115,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onRequestClose: () => {
-      dispatch(clearOverlay());
+      dispatch(hideOverlay());
     }
   };
 }

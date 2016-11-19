@@ -8,17 +8,20 @@ import { EditCheckpointForm } from './CheckpointForm';
 import Button from './Button';
 import IconButton from './IconButton';
 import { MaterialIcon } from './Icon';
+import ConfirmDialog from './ConfirmDialog';
 
-import { completeCheckpoint } from '../actions/checkpoints';
+import { completeCheckpoint, deleteCheckpoint } from '../actions/checkpoints';
+import { openDialog, closeDialog } from '../actions/dialog';
 
 interface Props extends React.HTMLAttributes {
   checkpoint: Checkpoints.Checkpoint;
   onEdit?: () => void;
+  onDelete?: () => void;
   onComplete?: () => void;
 }
 
 interface State {
-  edit?: boolean;
+
 }
 
 const CheckpointStatus = ({ complete }: { complete: boolean }) => {
@@ -34,36 +37,26 @@ const CheckpointStatus = ({ complete }: { complete: boolean }) => {
 
 export class Checkpoint extends React.Component<Props, State> {
   state: State = {
-    edit: false
-  };
 
-  showEdit = () => {
-    this.setState({ edit: true });
-  };
-
-  hideEdit = () => {
-    this.setState({ edit: false });
   };
 
   render() {
-    const { className, checkpoint, onEdit, onComplete } = this.props;
-    const other = _.omit(this.props, 'className', 'checkpoint', 'onEdit', 'onComplete');
+    const { className, checkpoint, onEdit, onDelete, onComplete } = this.props;
+    const other = _.omit(this.props, 'className', 'checkpoint', 'onEdit', 'onDelete', 'onComplete');
 
     const complete = checkpoint.isCompleted;
     const visibility = checkpoint.isPrivate ? 'Private' : 'Public';
 
-    const { edit } = this.state;
-
     const cssClass = classnames('Checkpoint', className, {
-      'Checkpoint--complete': complete,
-      'Checkpoint--edit': edit
+      'Checkpoint--complete': complete
     });
 
     return (
       <div className={cssClass} {...other}>
         <div className="Checkpoint-title">
           <h1>{checkpoint.title}</h1>
-          <IconButton onClick={this.showEdit} tabIndex={-1}><MaterialIcon icon="edit" /></IconButton>
+          {!complete && <IconButton className="Checkpoint-edit" onClick={onEdit} tabIndex={-1}><MaterialIcon icon="edit" /></IconButton>}
+          <IconButton className="Checkpoint-delete" onClick={onDelete} tabIndex={-1}><MaterialIcon icon="delete" /></IconButton>
           <CheckpointStatus complete={complete} />
         </div>
         <div className="Checkpoint-description">
@@ -73,13 +66,6 @@ export class Checkpoint extends React.Component<Props, State> {
         <div className="Checkpoint-visibility">
           <h3>Visibility</h3>
           <span>{visibility}</span>
-        </div>
-        <div className="Checkpoint-form">
-          <div className="Checkpoint-form-header">
-            <h1>Edit Checkpoint</h1>
-            <IconButton onClick={this.hideEdit} tabIndex={-1}><MaterialIcon icon="close" /></IconButton>
-          </div>
-          <EditCheckpointForm checkpointId={checkpoint.id} />
         </div>
         {
           complete
@@ -95,13 +81,39 @@ export class Checkpoint extends React.Component<Props, State> {
   }
 }
 
+const EditForm = (props: { checkpointId: number, onSubmitSuccess: () => void }) => {
+  return (
+    <div className="CheckpointEditForm">
+      <EditCheckpointForm checkpointId={props.checkpointId} onSubmitSuccess={props.onSubmitSuccess} />
+    </div>
+  )
+};
+
 const mapStateToProps = state => {
   return {};
 };
 
 const mapDispatchToProps = (dispatch, ownProps: Props) => {
   return {
-    onEdit: () => {},
+    onEdit: () => {
+      const callback = () => dispatch(closeDialog());
+      dispatch(openDialog(
+        <EditForm checkpointId={ownProps.checkpoint.id} onSubmitSuccess={callback} />,
+        { title: 'Edit Checkpoint' }
+      ));
+    },
+    onDelete: () => {
+      const onSubmit = (result: boolean) => {
+        result && dispatch(deleteCheckpoint(ownProps.checkpoint.id));
+      };
+      dispatch(openDialog(
+        <ConfirmDialog onSubmit={onSubmit}>
+          Are you sure you want to delete your checkpoint?
+          <strong>(It'll be gone forever!)</strong>
+        </ConfirmDialog>,
+        { title: 'Delete Checkpoint?', size: 'Small' }
+      ));
+    },
     onComplete: () => {
       dispatch(completeCheckpoint(ownProps.checkpoint.id));
     }

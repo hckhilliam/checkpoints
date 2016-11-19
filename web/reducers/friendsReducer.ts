@@ -9,7 +9,7 @@ import {
 export default function reducer(state: Checkpoints.Friend[] = [], action: Redux.Action) {
   switch (action.type) {
     case UPDATE_FRIENDS:
-      return (action as FriendsAction).friends;
+      return _.uniqBy((action as FriendsAction).friends, f => f.id);
     case UPDATE_FRIEND:
       const friend = (action as FriendAction).friend;
       return state.concat(friend);

@@ -9,16 +9,12 @@
     border-left-color: $md-green-500;
   }
 
-  &--edit &-form {
-    display: block;
-  }
-
   &-title {
     display: flex;
     align-items: center;
 
-    .IconButton {
-      margin-left: auto;
+    h1 {
+      margin-right: auto;
     }
 
     .CheckpointStatus {
@@ -26,8 +22,16 @@
     }
   }
 
+  &-delete.IconButton--default:not(.IconButton--disabled) {
+    color: $md-red-500;
+  }
+
   &-description, &-visibility {
     margin: 8px 0;
+
+    span {
+      @include content-text;
+    }
   }
 
   &-buttons {
@@ -46,27 +50,6 @@
     font-size: 13px;
     font-weight: 500;
     color: $md-dark-text-secondary;
-  }
-
-  &-form {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    padding: 12px;
-    z-index: 5;
-    background-color: $md-grey-50;
-    display: none;
-
-    &-header {
-      display: flex;
-      align-items: center;
-
-      .IconButton {
-        margin-left: auto;
-        margin-right: -8px;
-      }
-    }
   }
 }
 
@@ -88,4 +71,8 @@
     color: $md-green-700;
     background-color: $md-light-green-100;
   }
+}
+
+.CheckpointEditForm {
+
 }

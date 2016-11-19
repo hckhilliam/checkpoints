@@ -13,6 +13,10 @@
     display: flex;
   }
 
+  &-text {
+    @include text-ellipsis;
+  }
+
   &-icons {
     display: flex;
     margin-left: auto;
