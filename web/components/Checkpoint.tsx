@@ -11,6 +11,7 @@ import { MaterialIcon } from './Icon';
 import ConfirmDialog from './ConfirmDialog';
 import ImageUpload from './ImageUpload';
 import Picture from './Picture';
+import FacebookShareButton from './FacebookShareButton';
 
 import { completeCheckpoint, deleteCheckpoint, addCheckpointImages } from '../actions/checkpoints';
 import { openDialog, closeDialog } from '../actions/dialog';
@@ -82,11 +83,13 @@ export class Checkpoint extends React.Component<Props, State> {
           </div>
           <ImageUpload onUpload={onUpload} />
         </div>
+      
         {
           complete
             ? null
             : (
                 <div className="Checkpoint-buttons">
+                  <FacebookShareButton url="google.com" />
                   <Button onClick={onComplete} raised primary tabIndex={-1}>Mark as complete</Button>
                 </div>
               )

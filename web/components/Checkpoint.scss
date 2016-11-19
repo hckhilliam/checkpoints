@@ -36,7 +36,9 @@
 
   &-buttons {
     display: flex;
-
+    .FacebookShareButton {
+      margin-right: auto;
+    }
     .Button:first-child {
       margin-left: auto;
     }
