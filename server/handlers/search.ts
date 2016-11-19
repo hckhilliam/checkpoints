@@ -18,19 +18,21 @@ export function searchPeople(req: Request, res: Response, next: any) {
 
     debug(filteredPeople);
     
-    let result = [];
+    let result: CheckpointsServer.SearchResult[] = [];
     let count = 0;
     for (let i = 0; count < 10 && i < friends.length; ++i) {
-      let friend = friends[i];
+      let friend: CheckpointsServer.SearchResult = friends[i] as CheckpointsServer.SearchResult;
       if (filteredPeople.some(u => u._id == friend._id)) {
+        friend.type = 'user';
         result.push(friend);
         ++count;
       }
     }
 
     for (let i = 0; count < 10 && i < filteredPeople.length; ++i) {
-      let user = filteredPeople[i];
+      let user: CheckpointsServer.SearchResult = filteredPeople[i] as CheckpointsServer.SearchResult;
       if (!result.some(f => f._id == user._id)) {
+        user.type = 'user';
         result.push(user);
         ++count;
       }

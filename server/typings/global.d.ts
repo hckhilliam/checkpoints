@@ -49,4 +49,11 @@ declare namespace CheckpointsServer {
     client_id: string;
     expires: Date;
   }
+
+  interface SearchResult {
+    type: string;
+    _id: number;
+    name: string;
+    picture?: UserPicture;
+  }
 }

@@ -3,7 +3,7 @@ import {
     SearchAction
 } from '../actions/search';
 
-export default function reducer(state: Checkpoints.SearchResults[] = [], action: Redux.Action) {
+export default function reducer(state: Checkpoints.SearchResult[] = [], action: Redux.Action) {
     switch (action.type) {
         case SEARCH_RESULTS:
             return (action as SearchAction).results;

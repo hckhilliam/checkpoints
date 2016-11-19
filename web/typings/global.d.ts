@@ -90,9 +90,12 @@ declare namespace Checkpoints {
     }
   }
 
-  interface SearchResults {
+  interface SearchResult {
     type: string;
+    id: number;
     name: string;
+    picture?: Picture;
+    show: boolean;
   }
 }
 

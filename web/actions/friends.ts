@@ -17,21 +17,21 @@ export interface FriendAction extends Action {
 }
 
 // Action creators
-function updateFriend(friend): FriendAction {
+function updateFriend(friend: Checkpoints.Friend): FriendAction {
   return {
     type: UPDATE_FRIEND,
     friend
   };
 }
 
-function updateFriends(friends): FriendsAction {
+function updateFriends(friends: Checkpoints.Friend[]): FriendsAction {
   return {
     type: UPDATE_FRIENDS,
     friends
   };
 }
 
-function removeFriend(friend): FriendAction {
+function removeFriend(friend: Checkpoints.Friend): FriendAction {
   return {
     type: REMOVE_FRIEND,
     friend

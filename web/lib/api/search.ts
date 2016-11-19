@@ -1,16 +1,21 @@
 import { get } from './fetch' // needed for later...
+import { getUrl } from './utils';
 
-export function searchGeneral(query: string): Checkpoints.SearchResults[] {
-    let mockData: Checkpoints.SearchResults[] = [
-        {
-            type: "event",
-            name: "Some event 1"
-        },
-        {
-            type: "user",
-            name: "Some friend 1"
-        }
-    ];
+function parseResult(result): Checkpoints.SearchResult {
+    result.id = result._id;
+    delete result._id;
+    result.show = true;
+    return result as Checkpoints.SearchResult;
+}
 
-    return mockData;
+function parseResults(data): Checkpoints.SearchResult[] {
+    return data.map(r => {
+        r = parseResult(r);
+        return r;
+    });
+}
+
+export function searchGeneral(query: string): Promise<Checkpoints.SearchResult[]> {
+    const url = getUrl(`search?searchQuery=${query}`);
+    return get(url).then(res => parseResults(res.body));
 }
