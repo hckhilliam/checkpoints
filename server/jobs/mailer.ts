@@ -8,8 +8,8 @@ const transporter = nodemailer.createTransport({
     user: 'tjintest1@gmail.com',
     pass: 'checkpoints'
   },
-  pool: true    
-});
+  pool: true
+} as any);
 
 export function createMail(receivers: string, subject: string,  textBody: string, htmlBody: string){
   let mailOptions: nodemailer.SendMailOptions = {
