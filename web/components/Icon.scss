@@ -5,4 +5,16 @@
   align-items: center;
   justify-content: center;
   user-select: none;
+
+  &--Medium {
+    .material-icons {
+      font-size: 32px;
+    }
+  }
+
+  &--Large {
+    .material-icons {
+      font-size: 48px;
+    }
+  }
 }

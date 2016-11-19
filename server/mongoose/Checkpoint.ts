@@ -3,6 +3,7 @@ const debug = require('debug')('checkpoints:mongooseCheckpoint');
 import * as mongoose from 'mongoose';
 const autoIncrement = require('mongoose-auto-increment');
 
+import pictureSchema from './PictureSchema';
 
 const commentSchema = new mongoose.Schema({
   _id: Number,
@@ -18,7 +19,6 @@ commentSchema.plugin(autoIncrement.plugin, {
 
 export const Comment = mongoose.model('Comment', commentSchema);
 
-
 const checkpointSchema = new mongoose.Schema({
   _id: Number,
   user_id: {type: Number, required: true},                        // user checkpoint is associated to
@@ -27,7 +27,7 @@ const checkpointSchema = new mongoose.Schema({
   isPrivate: {type: Boolean, required: true},                     // setting to allow friends to see this checkpoint
   isCompleted: {type: Boolean, required: true, default: false},   // completion flag on whether this checkpoint is completed or not
   notes: String,                                                  // notes on checkpoint completion. eg. links for proof, feels
-  pictures: [Number],                                             // pictures attached to this checkpoint
+  pictures: [pictureSchema],                                      // pictures attached to this checkpoint
   comments: [commentSchema],                                      // user comments on this checkpoint
   likes: Number,                                                  // number of likes on this checkpoint
   isDeleted: {type: Boolean, required: true, default: false},     // flag for soft deletion of a checkpoint

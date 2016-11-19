@@ -3,12 +3,7 @@ const debug = require('debug')('checkpoints:mongooseUser');
 import * as mongoose from 'mongoose';
 const autoIncrement = require('mongoose-auto-increment');
 
-const pictureSchema = new mongoose.Schema({
-  _id: false,
-  width: { type: Number, required: true, default: 200 },
-  height: { type: Number, required: true, default: 200 },
-  url: { type: String, required: true, default: 'static/default.png' }
-});
+import pictureSchema from './PictureSchema';
 
 const facebookUserSchema = new mongoose.Schema({
   _id: false,

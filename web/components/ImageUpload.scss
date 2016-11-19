@@ -1,0 +1,32 @@
+@import "../styles/variables";
+
+.ImageUpload {
+  align-items: center;
+
+  &Body .Icon {
+    margin: auto;
+  }
+
+  &Preview {
+    &-overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: rgba($md-black, 0.32);
+      color: rgba($md-green-500, 0.87);
+    }
+  }
+
+  .FileUpload-dropzone {
+    width: auto;
+    height: auto;
+
+    min-height: 96px;
+  }
+}

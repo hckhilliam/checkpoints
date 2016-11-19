@@ -1,3 +1,5 @@
+import './imageupload';
+
 class LocalStorage implements Storage {
   [key: string]: any;
   [index: number]: string;

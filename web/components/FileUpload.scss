@@ -1,16 +1,26 @@
+@import "../styles/variables";
+
 .FileUpload {
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
+  cursor: pointer;
 
-  .DropText {
-    line-height: 200px;
-  }
+  &-dropzone {
+    position: relative;
 
-  .Button {
-    align-self: center;
-    width: 100px;
-    margin: 4px;
+    width: 128px;
+    height: 128px;
+
+    border: 2px dashed $md-grey-500;
+    border-radius: 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 0.3s ease;
+
+    &--active {
+      color: $md-green-500;
+      border-color: $md-green-500;
+    }
   }
 }

@@ -12,7 +12,8 @@ var plugins = [
     "process.env": {
       "FB_APPID": JSON.stringify(process.env.FB_APPID || "1122984984444971"),
       "CLIENT_ID": JSON.stringify(process.env.CLIENT_ID || "checkpoints.web"),
-      "API_BASE": JSON.stringify("/api")
+      "API_BASE": JSON.stringify("/api"),
+      "CLOUDINARY": JSON.stringify({ cloud_name: "checkpoints" })
     }
   })
 ];

@@ -12,7 +12,7 @@ import { CheckboxField } from './Checkbox';
 import FormButtons from './FormButtons';
 
 import { addCheckpoint, editCheckpoint, validate } from '../lib/forms/checkpoint';
-import { getCheckpoints } from '../actions/checkpoints';
+import { getCheckpoints, getCheckpoint } from '../actions/checkpoints';
 
 interface CheckpointFormProps extends React.HTMLAttributes {
   checkpointId?: number;
@@ -75,7 +75,7 @@ const EditCheckpointReduxForm = reduxForm({
     return editCheckpoint(values)
       .then(() => {
         dispatch(reset('EditCheckpointForm'));
-        dispatch(getCheckpoints());
+        dispatch(getCheckpoint(values.id));
       })
       .catch(err => new SubmissionError({ _error: err }));
   },

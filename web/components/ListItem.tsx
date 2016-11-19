@@ -2,6 +2,7 @@ import './ListItem.scss';
 
 import * as React from 'react';
 import * as classnames from 'classnames';
+import * as Measure from 'react-measure';
 
 import { AddLinearProgress } from './LinearProgress';
 import InkRipple from './InkRipple';
@@ -50,25 +51,8 @@ class BaseExpandableListItem extends React.Component<ExpandableListItemProps, Ex
     bodyHeight: 0
   };
 
-  body: HTMLDivElement;
-
-  componentWillReceiveProps(nextProps: ExpandableListItemProps) {
-    if (this.props.expanded && nextProps.expanded) {
-      this.updateBodyHeight();
-    }
-  }
-
-  updateBodyHeight() {
-    if (this.body) {
-      const bodyHeight = this.body.clientHeight;
-      if (this.state.bodyHeight != bodyHeight)
-        this.setState({ bodyHeight });
-    }
-  }
-
-  handleBodyRef = node => {
-    this.body = node;
-    this.updateBodyHeight();
+  handleMeasure = (dimensions: Measure.Dimensions) => {
+    this.setState({ bodyHeight: dimensions.height });
   };
 
   render() {
@@ -90,9 +74,11 @@ class BaseExpandableListItem extends React.Component<ExpandableListItemProps, Ex
         </ExpandableListItemContent>
         {
           selected &&
-            <div className="ExpandableListItem-body" ref={this.handleBodyRef}>
-              {body}
-            </div>
+            <Measure onMeasure={this.handleMeasure} whitelist={['height']}>
+              <div className="ExpandableListItem-body">
+                {body}
+              </div>
+            </Measure>
         }
       </ListItem>
     );

@@ -75,7 +75,7 @@ export function saveFacebookToken(facebookId: string, token: string, expires: Da
     });
 }
 
-export function updateFacebookPicture(facebookId: string, overwriteUserPicture = true): Promise<CheckpointsServer.UserPicture> {
+export function updateFacebookPicture(facebookId: string, overwritePicture = true): Promise<CheckpointsServer.Picture> {
   return Promise.all([
     user.getUserByFacebookId(facebookId),
     getFacebookToken(facebookId)
@@ -90,11 +90,11 @@ export function updateFacebookPicture(facebookId: string, overwriteUserPicture =
       fb(token.token).api('/me/picture', { width: 200, height: 200, redirect: 0 }, res => {
         if (res && res.error)
           return reject(new Error(res.error.code));
-        const picture = _.pick(res.data, 'width', 'height', 'url') as CheckpointsServer.UserPicture;
+        const picture = _.pick(res.data, 'width', 'height', 'url') as CheckpointsServer.Picture;
         let update = {
           'accounts.facebook.picture': picture
         };
-        if (overwriteUserPicture)
+        if (overwritePicture)
           update['picture'] = picture;
         User.findByIdAndUpdate(user._id, {
           $set: update
@@ -120,13 +120,13 @@ export function getFacebookFriends(facebookId: string) {
       fb(token.token).api('/me/friends', { fields: ['id'] }, res => {
         if (res && res.error)
           return reject(new Error(res.error.code));
-        
+
         debug(_.map(res.data, 'id'));
         User.find({ 'accounts.facebook.id': { $in: _.map(res.data, 'id') } }, GENERIC_USER_DATA).then(resolve);
       });
     });
   });
-  
+
 }
 
 export function syncFacebookFriends(user_id: number, facebookId: string) {

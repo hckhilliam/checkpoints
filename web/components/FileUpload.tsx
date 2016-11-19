@@ -1,55 +1,55 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import * as classnames from 'classnames';
-import * as Dropzone from 'react-dropzone';
-
-import Button from './Button';
-
 import './FileUpload.scss';
 
-interface Props {
-  handleUpload: () => void;
+import * as React from 'react';
+import * as classnames from 'classnames';
+import * as Dropzone from 'react-dropzone';
+import { AddLinearProgress } from './LinearProgress';
+
+interface Props extends React.HTMLAttributes {
+  accept?: string;
+  body?: React.ReactNode;
+  disablePreview?: boolean;
+  onUpload: (acceptedFiles: File[], rejectedFiles: File[]) => void;
 }
 
 interface State {
-  files: File[];
+
 }
 
-// const FileUpload = (props: FileUploadProps) => {
-export default class FileUpload extends React.Component<Props, State> {
-
-  state: State = {
-    files: []
+class FileUpload extends React.Component<Props, State> {
+  static defaultProps: Props = {
+    body: 'Add Files',
+    disablePreview: false,
+    onUpload: () => {}
   };
 
-  addFile = (files) => {
-    console.log("hello");
-    console.log(files);
-    this.setState({
-      files: files
-    });
+  handleDrop = (acceptedFiles: File[], rejectedFiles: File[]) => {
+    this.props.onUpload(acceptedFiles, rejectedFiles);
   };
 
   render() {
-    const { handleUpload } = this.props;
-    const cssClass = classnames('FileUpload');
+    const { className, children, accept, body, disablePreview, onUpload } = this.props;
+    const other = _.omit(this.props, 'className', 'accept', 'body', 'disablePreview', 'onUpload', 'children');
+    const cssClass = classnames('FileUpload', className);
+
     return (
-      <div className={cssClass}>
-        <Dropzone onDrop={this.addFile}>
-          <div className="DropText"> Drop Files Here </div>
+      <div className={cssClass} {...other}>
+        <Dropzone
+          className="FileUpload-dropzone"
+          activeClassName="FileUpload-dropzone--active"
+          accept={accept}
+          disablePreview={disablePreview}
+          onDrop={this.handleDrop}
+        >
+          <div className="FileUpload-content">
+            {body}
+            {children}
+          </div>
         </Dropzone>
-        <Button onClick={handleUpload} primary>Upload</Button>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return  {
-  };
-};
-export const FileUploader = connect(mapStateToProps, mapDispatchToProps)(FileUpload);
+const FileUploader = AddLinearProgress(FileUpload);
+export default FileUploader;

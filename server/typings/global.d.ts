@@ -17,10 +17,10 @@ declare namespace CheckpointsServer {
     accounts?: {
       facebook?: FacebookUser;
     };
-    picture?: UserPicture;
+    picture?: Picture;
   }
 
-  interface UserPicture {
+  interface Picture {
     width: number;
     height: number;
     url: string;
@@ -39,7 +39,7 @@ declare namespace CheckpointsServer {
     description: string;
     isPrivate: boolean;
     comments: string[];
-    pictures: string[];
+    pictures: Picture[];
     isCompleted: boolean;
   }
 
@@ -54,6 +54,6 @@ declare namespace CheckpointsServer {
     type: string;
     _id: number;
     name: string;
-    picture?: UserPicture;
+    picture?: Picture;
   }
 }

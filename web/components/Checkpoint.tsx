@@ -9,8 +9,10 @@ import Button from './Button';
 import IconButton from './IconButton';
 import { MaterialIcon } from './Icon';
 import ConfirmDialog from './ConfirmDialog';
+import ImageUpload from './ImageUpload';
+import Picture from './Picture';
 
-import { completeCheckpoint, deleteCheckpoint } from '../actions/checkpoints';
+import { completeCheckpoint, deleteCheckpoint, addCheckpointImages } from '../actions/checkpoints';
 import { openDialog, closeDialog } from '../actions/dialog';
 
 interface Props extends React.HTMLAttributes {
@@ -18,6 +20,7 @@ interface Props extends React.HTMLAttributes {
   onEdit?: () => void;
   onDelete?: () => void;
   onComplete?: () => void;
+  onUpload?: (images: Checkpoints.Picture[]) => void;
 }
 
 interface State {
@@ -41,8 +44,8 @@ export class Checkpoint extends React.Component<Props, State> {
   };
 
   render() {
-    const { className, checkpoint, onEdit, onDelete, onComplete } = this.props;
-    const other = _.omit(this.props, 'className', 'checkpoint', 'onEdit', 'onDelete', 'onComplete');
+    const { className, checkpoint, onEdit, onDelete, onComplete, onUpload } = this.props;
+    const other = _.omit(this.props, 'className', 'checkpoint', 'onEdit', 'onDelete', 'onComplete', 'onUpload');
 
     const complete = checkpoint.isCompleted;
     const visibility = checkpoint.isPrivate ? 'Private' : 'Public';
@@ -66,6 +69,18 @@ export class Checkpoint extends React.Component<Props, State> {
         <div className="Checkpoint-visibility">
           <h3>Visibility</h3>
           <span>{visibility}</span>
+        </div>
+        <div className="Checkpoint-photos">
+          <h3>Photos</h3>
+          <div className="Checkpoints-photos-row row">
+            {
+              checkpoint.pictures &&
+              checkpoint.pictures.map(picture => {
+                return <Picture className="col-xs-6 col-sm-3 col-md-4 col-lg-2" key={picture.url} picture={picture} />;
+              })
+            }
+          </div>
+          <ImageUpload onUpload={onUpload} />
         </div>
         {
           complete
@@ -116,6 +131,9 @@ const mapDispatchToProps = (dispatch, ownProps: Props) => {
     },
     onComplete: () => {
       dispatch(completeCheckpoint(ownProps.checkpoint.id));
+    },
+    onUpload: (images: Checkpoints.Picture[]) => {
+      dispatch(addCheckpointImages(ownProps.checkpoint.id, images));
     }
   };
 };

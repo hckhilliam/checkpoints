@@ -52,7 +52,7 @@ declare namespace Checkpoints {
     description?: string;
     isPrivate?: boolean;
     comments?: string[];
-    pictures?: string[];
+    pictures?: Picture[];
     isCompleted?: boolean;
     loaded?: boolean;
   }

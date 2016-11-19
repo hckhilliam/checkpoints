@@ -100,24 +100,22 @@ export class CheckpointsList extends React.Component<Props, State> {
     return (
       <List className={cssClass} {...other}>
         {
-          pending.length
-            ? <CheckpointsListSection
-                title="In Progress"
-                checkpoints={pending}
-                selectedId={checkpoint.id}
-                onClick={this.handleSelectCheckpoint}
-              />
-            : null
+          !!pending.length &&
+            <CheckpointsListSection
+              title="In Progress"
+              checkpoints={pending}
+              selectedId={checkpoint.id}
+              onClick={this.handleSelectCheckpoint}
+            />
         }
         {
-          complete.length
-            ? <CheckpointsListSection
-                title="Complete"
-                checkpoints={complete}
-                selectedId={checkpoint.id}
-                onClick={this.handleSelectCheckpoint}
-              />
-            : null
+          !!complete.length &&
+            <CheckpointsListSection
+              title="Complete"
+              checkpoints={complete}
+              selectedId={checkpoint.id}
+              onClick={this.handleSelectCheckpoint}
+            />
         }
       </List>
     );

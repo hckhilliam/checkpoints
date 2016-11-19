@@ -9,7 +9,7 @@ interface Props extends React.HTMLAttributes {
 
 export default class LinearProgress extends React.Component<Props, {}> {
   static defaultProps: Props = {
-    enabled: true
+    enabled: false
   };
 
   render() {

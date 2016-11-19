@@ -50,9 +50,8 @@ export function getCheckpoint(checkpointId: number) {
     const state = getState();
     const index = state.checkpoints.findIndex(c => c.id == checkpointId);
 
-    if (index < 0 || !state.checkpoints[index].loaded)
-      return checkpoints.getCheckpoint(checkpointId)
-        .then(checkpoint => dispatch(updateCheckpoint(checkpoint)));
+    return checkpoints.getCheckpoint(checkpointId)
+      .then(checkpoint => dispatch(updateCheckpoint(checkpoint)));
   };
 }
 
@@ -84,6 +83,19 @@ export function completeCheckpoint(checkpointId: number, completed = true) {
     if (checkpoint && checkpoint.isCompleted != completed) {
       const update = Object.assign({}, checkpoint, {
         isCompleted: completed
+      });
+      return dispatch(saveCheckpoint(update));
+    }
+  };
+}
+
+export function addCheckpointImages(checkpointId: number, images: Checkpoints.Picture[]) {
+  return (dispatch, getState: () => Checkpoints.State) => {
+    const state = getState();
+    const checkpoint = state.checkpoints.find(c => c.id == checkpointId);
+    if (checkpoint) {
+      const update = Object.assign({}, checkpoint, {
+        pictures: checkpoint.pictures.concat(images)
       });
       return dispatch(saveCheckpoint(update));
     }

@@ -51,7 +51,7 @@ export function setFacebookUser(userId: number, user: CheckpointsServer.Facebook
   }).then(parseUser);
 }
 
-export function updatePicture(userId: number, picture: CheckpointsServer.UserPicture) {
+export function updatePicture(userId: number, picture: CheckpointsServer.Picture) {
   return User.findByIdAndUpdate(userId, {
     $set: {
       picture
