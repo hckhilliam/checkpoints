@@ -14,6 +14,7 @@ import Router from './routes/Router';
 
 import checkpoints from './reducers/checkpointsReducer';
 import dialog from './reducers/dialogReducer';
+import dropdownlist from './reducers/dropdownlistReducer';
 import events from './reducers/eventsReducer';
 import flights from './reducers/filghtReducer';
 import friends from './reducers/friendsReducer';
@@ -35,7 +36,8 @@ const reducer = combineReducers({
   flights,
   search,
   overlay,
-  dialog
+  dialog,
+  dropdownlist
 });
 
 const reduxRouterMiddleware = routerMiddleware(browserHistory as any);

@@ -1,0 +1,25 @@
+@import "../styles/variables";
+
+.Dropdownlist {
+  min-width: 192px;
+  position: absolute;
+
+  .selected > .ListItem {
+    background-color: #E6ECF7;
+  }
+
+  .ListItem {
+    display: flex;
+    align-items: center;
+
+    .name {
+      margin-left: 8px;
+    }
+  }
+
+  .display {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+}

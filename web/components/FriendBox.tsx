@@ -11,8 +11,8 @@ export default class FriendBox extends React.Component<Props, {}> {
   render() {
     const { className, friend } = this.props;
 
-    const cssClass = classnames('FriendBox', className) + 
-                    " friend-box col-xs-3 col-sm-2 col-md-6 col-lg-3";
+    const cssClass = classnames('friend-box', className, 'col-xs-3', 'col-sm-2', 'col-md-6', 'col-lg-3');
+
     return (
       <div className={cssClass}>
         <img className="display" src={friend.picture.url} />
