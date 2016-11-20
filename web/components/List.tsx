@@ -10,14 +10,19 @@ export const ClickableListItem = CLI;
 
 interface Props extends React.HTMLAttributes {
   reference?: (element: HTMLElement) => void;
+  listStyle?: 'Raised' | 'Flat';
 }
 
 export class List extends React.Component<Props, {}> {
-  render() {
-    const { className, children, reference } = this.props;
-    const other = _.omit(this.props, 'className', 'children', 'reference');
+  static defaultProps: Props = {
+    listStyle: 'Raised'
+  }
 
-    const cssClass = classnames('List', className);
+  render() {
+    const { className, children, reference, listStyle } = this.props;
+    const other = _.omit(this.props, 'className', 'children', 'reference', 'listStyle');
+
+    const cssClass = classnames('List', className, `List--${listStyle}`);
 
     return (
       <ul className={cssClass} {...other} ref={reference}>
@@ -28,3 +33,4 @@ export class List extends React.Component<Props, {}> {
 }
 
 export default List;
+export type ListProps = Props;

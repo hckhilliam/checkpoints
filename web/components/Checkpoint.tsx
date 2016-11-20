@@ -18,6 +18,7 @@ import { openDialog, closeDialog } from '../actions/dialog';
 
 interface Props extends React.HTMLAttributes {
   checkpoint: Checkpoints.Checkpoint;
+  privateView?: boolean;
   onEdit?: () => void;
   onDelete?: () => void;
   onComplete?: () => void;
@@ -45,8 +46,8 @@ export class Checkpoint extends React.Component<Props, State> {
   };
 
   render() {
-    const { className, checkpoint, onEdit, onDelete, onComplete, onUpload } = this.props;
-    const other = _.omit(this.props, 'className', 'checkpoint', 'onEdit', 'onDelete', 'onComplete', 'onUpload');
+    const { className, checkpoint, privateView, onEdit, onDelete, onComplete, onUpload } = this.props;
+    const other = _.omit(this.props, 'className', 'checkpoint', 'privateView', 'onEdit', 'onDelete', 'onComplete', 'onUpload');
 
     const complete = checkpoint.isCompleted;
     const visibility = checkpoint.isPrivate ? 'Private' : 'Public';
@@ -59,41 +60,36 @@ export class Checkpoint extends React.Component<Props, State> {
       <div className={cssClass} {...other}>
         <div className="Checkpoint-title">
           <h1>{checkpoint.title}</h1>
-          {!complete && <IconButton className="Checkpoint-edit" onClick={onEdit} tabIndex={-1}><MaterialIcon icon="edit" /></IconButton>}
-          <IconButton className="Checkpoint-delete" onClick={onDelete} tabIndex={-1}><MaterialIcon icon="delete" /></IconButton>
+          {!complete && privateView && <IconButton className="Checkpoint-edit" onClick={onEdit} tabIndex={-1}><MaterialIcon icon="edit" /></IconButton>}
+          {privateView && <IconButton className="Checkpoint-delete" onClick={onDelete} tabIndex={-1}><MaterialIcon icon="delete" /></IconButton>}
           <CheckpointStatus complete={complete} />
         </div>
         <div className="Checkpoint-description">
           <h3>Description</h3>
           <span>{checkpoint.description}</span>
         </div>
-        <div className="Checkpoint-visibility">
-          <h3>Visibility</h3>
-          <span>{visibility}</span>
-        </div>
+        {privateView &&
+          <div className="Checkpoint-visibility">
+            <h3>Visibility</h3>
+            <span>{visibility}</span>
+          </div>
+        }
         <div className="Checkpoint-photos">
           <h3>Photos</h3>
           <div className="Checkpoints-photos-row row">
             {
               checkpoint.pictures &&
-              checkpoint.pictures.map(picture => {
-                return <Picture className="col-xs-6 col-sm-3 col-md-4 col-lg-2" key={picture.url} picture={picture} />;
-              })
+              checkpoint.pictures.map(picture => <Picture className="col-xs-6 col-sm-3 col-md-4 col-lg-2" key={picture.url} picture={picture} />)
             }
           </div>
-          <ImageUpload onUpload={onUpload} />
+          {privateView && <ImageUpload onUpload={onUpload} />}
         </div>
-
-        <div className="Checkpoint-buttons">
-          <FacebookShareButton url="google.com" />
-          {
-            complete
-              ? null
-              : (
-                  <Button onClick={onComplete} raised primary tabIndex={-1}>Mark as complete</Button>
-                )
-          }
-        </div>
+        {privateView &&
+          <div className="Checkpoint-buttons">
+            <FacebookShareButton url="google.com" />
+            {!complete && <Button onClick={onComplete} raised primary tabIndex={-1}>Mark as complete</Button>}
+          </div>
+        }
       </div>
     );
   }

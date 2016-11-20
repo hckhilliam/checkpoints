@@ -1,6 +1,15 @@
 @import "../styles/variables";
 
 .UserProfile {
+  &-checkpoints {
+    margin-top: 32px;
+
+    &-title {
+      margin: 0 32px;
+      font-size: 24px;
+    }
+  }
+
   .ProfileBanner {
     margin: 0 32px;
   }

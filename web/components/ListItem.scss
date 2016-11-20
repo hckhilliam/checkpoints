@@ -5,8 +5,21 @@
   padding: 8px;
   line-height: 32px;
   background-color: $md-grey-50;
-  @include shadow;
   @include text-ellipsis;
+}
+
+.List {
+  &--Raised .ListItem {
+    @include shadow;
+  }
+
+  &--Raised .ListItem.ExpandableListItem--selected {
+    border-bottom: none !important;
+  }
+
+  &--Flat .ListItem {
+    border: 1px solid $md-dark-text-dividers;
+  }
 }
 
 .ExpandableListItem {
@@ -25,7 +38,6 @@
   &--selected {
     margin: 32px 0;
     padding: 0;
-    border-bottom: none !important;
   }
 
   &--selected &-content {

@@ -11,13 +11,14 @@ import { MaterialIcon } from './Icon';
 interface Props extends React.HTMLAttributes {
   checkpoint: Checkpoints.Checkpoint;
   selected: boolean;
+  privateView?: boolean;
 }
 
 export default class CheckpointsListItem extends React.Component<Props, {}> {
   render() {
-    const { className, checkpoint, selected } = this.props;
+    const { className, checkpoint, selected, privateView } = this.props;
 
-    const other = _.omit(this.props, 'className', 'checkpoint', 'selected');
+    const other = _.omit(this.props, 'className', 'checkpoint', 'selected', 'privateView');
     const cssClass = classnames('CheckpointsListItem', className);
 
     return (
@@ -26,7 +27,7 @@ export default class CheckpointsListItem extends React.Component<Props, {}> {
         selected={selected}
         loading={selected && !checkpoint.loaded}
         expanded={checkpoint.loaded}
-        body={<Checkpoint checkpoint={checkpoint} />}
+        body={<Checkpoint checkpoint={checkpoint} privateView={privateView} />}
         {...other}
       >
         <div className="CheckpointsListItem-wrapper">

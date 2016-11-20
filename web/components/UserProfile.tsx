@@ -4,7 +4,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import ProfileBanner from './ProfileBanner';
-import { CheckpointsList } from './CheckpointsList';
+import CheckpointsList from './CheckpointsList';
 
 import { getUserInfo } from '../actions/users';
 
@@ -20,9 +20,14 @@ export class UserProfile extends React.Component<Props, {}> {
   }
 
   render() {
+    const { user, userId } = this.props;
     return (
       <div className="UserProfile">
         {this.props.user && <ProfileBanner user={this.props.user} />}
+        <div className="UserProfile-checkpoints">
+          <h2 className="UserProfile-checkpoints-title">Checkpoints</h2>
+          <CheckpointsList userId={userId} listStyle="Flat" />
+        </div>
       </div>
     );
   }

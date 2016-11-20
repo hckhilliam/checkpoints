@@ -7,11 +7,14 @@
   bottom: 0;
   top: 0;
   width: 0;
+  z-index: 5000;
   transition: all 0.01s ease 0.2s;
+  pointer-events: none;
 
   &--active {
     width: 100%;
     transition: none;
+    position: fixed;
   }
 
   .dialog-enter {
@@ -41,6 +44,9 @@
   max-height: 100%;
   background-color: $md-grey-50;
   border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  pointer-events: initial;
   @include shadow;
 
   &--Small {
@@ -76,5 +82,6 @@
 
   &-content {
     padding: 0 12px 12px;
+    overflow: auto;
   }
 }

@@ -4,12 +4,13 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import * as classnames from 'classnames';
 
-import { List } from './List';
+import { List, ListProps } from './List';
 import CheckpointsListItem from './CheckpointsListItem';
 
 import { getCheckpoints, getCheckpoint } from '../actions/checkpoints';
 
-interface Props extends React.HTMLAttributes {
+interface Props extends ListProps {
+  userId?: number;
   checkpoints?: Checkpoints.Checkpoint[];
   onComponentDidMount?: () => void;
   onSelectCheckpoint?: (checkpoint: Checkpoints.Checkpoint) => void;
@@ -50,6 +51,7 @@ const CheckpointsListSection = (props: CheckpointsListSectionProps) => {
 
 export class CheckpointsList extends React.Component<Props, State> {
   static defaultProps: Props = {
+    checkpoints: [],
     onComponentDidMount: () => {},
     onSelectCheckpoint: () => {}
   };
@@ -90,7 +92,7 @@ export class CheckpointsList extends React.Component<Props, State> {
     const { className, checkpoints } = this.props;
     const { checkpoint } = this.state;
 
-    const other = _.omit(this.props, 'className', 'checkpoints', 'onComponentDidMount', 'onSelectCheckpoint');
+    const other = _.omit(this.props, 'className', 'userId', 'checkpoints', 'onComponentDidMount', 'onSelectCheckpoint');
 
     const cssClass = classnames('CheckpointsList', className);
 
@@ -122,19 +124,23 @@ export class CheckpointsList extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: Checkpoints.State) => {
+const mapStateToProps = (state: Checkpoints.State, ownProps: Props) => {
+  const { userId } = ownProps;
   return {
-    checkpoints: state.checkpoints.me
+    checkpoints: userId
+      ? state.checkpoints.users[userId]
+      : state.checkpoints.me
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps: Props) => {
+  const { userId } = ownProps;
   return {
     onComponentDidMount: () => {
-      dispatch(getCheckpoints());
+      dispatch(getCheckpoints(userId));
     },
     onSelectCheckpoint: (checkpoint: Checkpoints.Checkpoint) => {
-      dispatch(getCheckpoint(checkpoint.id));
+      dispatch(getCheckpoint(checkpoint.id, userId));
     }
   };
 };
