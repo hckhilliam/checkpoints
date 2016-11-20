@@ -61,7 +61,7 @@ export class Checkpoint extends React.Component<Props, State> {
       <div className={cssClass} {...other}>
         <div className="Checkpoint-title">
           <h1>{checkpoint.title}</h1>
-          {!complete && privateView && <IconButton className="Checkpoint-edit" onClick={onEdit} tabIndex={-1}><MaterialIcon icon="edit" /></IconButton>}
+          {privateView && <IconButton className="Checkpoint-edit" onClick={onEdit} tabIndex={-1}><MaterialIcon icon="edit" /></IconButton>}
           {privateView && <IconButton className="Checkpoint-delete" onClick={onDelete} tabIndex={-1}><MaterialIcon icon="delete" /></IconButton>}
           <CheckpointStatus complete={complete} />
         </div>

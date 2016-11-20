@@ -46,13 +46,7 @@ export function validate(data: Checkpoints.Forms.Checkpoint) {
     errors['description'] = 'Oops, this description is too long';
   }
 
-  return errors;
-}
-
-export function validateComplete(data: Checkpoints.Forms.Checkpoint) {
-  const errors = {};
-
-  if (data.notes.length > 4000) {
+  if (_.get(data.notes, 'length') > 4000) {
     errors['notes'] = 'Oops, these notes are too long';
   }
 
