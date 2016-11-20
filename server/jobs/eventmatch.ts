@@ -1,13 +1,14 @@
-import { getAllUsers } from '../modules/user';
+import { getSubscribedUsers } from '../modules/user';
 import { getFBEventsByLocation } from '../modules/event';
-import { getCheckpoints } from '../modules/checkpoint';
+import { getActiveCheckpoints } from '../modules/checkpoint';
 import { createMail } from './mailer';
 
 
 export function matchEvents(){
-  getAllUsers().then(result => {
+  getSubscribedUsers().then(result => {
     let users: CheckpointsServer.User[] = result;
     users.forEach(user => {
+      console.log(user.name);
       searchEvents(user);
     });
   });
@@ -21,7 +22,7 @@ function searchEvents(user: CheckpointsServer.User){
       distance: 700,
       filter: undefined
     }),
-    getCheckpoints(user._id)
+    getActiveCheckpoints(user._id)
   ]).then((result) => {
     const events = result[0];
     const checkpoints = result[1] as any as CheckpointsServer.Checkpoint[];
@@ -48,13 +49,15 @@ function searchEvents(user: CheckpointsServer.User){
       });
     })
 
-    buildEmail(user, Object.keys(matchedEvents));
+    if (!(_.isEmpty(matchedEvents))) {
+      buildEmail(user, Object.keys(matchedEvents));
+    }
     // console.log("matched events", matchedEvents);
   });
 }
 
 function buildEmail(user: CheckpointsServer.User, eventIds:string[]) {
-  const subject = "Recommended Events";
+  const subject = `Recommended Events`;
   const { name, email } = user;
 
   let eventListing: string = "";
@@ -70,5 +73,5 @@ function buildEmail(user: CheckpointsServer.User, eventIds:string[]) {
     ${eventListing}
     <h1>😉</h1>
   `;
-  createMail(email,  subject, textBody, htmlBody);
+  createMail(email, subject, textBody, htmlBody);
 }

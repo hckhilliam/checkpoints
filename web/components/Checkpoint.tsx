@@ -84,16 +84,16 @@ export class Checkpoint extends React.Component<Props, State> {
           <ImageUpload onUpload={onUpload} />
         </div>
 
-        {
-          complete
-            ? null
-            : (
-                <div className="Checkpoint-buttons">
-                  <FacebookShareButton url="google.com" />
+        <div className="Checkpoint-buttons">
+          <FacebookShareButton url="google.com" />
+          {
+            complete
+              ? null
+              : (
                   <Button onClick={onComplete} raised primary tabIndex={-1}>Mark as complete</Button>
-                </div>
-              )
-        }
+                )
+          }
+        </div>
       </div>
     );
   }

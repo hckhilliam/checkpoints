@@ -18,6 +18,11 @@ export function getCheckpoints(user_id: number) {
   return Checkpoint.find({ user_id, isDeleted: false }, GENERIC_CHECKPOINT_DATA);
 }
 
+export function getActiveCheckpoints(user_id: number) {
+  debug(`Getting all active checkpoints for user (${user_id})`);
+  return Checkpoint.find({ user_id, isDeleted: false, isCompleted: false }, GENERIC_CHECKPOINT_DATA);
+}
+
 export function getCheckpointById(_id: number) {
   debug(`Getting checkpoint (${_id})`);
   // NOTE: no security check on if checkpoint is deleted or not

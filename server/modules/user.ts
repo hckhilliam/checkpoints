@@ -19,9 +19,9 @@ export function getUser(userId: number): Promise<CheckpointsServer.User> {
   return User.findById(userId).then(parseUser);
 }
 
-export function getAllUsers(): Promise<CheckpointsServer.User[]> {
+export function getSubscribedUsers(): Promise<CheckpointsServer.User[]> {
   debug('Finding all users');
-  return User.find().then(parseUsers);
+  return User.find({settings: {isSubscribed: true} }).then(parseUsers);
 }
 
 export function getUserByEmail(email: string): Promise<CheckpointsServer.User> {

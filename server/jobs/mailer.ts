@@ -20,7 +20,7 @@ export function createMail(receivers: string, subject: string,  textBody: string
     html: htmlBody // html body
   };
 
-  // sendMail(mailOptions);
+  sendMail(mailOptions);
 }
 
 function sendMail(mailOptions: nodemailer.SendMailOptions){

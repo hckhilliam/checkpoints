@@ -32,6 +32,9 @@ declare namespace Checkpoints {
     id?: string;
     name?: string;
     picture?: Picture;
+    settings?: {
+      isSubscribed?: boolean;
+    };
   }
 
   interface Friend {
