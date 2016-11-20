@@ -1,7 +1,6 @@
 import { getFlights } from '../modules/flights';
 
 export function getFlightsHandler(query: CheckpointsServer.FlightQuery): Promise<CheckpointsServer.Flight> {
-  
   if (!query.originCode) {
     if (!validCountry(query.origin)) {
       throw 'invalid country origin';
@@ -19,10 +18,8 @@ export function getFlightsHandler(query: CheckpointsServer.FlightQuery): Promise
   if (!query.departureDate) {
     //set query.departureDate to tomorrow
     query.departureDate = new Date();
-    query.departureDate.setDate(query.departureDate.getDate()+1);
+    query.departureDate.setDate(query.departureDate.getDate() + 1);
   }
-
-  console.log('query: ', query);
 
   return getFlights(query);
 }

@@ -3,7 +3,6 @@ import * as queryString from 'querystring';
 import * as dateformat from 'dateformat';
 
 export function getFlights(query: CheckpointsServer.FlightQuery): Promise<CheckpointsServer.Flight[]> {
-
   let body = {
     originplace: query.originCode,
     destinationplace: query.destinationCode,
@@ -16,8 +15,6 @@ export function getFlights(query: CheckpointsServer.FlightQuery): Promise<Checkp
     locationschema: 'Iata',
   };
 
-  console.log('body: ', body);
-  
   let init: _fetch.RequestInit = {
     method: 'POST',
     body: queryString.stringify(body)
@@ -27,7 +24,7 @@ export function getFlights(query: CheckpointsServer.FlightQuery): Promise<Checkp
   headers['Accept-header'] = 'application/json';
   headers['Content-Type'] = 'application/x-www-form-urlencoded';
   init.headers = headers;
-  
+
   return fetch('http://partners.api.skyscanner.net/apiservices/pricing/v1.0', init).then(res => {
     let sessionLocation = res.headers['_headers']['location'][0];
     sessionLocation = sessionLocation + "?" + queryString.stringify({apiKey: process.env['SKYSCANNER_APIKEY']});
