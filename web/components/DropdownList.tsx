@@ -57,7 +57,7 @@ class DropdownList extends React.Component<DropdownListProps, {}> {
   cycler = null;
   up: boolean;
   arrowDown = (e: KeyboardEvent) => {
-    if (e.key == 'ArrowUp' || e.code == 'ArrowUp') {
+    if (e.which == 38 || e.keyCode == 38) {
       if (!this.cycler || !this.up) {
         if (this.cycler) { this.cycler.next(true); }
         this.cycler = this.runCycle(
@@ -66,7 +66,7 @@ class DropdownList extends React.Component<DropdownListProps, {}> {
         );
         this.up = true;
       }
-    } else if (e.key == 'ArrowDown' || e.code == 'ArrowDown') {
+    } else if (e.which == 40 || e.keyCode == 40) {
       if (!this.cycler || this.up) {
         if (this.cycler) { this.cycler.next(true); }
         this.cycler = this.runCycle(
@@ -81,8 +81,8 @@ class DropdownList extends React.Component<DropdownListProps, {}> {
   };
 
   arrowUp = (e: KeyboardEvent) => {
-    if (this.cycler && (e.key == 'ArrowUp' || e.code == 'ArrowUp'
-                    || e.key == 'ArrowDown' || e.code == 'ArrowDown')) {
+    if (this.cycler && (e.which == 38 || e.keyCode == 38)
+                    || (e.which == 40 || e.keyCode == 40)) {
       this.cycler.next(true);
       this.cycler = null;
     }
