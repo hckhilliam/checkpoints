@@ -122,9 +122,9 @@ export class CheckpointsList extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: Checkpoints.State) => {
   return {
-    checkpoints: state.checkpoints
+    checkpoints: state.checkpoints.me
   };
 };
 

@@ -83,7 +83,7 @@ const EditCheckpointReduxForm = reduxForm({
 } as any)(CheckpointForm);
 
 const mapStateToProps = (state: Checkpoints.State, ownProps) => {
-  const checkpoint = state.checkpoints.find(c => c.id == ownProps.checkpointId);
+  const checkpoint = state.checkpoints.me.find(c => c.id == ownProps.checkpointId);
   return {
     initialValues: {
       id: checkpoint.id,

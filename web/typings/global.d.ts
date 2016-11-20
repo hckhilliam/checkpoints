@@ -33,12 +33,13 @@ declare namespace Checkpoints {
   }
 
   interface State {
-    checkpoints?: Checkpoint[];
+    checkpoints?: CheckpointsState;
+    users?: UsersState;
     user?: User;
   }
 
   interface User {
-    id?: string;
+    id?: number;
     name?: string;
     picture?: Picture;
     settings?: {
@@ -109,5 +110,15 @@ declare namespace Checkpoints {
     picture?: Picture;
     show: boolean;
   }
+
+  interface SharedState<T> {
+    me: T;
+    users: {
+      [userId: number]: T;
+    };
+  }
+
+  type CheckpointsState = SharedState<Checkpoint[]>;
+  type UsersState = SharedState<User[]>;
 }
 

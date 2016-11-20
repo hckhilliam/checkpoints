@@ -16,23 +16,18 @@ api.get('/:id', (req, res, next) => {
   checkpoints.getCheckpoint(req, res, next, id);
 });
 
-api.post('/', (req, res, next) => {
+api.post('/', authenticator.isSelf, (req, res, next) => {
   checkpoints.createCheckpoint(req, res, next);
 });
 
-api.put('/:id', (req, res, next) => {
+api.put('/:id', authenticator.isSelf, (req, res, next) => {
   const id = req.params['id'];
   checkpoints.updateCheckpoint(req, res, next, id);
 });
 
-api.delete('/:id', (req, res, next) => {
+api.delete('/:id', authenticator.isSelf, (req, res, next) => {
   const id = req.params['id'];
   checkpoints.deleteCheckpoint(req, res, next, id);
-});
-
-api.post('/:id/upload', authenticator.isSelf, (req, res, next) => {
-  const id = req.params['id'];
-  checkpoints.uploadCheckpointImages(req, res, next, id);
 });
 
 export default api;

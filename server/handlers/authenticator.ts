@@ -1,11 +1,17 @@
 const debug = require('debug')('checkpoints:authenticatorHandler');
 import { Request, Response, ErrorHandler } from 'express';
 
+import { getUserId, getCallerUserId } from '../lib/request';
+import { ForbiddenError } from './error';
+
 export function isSelf(req: CheckpointsServer.Request, res: Response, next: any) {
-  if (req.user._id == req.customParams.user._id) {
+  if (checkIsSelf(req)) {
     next();
   } else {
-    // TODO: add more errors
-    next(new Error('unauthorized'));
+    next(new ForbiddenError());
   }
+}
+
+export function checkIsSelf(req: CheckpointsServer.Request) {
+  return getUserId(req) == getCallerUserId(req);
 }

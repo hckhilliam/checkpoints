@@ -13,9 +13,12 @@ export function createCheckpoint(user_id: number, title: string, description: st
   return checkpoint.save();
 }
 
-export function getCheckpoints(user_id: number) {
+export function getCheckpoints(user_id: number, getPrivate = false) {
   debug(`Getting all checkpoints for user (${user_id})`);
-  return Checkpoint.find({ user_id, isDeleted: false }, GENERIC_CHECKPOINT_DATA);
+  const query = { user_id, isDeleted: false } as any;
+  if (!getPrivate)
+    query.isPrivate = false;
+  return Checkpoint.find(query, GENERIC_CHECKPOINT_DATA);
 }
 
 export function getActiveCheckpoints(user_id: number) {
@@ -23,10 +26,13 @@ export function getActiveCheckpoints(user_id: number) {
   return Checkpoint.find({ user_id, isDeleted: false, isCompleted: false }, GENERIC_CHECKPOINT_DATA);
 }
 
-export function getCheckpointById(_id: number) {
+export function getCheckpointById(_id: number, getPrivate = false) {
   debug(`Getting checkpoint (${_id})`);
   // NOTE: no security check on if checkpoint is deleted or not
-  return Checkpoint.findById(_id);
+  const query = { _id } as any;
+  if (!getPrivate)
+    query.isPrivate = false;
+  return Checkpoint.findOne(query);
 }
 
 export function updateCheckpoint(_id: number, query: CheckpointsServer.Checkpoint) {

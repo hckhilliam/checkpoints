@@ -21,14 +21,15 @@ interface State {
 }
 
 const EventDescription = ({ event }: { event: Checkpoints.Event }) => {
+  let name: React.ReactNode = event.name;
+  if (event.eventSource == 'Facebook')
+    name = <a href={`http://www.facebook.com/events/${event.id}`} target="_blank">{name}</a>
+
   return (
     <div className="EventDescription">
-      <h1>{event.name}</h1>
-      <Linkify properties={{target: '_blank'}}>
+      <h1>{name}</h1>
+      <Linkify properties={{ target: '_blank' }}>
         <span>{event.description}</span>
-        {
-          (event.eventSource == 'Facebook') && <div>{"www.facebook.com/events/" + event.id}</div>  
-        }
       </Linkify>
     </div>
   );
