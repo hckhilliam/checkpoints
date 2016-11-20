@@ -16,7 +16,7 @@ import checkpoints from './reducers/checkpointsReducer';
 import dialog from './reducers/dialogReducer';
 import dropdownlist from './reducers/dropdownlistReducer';
 import events from './reducers/eventsReducer';
-import flights from './reducers/filghtReducer';
+import flights from './reducers/flightReducer';
 import friends from './reducers/friendsReducer';
 import overlay from './reducers/overlayReducer';
 import search from './reducers/searchReducer';
