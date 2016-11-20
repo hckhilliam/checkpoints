@@ -13,8 +13,8 @@ const Dashboard = props => {
       <CheckpointsSection />
       <div className="DashboardRight">
         <FriendsSection />
-          <div className="EventsWarpper"><Events /></div>
-          <div className="FlightsWarpper"><Flights /></div>
+          <Events />
+          <Flights />
       </div>
     </div>
   );
