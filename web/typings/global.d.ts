@@ -68,6 +68,7 @@ declare namespace Checkpoints {
     pictures?: Picture[];
     isCompleted?: boolean;
     loaded?: boolean;
+    completedOn?: Date;
   }
 
   interface Response {

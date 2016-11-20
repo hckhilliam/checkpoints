@@ -2,6 +2,7 @@ import './CheckpointsListItem.scss';
 
 import * as React from 'react';
 import * as classnames from 'classnames';
+import * as dateformat from 'dateformat';
 
 import { ExpandableListItem } from './List';
 import Checkpoint from './Checkpoint';
@@ -35,6 +36,9 @@ export default class CheckpointsListItem extends React.Component<Props, {}> {
             <span>{checkpoint.description}</span>
           </div>
           <div className="CheckpointsListItem-icons">
+            <div className="CheckpointsListItem-date">
+              {checkpoint.completedOn ? dateformat(checkpoint.completedOn, 'yyyy-mm-dd') : null}
+            </div>
             {checkpoint.isPrivate ? <MaterialIcon icon="visibility_off" /> : null}
             {checkpoint.isCompleted ? <MaterialIcon className="CheckpointsListItem-completed" icon="check_circle" /> : null}
           </div>

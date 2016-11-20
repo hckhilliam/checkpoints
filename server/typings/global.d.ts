@@ -44,6 +44,8 @@ declare namespace CheckpointsServer {
     comments: string[];
     pictures: Picture[];
     isCompleted: boolean;
+    createdOn: Date;
+    completedOn: Date;
   }
 
   interface Token {
@@ -59,7 +61,7 @@ declare namespace CheckpointsServer {
     name: string;
     picture?: Picture;
   }
-  
+
   interface Location {
     lng: Number;
     lat: Number;
@@ -75,10 +77,10 @@ declare namespace CheckpointsServer {
     origin: string;
     destination: string;
     originCode: string;
-    destinationCode: string; 
+    destinationCode: string;
     departureDate?: Date;
   }
-  
+
   export interface Event {
     id: number;
     name: string;

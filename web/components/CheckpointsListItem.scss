@@ -27,6 +27,14 @@
     }
   }
 
+  &-date {
+    margin-left: 8px;
+    margin-right: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.32);
+  }
+
   &-completed.Icon {
     color: $md-green-300;
   }

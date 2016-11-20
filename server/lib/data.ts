@@ -10,5 +10,6 @@ export const GENERIC_CHECKPOINT_DATA = {
   title: 1,
   description: 1,
   isPrivate: 1,
-  isCompleted: 1
+  isCompleted: 1,
+  completedOn: 1
 };
