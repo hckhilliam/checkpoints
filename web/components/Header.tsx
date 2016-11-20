@@ -5,17 +5,21 @@ import { connect } from 'react-redux';
 
 import { reset } from '../actions/global';
 import { logout } from '../lib/auth';
+import { openDialog } from '../actions/dialog';
 
 import SearchBar from './SearchBar';
+import { UserSettingsForm } from './UserSettings';
+
 
 interface HeaderProps {
   user?: Checkpoints.User;
   onLogout?: () => void;
+  onOpenSettings?: () => void;
 }
 
 export class Header extends React.Component<HeaderProps, {}> {
   render() {
-    const { user, onLogout } = this.props;
+    const { user, onLogout, onOpenSettings } = this.props;
 
     const pictureUrl = _.get(user, 'picture.url') as string;
     const picture = pictureUrl ? <img src={pictureUrl} /> : null;
@@ -25,7 +29,7 @@ export class Header extends React.Component<HeaderProps, {}> {
         <div className="Header-content">
           <h1 className="Header-title">Checkpoints</h1>
           <SearchBar />
-          <div className="Header-user">
+          <div className="Header-user" onClick={onOpenSettings}>
             <div className="Header-user-picture">
               {picture}
             </div>
@@ -49,6 +53,12 @@ const mapDispatchToProps = dispatch => {
     onLogout: () => {
       dispatch(reset());
       logout();
+    },
+    onOpenSettings: () => {
+      dispatch(openDialog(<UserSettingsForm />, {
+        size: 'Medium',
+        title: 'User Settings'
+      }));
     }
   };
 };

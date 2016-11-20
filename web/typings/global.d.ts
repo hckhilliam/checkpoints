@@ -104,6 +104,13 @@ declare namespace Checkpoints {
       notes?: string;
       private: boolean;
     }
+
+    interface User {
+      name: string;
+      settings: {
+        isSubscribed: boolean;
+      };
+    }
   }
 
   interface SearchResult {
