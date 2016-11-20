@@ -1,15 +1,15 @@
 const debug = require('debug')('checkpoints:checkpointsEvents');
 
 import { Router, Request, Response } from 'express';
-import { eventCriteria, getFilteredEvents } from '../modules/event';
+import { eventCriteria, getFilteredEvents, searchUserEvents } from '../modules/event';
 import { getLocation } from '../modules/location';
 
 
 const api = Router();
 
-api.post('/', (req: CheckpointsServer.Request & Request, res: Response, next) => {
-  let criteria: eventCriteria = req.body;
 
+api.all('*', (req: Request & CheckpointsServer.Request, res: Response, next) => {
+  let criteria: eventCriteria = req.body;
   let deferred: Promise<eventCriteria> = Promise.resolve(criteria);
   if (!(criteria.lat && criteria.lng)) {
     debug('lat and lng are not set');
@@ -20,14 +20,31 @@ api.post('/', (req: CheckpointsServer.Request & Request, res: Response, next) =>
       });
     });
   }
-  return deferred.then(
-    criteria => {
-      return getFilteredEvents(criteria).then((events) => {
-        res.json({
-          events
-        });
-      });
+  deferred.then((newBody) => {
+    req.body = newBody;
+    next();
   });
+});
+
+
+api.post('/recommend', (req: CheckpointsServer.Request & Request, res: Response, next) => {
+  let criteria: eventCriteria = req.body;
+  let user = req.user;
+  searchUserEvents(user, criteria).then((events) => {
+    res.json({
+      events
+    });
+  })
+});
+
+
+api.post('/', (req: CheckpointsServer.Request & Request, res: Response, next) => {
+  let criteria: eventCriteria = req.body;
+  getFilteredEvents(criteria).then((events) => {
+    res.json({
+      events
+    });
+  })
 });
 
 export default api;

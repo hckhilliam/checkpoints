@@ -1,6 +1,5 @@
 import { getSubscribedUsers } from '../modules/user';
-import { getFBEventsByLocation } from '../modules/event';
-import { getActiveCheckpoints } from '../modules/checkpoint';
+import { searchUserEvents, eventCriteria } from '../modules/event';
 import { createMail } from './mailer';
 
 
@@ -8,55 +7,27 @@ export function matchEvents(){
   getSubscribedUsers().then(result => {
     let users: CheckpointsServer.User[] = result;
     users.forEach(user => {
-      console.log(user.name);
-      searchEvents(user);
+      sendUserEvents(user);
     });
   });
 }
 
-function searchEvents(user: CheckpointsServer.User){
-  Promise.all([
-    getFBEventsByLocation({
-      lat: 43.4761238,
-      lng: -80.5378432,
-      distance: 700,
-      filter: undefined
-    }),
-    getActiveCheckpoints(user._id)
-  ]).then((result) => {
-    const events = result[0];
-    const checkpoints = result[1] as any as CheckpointsServer.Checkpoint[];
-
-    let eventKeys = {};
-    let matchedEvents = {};
-
-    events.forEach(event => {
-      let eventNames = event.name.toLowerCase().split(/[ ,."()]+/);
-      eventNames.forEach(name => {
-      if (eventKeys[name] === undefined) {
-        eventKeys[name] = {};
-        eventKeys[name][event.id] = true;
-      } else if (eventKeys[name][event.id] === undefined) {
-        eventKeys[name][event.id] = true; 
-      }
-    });
-    // match checkpoints to events
-      checkpoints.forEach(checkpoint => {
-        //TODO replace title with tags/keywords
-        if (eventKeys[checkpoint.title]) {
-          _.merge(matchedEvents, eventKeys[checkpoint.title]);
-        }
-      });
-    })
-
-    if (!(_.isEmpty(matchedEvents))) {
-      buildEmail(user, Object.keys(matchedEvents));
+function sendUserEvents(user: CheckpointsServer.User) {
+  let search: eventCriteria = {
+    lat: 43.4761238,
+    lng: -80.5378432,
+    distance: 700,
+    filter: undefined
+  }    
+  searchUserEvents(user, search).then(events => {
+    let eventsIDs = events.map(event => event.id);
+    if (!(_.isEmpty(eventsIDs))) {
+      buildEmail(user, eventsIDs);
     }
-    // console.log("matched events", matchedEvents);
   });
 }
 
-function buildEmail(user: CheckpointsServer.User, eventIds:string[]) {
+function buildEmail(user: CheckpointsServer.User, eventIds:number[]) {
   const subject = `Recommended Events`;
   const { name, email } = user;
 

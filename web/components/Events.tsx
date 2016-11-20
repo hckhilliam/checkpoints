@@ -9,7 +9,7 @@ import Event from './Event';
 import Panel from './Panel';
 import { List, ExpandableListItem } from './List';
 
-import { getEvents } from '../actions/events';
+import { getRecommendEvents } from '../actions/events';
 
 interface Props {
   events?: Checkpoints.Event[];
@@ -101,7 +101,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onGetEvents: (search: Checkpoints.eventSearch) => {
-      dispatch(getEvents(search));
+      dispatch(getRecommendEvents(search));
     }
   }
 };

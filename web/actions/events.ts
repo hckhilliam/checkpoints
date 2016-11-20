@@ -8,9 +8,17 @@ export interface EventsAction extends Action {
   events: Checkpoints.Event[];
 } 
 
-export function getEvents(search: Checkpoints.eventSearch) {
+export function getAllEvents(search: Checkpoints.eventSearch) {
   return dispatch => {
-    return events.getEvents(search).then(events => {
+    return events.getAllEvents(search).then(events => {
+      dispatch(updateEvents(events));
+    });
+  }
+}
+
+export function getRecommendEvents(search: Checkpoints.eventSearch) {
+  return dispatch => {
+    return events.getRecommendEvents(search).then(events => {
       dispatch(updateEvents(events));
     });
   }

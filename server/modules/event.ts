@@ -1,6 +1,7 @@
 const EventSearch = require('facebook-events-by-location-core');
 
 import { getAppFacebookToken } from './facebook';
+import { getActiveCheckpoints } from '../modules/checkpoint';
 
 export interface eventCriteria {
   lng: number;
@@ -41,4 +42,38 @@ function normalizeFacebookEvent(fbEvent): CheckpointsServer.Event {
   fbEvent.eventSource = "Facebook";
   fbEvent.pictureURL = fbEvent.profilePicture;
   return fbEvent;
+}
+
+export function searchUserEvents(user: CheckpointsServer.User, search: eventCriteria): Promise<CheckpointsServer.Event[]>{
+  return Promise.all([
+    getFBEventsByLocation(search),
+    getActiveCheckpoints(user._id)
+  ]).then((result) => {
+    const events = result[0];
+    const checkpoints = result[1] as any as CheckpointsServer.Checkpoint[];
+
+    let eventKeys = {};
+    let matchedEvents = {};
+
+    events.forEach(event => {
+      let eventNames = event.name.toLowerCase().split(/[ ,."()]+/);
+      eventNames.forEach(name => {
+        if (eventKeys[name] === undefined) {
+          eventKeys[name] = {};
+          eventKeys[name][event.id] = event;
+        } else if (eventKeys[name][event.id] === undefined) {
+          eventKeys[name][event.id] = event; 
+        }
+      });
+      // match checkpoints to events
+      checkpoints.forEach(checkpoint => {
+        //TODO replace title with tags/keywords
+        if (eventKeys[checkpoint.title]) {
+          _.merge(matchedEvents, eventKeys[checkpoint.title]);
+        }
+      });
+    })
+    matchedEvents = _.values(matchedEvents);
+    return Promise.resolve(matchedEvents);
+  });
 }
