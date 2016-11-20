@@ -27,10 +27,12 @@ export default class Picture extends React.Component<Props, {}> {
 
     return (
       <div className={cssClass} {...other}>
-        <div className="Picture-image" style={style}>
-          <img src={picture.url} />
-          {children}
-        </div>
+        <a href={picture.url} target="_blank">
+          <div className="Picture-image" style={style}>
+            <img src={picture.url} />
+            {children}
+          </div>
+        </a>
       </div>
     );
   }

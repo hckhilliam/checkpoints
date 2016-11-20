@@ -1,23 +1,31 @@
-$iconSize: 64px; 
+@import "../styles/variables";
 
 .Event {
-  height: $iconSize;
-  margin: 0;
-  // & > * {
-  //   float: left;
-  // }
-  .Event-icon {
-    width: $iconSize;
-    height: auto;
-    position: absolute;
+  height: 64px;
+  display: flex;
+  overflow: hidden;
+
+  &-thumbnail {
+    max-width: 100%;
+    max-height: 100%;
   }
-  .Event-details {
-    margin-left: $iconSize;
-    // overflow: hidden;
-    .Event-name, .Event-date{
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
+
+  &-details {
+    flex: 1;
+    margin: auto 0 auto 8px;
+  }
+
+  &-name {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    @include text-ellipsis;
+  }
+
+  &-date {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    color: $md-dark-text-secondary;
   }
 }

@@ -83,7 +83,7 @@ export class Checkpoint extends React.Component<Props, State> {
           </div>
           <ImageUpload onUpload={onUpload} />
         </div>
-      
+
         {
           complete
             ? null
@@ -126,8 +126,7 @@ const mapDispatchToProps = (dispatch, ownProps: Props) => {
       };
       dispatch(openDialog(
         <ConfirmDialog onSubmit={onSubmit}>
-          Are you sure you want to delete your checkpoint?
-          <strong>(It'll be gone forever!)</strong>
+          Are you sure you want to delete your checkpoint? <strong>(It'll be gone forever!)</strong>
         </ConfirmDialog>,
         { title: 'Delete Checkpoint?', size: 'Small' }
       ));

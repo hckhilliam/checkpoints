@@ -25,7 +25,7 @@ export class ListItem extends React.Component<React.HTMLAttributes, {}> {
 interface ExpandableListItemProps extends React.HTMLAttributes {
   selected?: boolean;
   expanded?: boolean;
-  body?: JSX.Element;
+  body?: React.ReactNode;
 }
 
 interface ExpandableListItemState {

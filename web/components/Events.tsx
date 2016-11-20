@@ -2,10 +2,14 @@ import './Events.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { getEvents } from '../actions/events';
+
+const Linkify = require('react-linkify').default;
+
 import Event from './Event';
 import Panel from './Panel';
 import { List, ExpandableListItem } from './List';
+
+import { getEvents } from '../actions/events';
 
 interface Props {
   events?: Checkpoints.Event[];
@@ -15,6 +19,17 @@ interface Props {
 interface State {
   selectEventID?: string;
 }
+
+const EventDescription = ({ event }: { event: Checkpoints.Event }) => {
+  return (
+    <div className="EventDescription">
+      <h1>{event.name}</h1>
+      <Linkify>
+        <span>{event.description}</span>
+      </Linkify>
+    </div>
+  );
+};
 
 export class Events extends React.Component<Props, State> {
   componentDidMount() {
@@ -42,7 +57,7 @@ export class Events extends React.Component<Props, State> {
   onClickEvent(id: string) {
     let prevSelected = this.state.selectEventID;
     if (prevSelected == id) {
-      this.setState({ selectEventID: "" });
+      this.setState({ selectEventID: '' });
     }
     else {
       this.setState({ selectEventID: id });
@@ -64,9 +79,10 @@ export class Events extends React.Component<Props, State> {
             return (
               <ExpandableListItem
                 selected={selected}
+                expanded={selected}
                 key={id}
-                body={<div>{event.description}</div>}
                 loading={false}
+                body={<EventDescription event={event} />}
                 onClick={() => this.onClickEvent(id)}
               >
                 <Event event={event} />
@@ -95,4 +111,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export const EventsContainer = connect(mapStateToProps, mapDispatchToProps)(Events);
-export default EventsContainer
+export default EventsContainer;

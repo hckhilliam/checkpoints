@@ -17,15 +17,11 @@ export const Event = (props: Props) => {
   }
   return (
     <div className="Event">
-      {/* <p>{event.description}</p>
-      <p>{event.distance}?</p>
-      <p>{event.eventSource}</p>*/ }
-      <img className="Event-icon" src={event.pictureURL}/>
+      <img className="Event-thumbnail" src={event.pictureURL}/>
       <div className="Event-details">
-        <div className="Event-name">{event.name}</div>
-        <div className="Event-date">{ dateDisplay }</div>
+        <h1 className="Event-name">{event.name}</h1>
+        <h2 className="Event-date">{dateDisplay}</h2>
       </div>
-      <div style={{clear: 'both'}} />
     </div>
   );
 }
