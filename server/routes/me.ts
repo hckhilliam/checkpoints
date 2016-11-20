@@ -14,11 +14,6 @@ api.all('*', (req: Request & CheckpointsServer.Request, res: Response, next) => 
   next();
 });
 
-api.get('/info', (req: CheckpointsServer.Request, res: Response) => {
-  const user = _.pick(req.customParams.user, '_id', 'name', 'picture');
-  res.json(user);
-});
-
 api.use('/', common);
 api.use('/friends', friends);
 api.use('/search', search);

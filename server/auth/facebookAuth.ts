@@ -62,7 +62,7 @@ export function useFacebookStrategy() {
           .then(values => {
             // update user picture
             const user = values[2];
-            const overwrite = !(user.picture && user.picture.url);
+            const overwrite = !(user.picture && user.picture.url) || _.get(user, 'picture.url') == process.env['DEFAULT_PICTURE'];
             return facebook.updateFacebookPicture(fbUser.id, overwrite).then(() => values)
           })
           .then(values => {
