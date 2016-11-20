@@ -3,6 +3,7 @@ import './Checkpoint.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import * as classnames from 'classnames';
+const Linkify = require('react-linkify').default;
 
 import { EditCheckpointForm } from './CheckpointForm';
 import Button from './Button';
@@ -66,7 +67,7 @@ export class Checkpoint extends React.Component<Props, State> {
         </div>
         <div className="Checkpoint-description">
           <h3>Description</h3>
-          <span>{checkpoint.description}</span>
+          <Linkify properties={{ target: '_blank' }}>{checkpoint.description}</Linkify>
         </div>
         {privateView &&
           <div className="Checkpoint-visibility">

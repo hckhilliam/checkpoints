@@ -24,11 +24,12 @@ interface CheckpointsListSectionProps {
   title: string;
   checkpoints: Checkpoints.Checkpoint[];
   selectedId: number;
+  privateView: boolean;
   onClick: (checkpoint: Checkpoints.Checkpoint) => void;
 }
 
 const CheckpointsListSection = (props: CheckpointsListSectionProps) => {
-  const { title, checkpoints, selectedId, onClick } = props;
+  const { title, checkpoints, selectedId, privateView, onClick } = props;
   return (
     <div className="CheckpointsListSection">
       <h2>{title}</h2>
@@ -40,6 +41,7 @@ const CheckpointsListSection = (props: CheckpointsListSectionProps) => {
               key={c.id}
               checkpoint={c}
               selected={selected}
+              privateView={privateView}
               onClick={() => onClick(c)}
             />
           );
@@ -89,7 +91,7 @@ export class CheckpointsList extends React.Component<Props, State> {
   };
 
   render() {
-    const { className, checkpoints } = this.props;
+    const { className, checkpoints, userId } = this.props;
     const { checkpoint } = this.state;
 
     const other = _.omit(this.props, 'className', 'userId', 'checkpoints', 'onComponentDidMount', 'onSelectCheckpoint');
@@ -107,6 +109,7 @@ export class CheckpointsList extends React.Component<Props, State> {
               title="In Progress"
               checkpoints={pending}
               selectedId={checkpoint.id}
+              privateView={!userId}
               onClick={this.handleSelectCheckpoint}
             />
         }
@@ -116,6 +119,7 @@ export class CheckpointsList extends React.Component<Props, State> {
               title="Complete"
               checkpoints={complete}
               selectedId={checkpoint.id}
+              privateView={!userId}
               onClick={this.handleSelectCheckpoint}
             />
         }
