@@ -33,8 +33,12 @@ export default class CheckpointsListItem extends React.Component<Props, {}> {
         <div className="CheckpointsListItem-wrapper">
           <div className="CheckpointsListItem-text">
             <span className="CheckpointsListItem-title">{checkpoint.title}</span>
-            <span className="CheckpointsListItem-divider">—</span>
-            <span>{checkpoint.description}</span>
+            {checkpoint.description &&
+              <span>
+                <span className="CheckpointsListItem-divider">—</span>
+                <span>{checkpoint.description}</span>
+              </span>
+            }
           </div>
           <div className="CheckpointsListItem-icons">
             <div className="CheckpointsListItem-date">

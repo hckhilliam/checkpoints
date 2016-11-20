@@ -26,8 +26,9 @@
     color: $md-red-500;
   }
 
-  &-description, &-visibility {
+  &-description, &-visibility, &-notes {
     margin: 8px 0;
+    white-space: pre-line;
 
     span {
       @include content-text;

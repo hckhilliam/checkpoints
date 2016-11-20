@@ -65,10 +65,18 @@ export class Checkpoint extends React.Component<Props, State> {
           {privateView && <IconButton className="Checkpoint-delete" onClick={onDelete} tabIndex={-1}><MaterialIcon icon="delete" /></IconButton>}
           <CheckpointStatus complete={complete} />
         </div>
-        <div className="Checkpoint-description">
-          <h3>Description</h3>
-          <Linkify properties={{ target: '_blank' }}>{checkpoint.description}</Linkify>
-        </div>
+        {!_.isEmpty(checkpoint.description) &&
+          <div className="Checkpoint-description">
+            <h3>Description</h3>
+            <Linkify properties={{ target: '_blank' }}>{checkpoint.description}</Linkify>
+          </div>
+        }
+        {!_.isEmpty(checkpoint.notes) &&
+          <div className="Checkpoint-notes">
+            <h3>Notes</h3>
+            <Linkify properties={{ target: '_blank' }}>{checkpoint.notes}</Linkify>
+          </div>
+        }
         {privateView &&
           <div className="Checkpoint-visibility">
             <h3>Visibility</h3>

@@ -67,6 +67,7 @@ declare namespace Checkpoints {
     comments?: string[];
     pictures?: Picture[];
     isCompleted?: boolean;
+    notes?: string;
     loaded?: boolean;
     completedOn?: Date;
   }
@@ -99,7 +100,8 @@ declare namespace Checkpoints {
     interface Checkpoint {
       id?: number;
       title: string;
-      description: string;
+      description?: string;
+      notes?: string;
       private: boolean;
     }
   }

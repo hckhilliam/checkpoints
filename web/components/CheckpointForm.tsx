@@ -44,6 +44,7 @@ export class CheckpointForm extends React.Component<CheckpointFormProps, {}> {
       <Form className={cssClass} {...other}>
         <InputField label="Title" name="title" />
         <TextAreaField label="Description" name="description" />
+        {edit ? <TextAreaField label="Notes" name="notes" /> : <span></span>}
         <CheckboxField label="Private" name="private" />
         <FormButtons>
           <Button type="submit" primary>{buttonText}</Button>
@@ -89,6 +90,7 @@ const mapStateToProps = (state: Checkpoints.State, ownProps) => {
       id: checkpoint.id,
       title: checkpoint.title,
       description: checkpoint.description,
+      notes: checkpoint.notes,
       private: checkpoint.isPrivate
     }
   };
