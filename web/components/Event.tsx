@@ -11,9 +11,9 @@ export const Event = (props: Props) => {
   const event = props.event;
   let dateDisplay;
   if (event.startTime.toDateString() === event.endTime.toDateString()) { // checks if the date is the same
-    dateDisplay = dateformat(event.startTime, 'mmmm dS h:MM') + ' - ' + dateformat(event.endTime, 'h:MM');
+    dateDisplay = `${dateformat(event.startTime, 'mmmm dS h:MM')} - ${dateformat(event.endTime, 'h:MM')}`;
   } else {
-    dateDisplay = dateformat(event.startTime, 'mmmm dS h:MM') + ' - ' + dateformat(event.endTime, 'mmmm dS h:MM');
+    dateDisplay = `${dateformat(event.startTime, 'mmmm dS h:MM')} - ${dateformat(event.endTime, 'mmmm dS h:MM')}`;
   }
   return (
     <div className="Event">

@@ -3,7 +3,7 @@ const debug = require('debug')('checkpoints:checkpointsHandler');
 import { Request, Response } from 'express';
 
 import * as checkpoint from '../modules/checkpoint';
-import { getUserId } from '../lib/request';
+import { getUserId, getCallerUserId } from '../lib/request';
 import { checkIsSelf } from './authenticator';
 
 export function getCheckpoints(req: Request, res: Response, next: any) {
@@ -20,7 +20,7 @@ export function getCheckpoint(req: Request, res: Response, next: any, checkpoint
 }
 
 export function createCheckpoint(req: CheckpointsServer.Request, res: Response, next: any) {
-  const userId = getUserId(req);
+  const userId = getCallerUserId(req);
   const { title, description, isPrivate } = req.body as CheckpointsServer.Checkpoint;
   checkpoint.createCheckpoint(userId, title, description, !!isPrivate)
     .then(checkpoint => res.json(checkpoint))
@@ -28,14 +28,16 @@ export function createCheckpoint(req: CheckpointsServer.Request, res: Response, 
 }
 
 export function updateCheckpoint(req: CheckpointsServer.Request, res: Response, next: any, checkpointId: number) {
+  const userId = getCallerUserId(req);
   const body = req.body as CheckpointsServer.Checkpoint;
-  checkpoint.updateCheckpoint(checkpointId, body)
+  checkpoint.updateCheckpoint(checkpointId, userId, body)
     .then(c => res.json(c))
     .catch(next);
 }
 
 export function deleteCheckpoint(req: Request, res: Response, next: any, checkpointId: number) {
-  checkpoint.deleteCheckpoint(checkpointId)
+  const userId = getCallerUserId(req);
+  checkpoint.deleteCheckpoint(checkpointId, userId)
     .then(() => res.end())
     .catch(next);
 }

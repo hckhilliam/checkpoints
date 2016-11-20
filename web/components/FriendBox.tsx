@@ -10,11 +10,10 @@ interface Props extends React.HTMLAttributes {
 export default class FriendBox extends React.Component<Props, {}> {
   render() {
     const { className, friend } = this.props;
-
-    const cssClass = classnames('friend-box', className, 'col-xs-3', 'col-sm-2', 'col-md-6', 'col-lg-3');
-
+    const other = _.omit(this.props, 'className', 'friend');
+    const cssClass = classnames('FriendBox', className);
     return (
-      <div className={cssClass}>
+      <div className={cssClass} {...other}>
         <img className="display" src={friend.picture.url} />
         <div className="name" title={friend.name}>{friend.name.split(' ')[0]}</div>
       </div>

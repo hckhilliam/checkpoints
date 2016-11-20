@@ -31,10 +31,6 @@ const Overlay = (props: OverlayElementProps) => {
 };
 
 class Overlays extends React.Component<OverlayProps, {}> {
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleEscape);
-  }
-
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleEscape);
   }
@@ -57,6 +53,12 @@ class Overlays extends React.Component<OverlayProps, {}> {
           overlay.onClose();
         }
       });
+
+      if (this.props.overlays.length && nextProps.overlays.length == 0) {
+        window.removeEventListener('keydown', this.handleEscape);
+      } else if (this.props.overlays.length == 0 && nextProps.overlays.length) {
+        window.addEventListener('keydown', this.handleEscape);
+      }
     }
   }
 

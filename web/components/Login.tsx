@@ -9,7 +9,7 @@ import LoginForm from './LoginForm';
 import RegistrationForm from './RegistrationForm';
 import FacebookLoginButton from './FacebookLoginButton';
 
-import { getInfo } from '../actions/user';
+import { getUserInfo } from '../actions/users';
 import { dashboard } from '../actions/routing';
 
 interface LoginProps extends React.HTMLAttributes {
@@ -73,7 +73,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onSubmitSuccess: () => {
-      dispatch(getInfo());
+      dispatch(getUserInfo());
       dispatch(dashboard());
     }
   };

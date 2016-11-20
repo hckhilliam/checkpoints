@@ -35,13 +35,13 @@ export function getCheckpointById(_id: number, getPrivate = false) {
   return Checkpoint.findOne(query);
 }
 
-export function updateCheckpoint(_id: number, query: CheckpointsServer.Checkpoint) {
+export function updateCheckpoint(_id: number, user_id: number, query: CheckpointsServer.Checkpoint) {
   debug(`Updating checkpoint (${_id})`);
   delete query._id;
-  return Checkpoint.findOneAndUpdate({_id}, query, {new: true});
+  return Checkpoint.findOneAndUpdate({ _id, user_id }, query, { new: true });
 }
 
-export function deleteCheckpoint(_id: number) {
+export function deleteCheckpoint(_id: number, user_id: number) {
   debug(`Deleting checkpoint (${_id})`);
-  return Checkpoint.findOneAndUpdate({_id}, {isDeleted: true}, {new: true});
+  return Checkpoint.findOneAndUpdate({ _id, user_id }, { isDeleted: true}, { new: true });
 }

@@ -1,0 +1,22 @@
+@import "../styles/variables";
+
+.ProfileBanner {
+  display: flex;
+  align-items: center;
+
+  &-image {
+    border-radius: 50%;
+    max-width: 200px;
+    max-height: 200px;
+    @include shadow-dark;
+  }
+
+  &-name {
+    font-size: 32px;
+    font-weight: 300;
+
+    flex: 1;
+    margin-left: 32px;
+    cursor: default;
+  }
+}

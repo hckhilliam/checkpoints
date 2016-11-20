@@ -5,12 +5,15 @@ import { connect } from 'react-redux';
 
 import Panel from './Panel';
 import FriendBox from './FriendBox';
+import UserProfile from './UserProfile';
 
 import { getFriends } from '../actions/friends';
+import { openDialog } from '../actions/dialog';
 
 interface Props {
   friends?: Checkpoints.Friend[];
   onComponentDidMount?: () => void;
+  onSelectFriend?: (friend: Checkpoints.Friend) => void;
 }
 
 interface State {
@@ -31,7 +34,7 @@ export class FriendsSection extends React.Component<Props, State> {
   }
 
   render() {
-    const { friends } = this.props;
+    const { friends, onSelectFriend } = this.props;
 
     return (
       <div className="FriendsSection">
@@ -41,9 +44,14 @@ export class FriendsSection extends React.Component<Props, State> {
         <Panel className="FriendsSection-list">
           <div className="row">
             {
-              friends.map(f => {
-                return (<FriendBox key={f.id} friend={f} />);
-              })
+              friends.map(f => (
+                <FriendBox
+                  className="col-xs-3 col-sm-2 col-md-6 col-lg-3"
+                  key={f.id}
+                  friend={f}
+                  onClick={() => onSelectFriend(f)}
+                />
+              ))
             }
           </div>
         </Panel>
@@ -62,6 +70,11 @@ const mapDispatchToProps = dispatch => {
   return {
     onComponentDidMount: () => {
       dispatch(getFriends());
+    },
+    onSelectFriend: (friend: Checkpoints.Friend) => {
+      dispatch(openDialog(<UserProfile userId={friend.id} />, {
+        size: 'Large'
+      }));
     }
   };
 };

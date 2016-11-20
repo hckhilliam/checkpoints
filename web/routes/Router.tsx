@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Router as ReactRouter, Route, IndexRoute } from 'react-router';
 
 import { isLoggedIn } from '../lib/auth';
-import { getInfo as getUserInfo } from '../actions/user';
+import { getUserInfo } from '../actions/users';
 
 import Root from './Root';
 import UserRoot from './UserRoot';

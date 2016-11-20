@@ -10,24 +10,28 @@ export const REMOVE_CHECKPOINT = 'REMOVE_CHECKPOINT';
 // Actions
 export interface CheckpointAction extends Action {
   checkpoint: Checkpoints.Checkpoint;
+  userId?: number;
 }
 
 export interface CheckpointsAction extends Action {
   checkpoints: Checkpoints.Checkpoint[];
+  userId?: number;
 }
 
 // Action creators
-function updateCheckpoint(checkpoint): CheckpointAction {
+function updateCheckpoint(checkpoint, userId?: number): CheckpointAction {
   return {
     type: UPDATE_CHECKPOINT,
-    checkpoint
+    checkpoint,
+    userId
   };
 }
 
-function updateCheckpoints(checkpoints): CheckpointsAction {
+function updateCheckpoints(checkpoints, userId?: number): CheckpointsAction {
   return {
     type: UPDATE_CHECKPOINTS,
-    checkpoints
+    checkpoints,
+    userId
   };
 }
 
@@ -38,20 +42,17 @@ function removeCheckpoint(checkpointId): CheckpointAction {
   };
 }
 
-export function getCheckpoints() {
+export function getCheckpoints(userId?: number) {
   return dispatch => {
-    return checkpoints.getCheckpoints()
-      .then(checkpoints => dispatch(updateCheckpoints(checkpoints)));
+    return checkpoints.getCheckpoints(userId)
+      .then(checkpoints => dispatch(updateCheckpoints(checkpoints, userId)));
   }
 }
 
-export function getCheckpoint(checkpointId: number) {
-  return (dispatch, getState: () => Checkpoints.State) => {
-    const state = getState();
-    const index = state.checkpoints.me.findIndex(c => c.id == checkpointId);
-
-    return checkpoints.getCheckpoint(checkpointId)
-      .then(checkpoint => dispatch(updateCheckpoint(checkpoint)));
+export function getCheckpoint(checkpointId: number, userId?: number) {
+  return dispatch => {
+    return checkpoints.getCheckpoint(checkpointId, userId)
+      .then(checkpoint => dispatch(updateCheckpoint(checkpoint, userId)));
   };
 }
 

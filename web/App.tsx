@@ -12,6 +12,8 @@ import { reducer as form } from 'redux-form';
 
 import Router from './routes/Router';
 
+import { RESET } from './actions/global';
+
 import checkpoints from './reducers/checkpointsReducer';
 import dialog from './reducers/dialogReducer';
 import dropdownlist from './reducers/dropdownlistReducer';
@@ -20,15 +22,14 @@ import flights from './reducers/flightReducer';
 import friends from './reducers/friendsReducer';
 import overlay from './reducers/overlayReducer';
 import search from './reducers/searchReducer';
-import user from './reducers/userReducer';
+import users from './reducers/usersReducer';
 
 import { initializeAuth } from './lib/auth';
 
 initializeAuth();
 
-const reducer = combineReducers({
+const combinedReducer = combineReducers({
   checkpoints,
-  user,
   friends,
   routing,
   form,
@@ -37,8 +38,16 @@ const reducer = combineReducers({
   search,
   overlay,
   dialog,
-  dropdownlist
+  dropdownlist,
+  users
 });
+
+const reducer = (state, action) => {
+  if (action.type == RESET)
+    state = undefined;
+
+  return combinedReducer(state, action);
+};
 
 const reduxRouterMiddleware = routerMiddleware(browserHistory as any);
 const createStoreWithMiddleware = applyMiddleware(thunk, reduxRouterMiddleware);

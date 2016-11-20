@@ -3,7 +3,7 @@ import './Header.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { clearInfo } from '../actions/user';
+import { reset } from '../actions/global';
 import { logout } from '../lib/auth';
 
 import SearchBar from './SearchBar';
@@ -40,14 +40,14 @@ export class Header extends React.Component<HeaderProps, {}> {
 
 const mapStateToProps = (state: Checkpoints.State) => {
   return {
-    user: state.user
+    user: state.users.me
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onLogout: () => {
-      dispatch(clearInfo());
+      dispatch(reset());
       logout();
     }
   };

@@ -3,7 +3,7 @@ import { Action } from 'redux';
 import * as search from '../lib/api/search';
 
 // Action Types
-export const SEARCH_RESULTS = "SEARCH_RESULTS"
+export const SEARCH_RESULTS = 'SEARCH_RESULTS';
 
 // Actions
 export interface SearchAction extends Action {
