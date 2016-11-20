@@ -18,6 +18,11 @@ const accountsSchema = new mongoose.Schema({
   facebook: facebookUserSchema
 });
 
+const settingsSchema = new mongoose.Schema({
+  _id: false,
+  isSubscribed: { type: Boolean, default: true }
+})
+
 const schema = {
   _id: Number,
   email: { type: String, required: true, unique: true },
@@ -27,7 +32,8 @@ const schema = {
   friends: [Number],
   friendRequests: [Number],
   accounts: accountsSchema,
-  picture: { type: pictureSchema, default: pictureSchema }
+  picture: { type: pictureSchema, default: pictureSchema },
+  settings: { type: settingsSchema, default: settingsSchema }
 };
 
 const userSchema = new mongoose.Schema(schema);

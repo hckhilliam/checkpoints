@@ -18,6 +18,9 @@ declare namespace CheckpointsServer {
       facebook?: FacebookUser;
     };
     picture?: Picture;
+    settings?: {
+      isSubscribed?: boolean;
+    };
   }
 
   interface Picture {
