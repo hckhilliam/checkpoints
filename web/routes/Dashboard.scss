@@ -30,8 +30,6 @@ $mobileWidth: 64em;
 
       overflow: scroll;
       overflow-x: hidden;
-
-
     }
     .DashboardRight{
       margin: 16px;
@@ -46,8 +44,11 @@ $mobileWidth: 64em;
       }
 
       /*.FriendsSection {}*/
-      .Events {
+      .EventsWarpper, .FlightsWarpper {
         margin-top: 16px;
+        flex-grow: 1;
+        height: 0;
+        overflow: auto;
       }
     }
   }

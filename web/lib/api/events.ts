@@ -1,4 +1,4 @@
-import { get, post, put, del } from './fetch';
+import { post } from './fetch';
 
 
 function parseEvent(event): Checkpoints.Event {

@@ -16,6 +16,14 @@ declare namespace Checkpoints {
     pictureURL: string;
   }
 
+  interface Flight {
+    price: number;
+    url: string;
+    origin: string;
+    destintaion: string;
+    departureDate: Date;
+  }
+
   interface eventSearch {
     lng: number;
     lat: number;

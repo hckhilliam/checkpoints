@@ -15,6 +15,7 @@ import Router from './routes/Router';
 import checkpoints from './reducers/checkpointsReducer';
 import dialog from './reducers/dialogReducer';
 import events from './reducers/eventsReducer';
+import flights from './reducers/filghtReducer';
 import friends from './reducers/friendsReducer';
 import overlay from './reducers/overlayReducer';
 import search from './reducers/searchReducer';
@@ -31,6 +32,7 @@ const reducer = combineReducers({
   routing,
   form,
   events,
+  flights,
   search,
   overlay,
   dialog

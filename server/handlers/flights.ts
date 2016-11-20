@@ -1,3 +1,4 @@
+const debug = require('debug')('checkpoints:flightsHandler');
 import { getFlights } from '../modules/flights';
 
 export function getFlightsHandler(query: CheckpointsServer.FlightQuery): Promise<CheckpointsServer.Flight> {
@@ -20,7 +21,6 @@ export function getFlightsHandler(query: CheckpointsServer.FlightQuery): Promise
     query.departureDate = new Date();
     query.departureDate.setDate(query.departureDate.getDate() + 1);
   }
-
   return getFlights(query);
 }
 
