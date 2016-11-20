@@ -7,6 +7,7 @@ type HttpResponse = Response;
 
 declare namespace Checkpoints {
   interface Event {
+    id: number;
     name: string;
     description: string;
     startTime: Date;

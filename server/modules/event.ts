@@ -9,9 +9,9 @@ export interface eventCriteria {
   filter: string;
 }
 
-export function getFilteredEvents(search: eventCriteria): Promise<Checkpoints.Event[]> {
+export function getFilteredEvents(search: eventCriteria): Promise<CheckpointsServer.Event[]> {
   let filter = search.filter;
-  return getFBEventsByLocation(search).then((events: Checkpoints.Event[]) => {
+  return getFBEventsByLocation(search).then((events: CheckpointsServer.Event[]) => {
     return events.filter((event) => {
       if (filter && event.name.search(new RegExp(filter, 'i')) == -1 && event.description.search(new RegExp(filter, 'i')) == -1) {
         return false;
@@ -24,7 +24,7 @@ export function getFilteredEvents(search: eventCriteria): Promise<Checkpoints.Ev
   });
 }
 
-export function getFBEventsByLocation(search: eventCriteria): Promise<Checkpoints.Event[]> {
+export function getFBEventsByLocation(search: eventCriteria): Promise<CheckpointsServer.Event[]> {
   return getAppFacebookToken().then(accessToken => {
     const eventQuery = new EventSearch({
       lng: search.lng,
@@ -32,14 +32,12 @@ export function getFBEventsByLocation(search: eventCriteria): Promise<Checkpoint
       distance: search.distance,
       accessToken: accessToken.token 
     });
-    return eventQuery.search().then((events) => {
-      return events.events.map(normalizeFacebookEvent) ;
-    });
+    return eventQuery.search().then((events) => events.events.map(normalizeFacebookEvent));
   });
   
 }
 
-function normalizeFacebookEvent(fbEvent): Checkpoints.Event {
+function normalizeFacebookEvent(fbEvent): CheckpointsServer.Event {
   fbEvent.eventSource = "Facebook";
   fbEvent.pictureURL = fbEvent.profilePicture;
   return fbEvent;

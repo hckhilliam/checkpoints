@@ -17,15 +17,18 @@ interface Props {
 }
 
 interface State {
-  selectEventID?: string;
+  selectEventID?: number;
 }
 
 const EventDescription = ({ event }: { event: Checkpoints.Event }) => {
   return (
     <div className="EventDescription">
       <h1>{event.name}</h1>
-      <Linkify>
+      <Linkify properties={{target: '_blank'}}>
         <span>{event.description}</span>
+        {
+          (event.eventSource == 'Facebook') && <div>{"www.facebook.com/events/" + event.id}</div>  
+        }
       </Linkify>
     </div>
   );
@@ -36,14 +39,7 @@ export class Events extends React.Component<Props, State> {
     this.props.onGetEvents(this.getSearchQuery());
   }
 
-  state: State = {
-    selectEventID: ''
-  };
-
-  // id is just a stringified version of the event
-  getSelectEventID(event: Checkpoints.Event) {
-    return JSON.stringify(event);
-  }
+  state: State = {};
 
   getSearchQuery = () => {
     return {
@@ -54,10 +50,10 @@ export class Events extends React.Component<Props, State> {
     } as Checkpoints.eventSearch;
   };
 
-  onClickEvent(id: string) {
+  onClickEvent(id: number) {
     let prevSelected = this.state.selectEventID;
     if (prevSelected == id) {
-      this.setState({ selectEventID: '' });
+      this.setState({ selectEventID: undefined });
     }
     else {
       this.setState({ selectEventID: id });
@@ -74,16 +70,15 @@ export class Events extends React.Component<Props, State> {
         <List>
         {
           this.props.events.map((event) => {
-            let id = this.getSelectEventID(event);
-            const selected = id == this.state.selectEventID;
+            const selected = event.id == this.state.selectEventID;
             return (
               <ExpandableListItem
                 selected={selected}
                 expanded={selected}
-                key={id}
+                key={event.id}
                 loading={false}
                 body={<EventDescription event={event} />}
-                onClick={() => this.onClickEvent(id)}
+                onClick={() => this.onClickEvent(event.id)}
               >
                 <Event event={event} />
               </ExpandableListItem>
