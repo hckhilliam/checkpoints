@@ -45,8 +45,8 @@ export class Events extends React.Component<Props, State> {
 
   getSearchQuery = () => {
     return {
-      lat: _.isEmpty(this.props.user) ?  43.4761238 : this.props.user.location.lat,
-      lng: _.isEmpty(this.props.user) ?  -80.5378432 : this.props.user.location.lng,
+      lat: _.isEmpty(this.props.user) ? 43.4761238 : this.props.user.location.lat,
+      lng: _.isEmpty(this.props.user) ? -80.5378432 : this.props.user.location.lng,
       distance: 7000,
       filter: undefined
     } as Checkpoints.EventSearch;

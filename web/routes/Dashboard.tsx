@@ -1,6 +1,8 @@
-import './Dashboard.scss'; 
+import './Dashboard.scss';
 
 import * as React from 'react';
+import { connect } from 'react-redux';
+
 import CheckpointsSection from '../components/CheckpointsSection';
 import Events from '../components/Events'
 import Flights from '../components/Flights'
@@ -8,15 +10,25 @@ import FriendsSection from '../components/FriendsSection';
 
 
 const Dashboard = props => {
-  return ( 
+  const user = !_.isEmpty(props.user);
+  return (
     <div className="Dashboard">
       <CheckpointsSection />
       <div className="DashboardRight">
-        <FriendsSection />
-          <Events />
-          <Flights />
+        {user && <FriendsSection />}
+        {user && <Events />}
+        {user && <Flights />}
       </div>
     </div>
   );
 };
-export default Dashboard;
+
+const mapStateToProps = state => {
+  return {
+    user: state.users.me
+  };
+};
+
+export const DashboardContainer = connect(mapStateToProps)(Dashboard);
+export default DashboardContainer;
+
