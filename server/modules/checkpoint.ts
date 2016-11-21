@@ -18,7 +18,7 @@ export function getCheckpoints(user_id: number, getPrivate = false) {
   const query = { user_id, isDeleted: false } as any;
   if (!getPrivate)
     query.isPrivate = false;
-  return Checkpoint.find(query, GENERIC_CHECKPOINT_DATA).sort('-createdOn');
+  return Checkpoint.find(query, GENERIC_CHECKPOINT_DATA).sort({ completedOn: -1, createdOn: -1 });
 }
 
 export function getActiveCheckpoints(user_id: number) {
