@@ -55,6 +55,7 @@ class DropdownList extends React.Component<DropdownListProps, {}> {
   cycler = null;
   up: boolean;
   arrowDown = (e: KeyboardEvent) => {
+    // up arrow
     if (e.which == 38 || e.keyCode == 38) {
       if (!this.cycler || !this.up) {
         if (this.cycler) { this.cycler.next(true); }
@@ -64,6 +65,7 @@ class DropdownList extends React.Component<DropdownListProps, {}> {
         );
         this.up = true;
       }
+    // down arrow
     } else if (e.which == 40 || e.keyCode == 40) {
       if (!this.cycler || this.up) {
         if (this.cycler) { this.cycler.next(true); }
@@ -75,6 +77,11 @@ class DropdownList extends React.Component<DropdownListProps, {}> {
         );
         this.up = false;
       }
+    // enter
+    } else if (e.which == 13 || e.keyCode == 13) {
+      e.preventDefault();
+      e.stopPropagation();
+      (this.element.children[this.state.selectedIndex].children[0] as HTMLElement).click();
     }
   };
 
