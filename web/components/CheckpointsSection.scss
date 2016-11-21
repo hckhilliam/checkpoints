@@ -1,8 +1,6 @@
 @import "../styles/variables";
 
 .CheckpointsSection {
-  margin: 0 auto;
-
   &-header {
     min-height: 66px; // todo standardize (maybe 72px), background?
     margin: 0 32px;
@@ -26,6 +24,7 @@
 
   &-title, &-form-title {
     display: flex;
+    min-height: 66px;
   }
 
   &-title {

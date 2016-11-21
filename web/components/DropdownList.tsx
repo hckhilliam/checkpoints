@@ -127,7 +127,8 @@ class DropdownList extends React.Component<DropdownListProps, {}> {
       let className = classnames('list-item', i == selected ? 'selected' : '');
       listItems.push(<div key={i} className={className} onMouseOver={() => this.handleMouseOver(i)}>{node[i]}</div>);
     }
-    this.setState({ selectedIndex: selected != null ? selected : listItems.length, listItems: listItems })
+    this.setState({ selectedIndex: selected != null ? selected : listItems.length, listItems: listItems });
+    window.scrollTo(0, 0); // todo better fix
   }
 
   render() {

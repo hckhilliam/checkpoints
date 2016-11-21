@@ -46,7 +46,7 @@ export class FriendsSection extends React.Component<Props, State> {
             {
               friends.map(f => (
                 <FriendBox
-                  className="col-xs-3 col-sm-2 col-md-6 col-lg-3"
+                  className="col-xs-6 col-sm-4 col-md-6 col-lg-3"
                   key={f.id}
                   friend={f}
                   onClick={() => onSelectFriend(f)}

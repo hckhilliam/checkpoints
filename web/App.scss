@@ -1,5 +1,6 @@
 @import 'styles/variables';
 @import 'styles/common';
+@import 'styles/media';
 
 body {
   margin: 0;
@@ -19,6 +20,7 @@ body {
 /* This only works on webkit browsers :( pls fix */
 ::-webkit-scrollbar {
   width: 4px;
+  height: 4px;
   background: transparent;
 }
 

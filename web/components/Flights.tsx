@@ -43,26 +43,27 @@ export class Flights extends React.Component<Props, State> {
     }
   }
 
-
   render() {
     return _.isEmpty(this.props.flights) ? null : (
       <div className="Flights">
-        <Panel>
+        <Panel className="Flights-title">
           <h1>Suggested Destinations</h1>
         </Panel>
-        <List>
-        {
-          this.props.flights.map((flight) => {
-            let id = this.getID(flight);
-            const selected = id == this.state.selectFlightID;
-            return (
-              <ListItem key={id}>
-                <Flight flight={flight} />
-              </ListItem>
-            )
-          })
-        }
-        </List>
+        <div className="Flights-list">
+          <List>
+          {
+            this.props.flights.map((flight) => {
+              let id = this.getID(flight);
+              const selected = id == this.state.selectFlightID;
+              return (
+                <ListItem key={id}>
+                  <Flight flight={flight} />
+                </ListItem>
+              )
+            })
+          }
+          </List>
+        </div>
       </div>
     );
   };

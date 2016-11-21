@@ -66,28 +66,30 @@ export class Events extends React.Component<Props, State> {
   render() {
     return _.isEmpty(this.props.events) ? null : (
       <div className="Events">
-        <Panel>
+        <Panel className="Events-title">
           <h1>Suggested Events</h1>
         </Panel>
-        <List>
-        {
-          this.props.events.map((event) => {
-            const selected = event.id == this.state.selectEventID;
-            return (
-              <ExpandableListItem
-                selected={selected}
-                expanded={selected}
-                key={event.id}
-                loading={false}
-                body={<EventDescription event={event} />}
-                onClick={() => this.onClickEvent(event.id)}
-              >
-                <Event event={event} />
-              </ExpandableListItem>
-            )
-          })
-        }
-        </List>
+        <div className="Events-list">
+          <List>
+            {
+              this.props.events.map((event) => {
+                const selected = event.id == this.state.selectEventID;
+                return (
+                  <ExpandableListItem
+                    selected={selected}
+                    expanded={selected}
+                    key={event.id}
+                    loading={false}
+                    body={<EventDescription event={event} />}
+                    onClick={() => this.onClickEvent(event.id)}
+                  >
+                    <Event event={event} />
+                  </ExpandableListItem>
+                )
+              })
+            }
+          </List>
+        </div>
       </div>
     );
   };

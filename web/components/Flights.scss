@@ -1,8 +1,18 @@
 .Flights {
-  overflow: auto;
-  
-  .ListItem {
-    margin-left: 0;
-    margin-right: 0;
+  display: flex;
+  flex-direction: column;
+
+  &-title {
+    flex: none;
+  }
+
+  &-list {
+    flex: 1;
+    overflow: auto;
+
+    .ListItem {
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 }

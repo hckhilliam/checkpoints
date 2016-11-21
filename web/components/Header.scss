@@ -2,7 +2,7 @@
 @import "../styles/media";
 
 .Header {
-  /*position: fixed;*/
+  position: fixed;
   width: 100%;
   background-color: $md-green-500;
   box-shadow: inset 0px 4px 8px -3px rgba(17, 17, 17, .16);

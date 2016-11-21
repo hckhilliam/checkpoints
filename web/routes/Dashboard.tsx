@@ -12,8 +12,10 @@ const Dashboard = props => {
   const user = !_.isEmpty(props.user);
   return (
     <div className="Dashboard">
-      <CheckpointsSection />
-      <div className="DashboardRight">
+      <div className="Dashboard-left">
+        <CheckpointsSection />
+      </div>
+      <div className="Dashboard-right">
         {user && <FriendsSection />}
         {user && <Events />}
         {user && <Flights />}
