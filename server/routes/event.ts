@@ -3,6 +3,7 @@ const debug = require('debug')('checkpoints:checkpointsEvents');
 import { Router, Request, Response } from 'express';
 import { eventCriteria, getFilteredEvents, searchUserEvents } from '../modules/event';
 import { getLocation } from '../modules/location';
+import { matchEvents } from '../jobs/eventmatch';
 
 
 const api = Router();
@@ -26,7 +27,6 @@ api.all('*', (req: Request & CheckpointsServer.Request, res: Response, next) => 
   });
 });
 
-
 api.post('/recommend', (req: CheckpointsServer.Request & Request, res: Response, next) => {
   let criteria: eventCriteria = req.body;
   let user = req.user;
@@ -43,6 +43,11 @@ api.post('/', (req: CheckpointsServer.Request & Request, res: Response, next) =>
       events
     });
   })
+});
+
+api.get('/notify', (req, res, next) => {
+  matchEvents();
+  res.json({message: "started notifications"});
 });
 
 export default api;
