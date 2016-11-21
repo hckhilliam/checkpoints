@@ -21,6 +21,10 @@
     display: flex;
     align-items: center;
 
+    &:hover {
+      background-color: $md-light-blue-50;
+    }
+
     &:not(:last-child) {
       margin-bottom: 8px;
     }
@@ -30,6 +34,13 @@
     max-width: 48px;
     max-height: 48px;
     border-radius: 50%;
+  }
+
+  &-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
   }
 
   &-name {

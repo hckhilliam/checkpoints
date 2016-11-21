@@ -7,7 +7,9 @@ import ProfileBanner from './ProfileBanner';
 import { UserSettingsForm } from './UserSettings';
 import { MaterialIcon } from './Icon';
 import IconButton from './IconButton';
+import UserProfile from './UserProfile';
 
+import { openDialog } from '../actions/dialog';
 import { respond } from '../actions/friends';
 
 interface Props {
@@ -18,18 +20,21 @@ interface Props {
 interface FriendRequestsProps {
   friendRequests: Checkpoints.Friend[];
   onRespond?: (friendId: number, response: boolean) => void;
+  onClick?: (friendId: number) => void;
 }
 
 const FriendRequests = (props: FriendRequestsProps) => {
-  const { friendRequests, onRespond } = props;
+  const { friendRequests, onRespond, onClick } = props;
   return (
     <div className="FriendRequests">
       {
         friendRequests.map(friend => {
           return (
             <div key={friend.id} className="FriendRequests-item">
-              {_.get(friend, 'picture.url') && <img className="FriendRequests-picture" src={friend.picture.url} />}
-              <span className="FriendRequests-name">{friend.name}</span>
+              <div className="FriendRequests-label" onClick={() => onClick(friend.id)}>
+                {_.get(friend, 'picture.url') && <img className="FriendRequests-picture" src={friend.picture.url} />}
+                <span className="FriendRequests-name">{friend.name}</span>
+              </div>
               <div className="FriendRequests-buttons">
                 <IconButton className="FriendRequests-accept" onClick={() => onRespond(friend.id, true)}>
                   <MaterialIcon icon="check" />
@@ -52,6 +57,11 @@ const FriendRequestsContainer = connect(
     return {
       onRespond: (friendId: number, response: boolean) => {
         dispatch(respond(friendId, response));
+      },
+      onClick: (friendId: number) => {
+        dispatch(openDialog(<UserProfile userId={friendId} />, {
+          size: 'Large'
+        }));
       }
     };
   }
