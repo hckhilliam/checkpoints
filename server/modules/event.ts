@@ -56,7 +56,7 @@ export function searchUserEvents(user: CheckpointsServer.User, search: eventCrit
     let eventKeys = {};
     let checkpointsToRelevantEvents = [];
     events.forEach(event => {
-      let eventNames = `${event.name}`.toLowerCase().split(/[ ,."()]+/);
+      let eventNames = event.name.toLowerCase().split(/[ ,."()]+/);
       eventNames.forEach(name => {
         if (eventKeys[name] === undefined) {
           eventKeys[name] = [];
@@ -91,7 +91,7 @@ export function searchUserEvents(user: CheckpointsServer.User, search: eventCrit
   });
 }
 
-const blacklist = ['a', 'an', 'the', 'and', 'go', 'more', 'to', 'do'];
+const blacklist = ['a', 'an', 'the', 'and', 'go', 'more', 'to', 'do', 'visit', 'try'];
 
 function filterWords(words: string[]) {
   return _.difference(words, blacklist);
