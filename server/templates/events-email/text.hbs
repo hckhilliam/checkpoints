@@ -2,7 +2,10 @@ Hi {{name}}
 
 We'd like to recommend you some events based on your goals
 
-{{#events}}
-{{this}}
-{{/events}}
+{{#checkpointEvents}}
+  Here are some events for "{{this.checkpoint}}"
+  {{#this.events}}
+    {{this.name}} - {{this.link}}
+  {{/this.events}}
+{{/checkpointEvents}}
 😉

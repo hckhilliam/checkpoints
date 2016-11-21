@@ -22,28 +22,34 @@ function sendUserEvents(user: CheckpointsServer.User) {
     distance: 7000,
     filter: undefined
   }
-  searchUserEvents(user, search).then(events => {
-    let eventsIDs = events.map(event => event.id);
-    if (!(_.isEmpty(eventsIDs))) {
-      buildEmail(user, eventsIDs);
+  searchUserEvents(user, search).then(checkpointEvents => {
+    if (checkpointEvents.length > 0) {
+      buildEmail(user, checkpointEvents);
     }
   });
 }
 
-function buildEmail(user: CheckpointsServer.User, eventIds:number[]) {
+function buildEmail(user: CheckpointsServer.User, checkpointEvents: any[]) {
   const subject = `Recommended Events`;
   const { name, email } = user;
 
-  let eventListing: string[] = [];
-  eventIds.forEach(id => {
-    eventListing.push(`https://www.facebook.com/events/${id}`);
+  const parsedCheckpointEvents = _.map(checkpointEvents, checkpointEvent => {
+    return {
+      checkpoint: checkpointEvent.checkpoint.title,
+      events: _.map(checkpointEvent.events, event => {
+        return {
+          name: event['name'],
+          link: `https://www.facebook.com/events/${event['id']}`
+        }
+      })
+    };
   });
 
   let template = new EmailTemplate(path.join(__dirname, '..', 'templates', 'events-email'));
 
   template.render({
     name: name,
-    events: eventListing,
+    checkpointEvents: parsedCheckpointEvents,
     subject: subject
   }, (err, result) => {
     if (err) { debug(err); }

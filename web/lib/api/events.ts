@@ -8,9 +8,9 @@ function parseEvent(event): Checkpoints.Event {
 }
 
 export function getAllEvents(search: Checkpoints.EventSearch): Promise<Checkpoints.Event[]>{
-  return post('/api/events', search).then(res => res.body.events.map(parseEvent));
+  return post('/api/events', search).then(res => res.body.map(parseEvent));
 }
 
 export function getRecommendEvents(search: Checkpoints.EventSearch): Promise<Checkpoints.Event[]>{
-  return post('/api/events/recommend', search).then(res => res.body.events.map(parseEvent));
+  return post('/api/events/recommend', search).then(res => res.body.map(parseEvent));
 }

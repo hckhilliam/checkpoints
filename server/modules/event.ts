@@ -45,7 +45,7 @@ function normalizeFacebookEvent(fbEvent): CheckpointsServer.Event {
   return fbEvent;
 }
 
-export function searchUserEvents(user: CheckpointsServer.User, search: eventCriteria): Promise<CheckpointsServer.Event[]>{
+export function searchUserEvents(user: CheckpointsServer.User, search: eventCriteria) {
   return Promise.all([
     getFBEventsByLocation(search),
     getActiveCheckpoints(user._id)
@@ -54,33 +54,44 @@ export function searchUserEvents(user: CheckpointsServer.User, search: eventCrit
     const checkpoints = result[1] as any as CheckpointsServer.Checkpoint[];
 
     let eventKeys = {};
-    let matchedEvents = {};
+    let checkpointsToRelevantEvents = [];
     events.forEach(event => {
       let eventNames = `${event.name}`.toLowerCase().split(/[ ,."()]+/);
       eventNames.forEach(name => {
         if (eventKeys[name] === undefined) {
-          eventKeys[name] = {};
-          eventKeys[name][event.id] = event;
-        } else if (eventKeys[name][event.id] === undefined) {
-          eventKeys[name][event.id] = event;
+          eventKeys[name] = [];
+        }
+        eventKeys[name].push(event);
+      });
+    });
+
+    // match checkpoints to events
+    checkpoints.forEach(checkpoint => {
+      let checkpointItem = {
+        checkpoint: checkpoint,
+        events: {}
+      };
+      let keywords = filterWords(checkpoint.title.toLowerCase().split(/[ ,."()]+/));
+      let hasResults = false;
+      keywords.forEach(key => {
+        if (eventKeys[key]) {
+          eventKeys[key].forEach(event => {
+            checkpointItem.events[event.id] = event;
+            hasResults = true;
+          });
         }
       });
-      // match checkpoints to events
-      checkpoints.forEach(checkpoint => {
-        let keywords = filterWords(checkpoint.title.toLowerCase().split(/[ ,."()]+/));
-        keywords.forEach(key => {
-          if (eventKeys[key]) {
-            _.merge(matchedEvents, eventKeys[key]);
-          }
-        });
-      });
-    })
-    matchedEvents = _.values(matchedEvents);
-    return Promise.resolve(matchedEvents);
+
+      if (hasResults) {
+        checkpointsToRelevantEvents.push(checkpointItem);
+      }
+    });
+
+    return Promise.resolve(checkpointsToRelevantEvents);
   });
 }
 
-const blacklist = ['a', 'an', 'the', 'and', 'go', 'more', 'to'];
+const blacklist = ['a', 'an', 'the', 'and', 'go', 'more', 'to', 'do'];
 
 function filterWords(words: string[]) {
   return _.difference(words, blacklist);

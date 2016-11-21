@@ -30,10 +30,8 @@ api.all('*', (req: Request & CheckpointsServer.Request, res: Response, next) => 
 api.post('/recommend', (req: CheckpointsServer.Request & Request, res: Response, next) => {
   let criteria: eventCriteria = req.body;
   let user = req.user;
-  searchUserEvents(user, criteria).then((events) => {
-    res.json({
-      events
-    });
+  searchUserEvents(user, criteria).then((checkpointEvents) => {
+    res.json(_.uniqBy(_.flatten(_.map(checkpointEvents, checkpointEvent => _.values(checkpointEvent.events))), 'id'));
   })
 });
 

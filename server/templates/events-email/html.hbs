@@ -1,10 +1,17 @@
 <body>
   <h3>Hi {{name}}</h3>
   <p>We'd like to recommend you some events based on your goals</p>
-  <ul>
-  {{#events}}
-  <li>{{this}}</li>
-  {{/events}}
-  </ul>
+  {{#checkpointEvents}}
+    <div>
+      <h4>Here are some events for "{{this.checkpoint}}"</h4>
+      <ul>
+      {{#this.events}}
+        <li>{{this.name}} - {{this.link}}</li>
+      {{/this.events}}
+      </ul>
+    </div>
+  {{/checkpointEvents}}
   <h1>😉</h1>
+  <br />
+  <img src="https://res.cloudinary.com/checkpoints/image/upload/v1479705842/mfb1ani1kjkwj24httad.png" />
 </body>
