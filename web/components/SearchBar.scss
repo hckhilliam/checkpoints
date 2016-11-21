@@ -1,43 +1,43 @@
 @import "../styles/variables";
 
 .SearchBar {
-    display: flex;
-    flex-direction: row;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    margin-left: 16px;
-    background-color: white;
-    line-height: 32px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-left: 16px;
+  background-color: white;
+  line-height: 32px;
 
-    &-Dropdown {
-        width: 95%;
-        .Input {
-            padding: 0;
-            margin: 0;
-            input {
-                padding-left: 8px;
-            }
-        }
+  &-Dropdown {
+    width: 95%;
+
+    .Input {
+      padding: 0;
+      margin: 0;
+
+      input {
+        padding-left: 12px;
+      }
     }
+  }
 
-    .Button {
-        background-color: #e0e0e0;
-        color: $md-light-green-700 !important;
+  .Button {
+    background-color: #e0e0e0;
+    color: $md-light-green-700 !important;
+  }
+
+  &-List {
+    color: black;
+
+    .display {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
     }
+  }
 
-    &-List {
-        color: black;
-
-        .display {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-        }
-    }
-
-    &-ResultIcon {
-        margin: 4px;
-    }
-
-    
+  &-ResultIcon {
+    margin: 4px;
+  }
 }
