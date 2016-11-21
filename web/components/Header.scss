@@ -22,28 +22,6 @@
     letter-spacing: 1px;
   }
 
-  &-user {
-    display: flex;
-    margin-left: auto;
-    margin-right: 16px;
-    cursor: pointer;
-
-    &-name {
-      font-size: 18px;
-      font-weight: 400;
-    }
-
-    &-picture {
-      margin-right: 4px;
-
-      img {
-        width: 40px;
-        padding: 8px;
-        border-radius: 50%;
-      }
-    }
-  }
-
   &-logout {
     margin-left: 16px;;
     font-size: 16px;

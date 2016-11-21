@@ -1,0 +1,56 @@
+@import "../styles/variables";
+
+.HeaderUser {
+  display: flex;
+  margin-left: auto;
+  margin-right: 16px;
+  cursor: pointer;
+
+  &-name {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  &-picture {
+    position: relative;
+    min-width: 40px;
+    margin-right: 4px;
+
+    img {
+      width: 40px;
+      padding: 8px;
+      border-radius: 50%;
+    }
+
+    &--empty {
+      min-width: 32px;
+
+      .HeaderUser-notification-icon {
+        position: relative;
+        top: 0;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 12px 0;
+
+        .Icon {
+          transform: scale(0.8);
+        }
+      }
+    }
+  }
+
+  &-notification-icon {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    border-radius: 50%;
+    background-color: rgba($md-blue-grey-800, 0.87);
+
+    .Icon {
+      transform: scale(0.55);
+    }
+  }
+}

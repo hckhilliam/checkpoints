@@ -23,6 +23,7 @@ import friends from './reducers/friendsReducer';
 import overlay from './reducers/overlayReducer';
 import search from './reducers/searchReducer';
 import users from './reducers/usersReducer';
+import notifications from './reducers/notificationsReducer';
 
 import { initializeAuth } from './lib/auth';
 
@@ -39,7 +40,8 @@ const combinedReducer = combineReducers({
   overlay,
   dialog,
   dropdownlist,
-  users
+  users,
+  notifications
 });
 
 const reducer = (state, action) => {

@@ -1,8 +1,3 @@
-declare module "fb" {
-  var FB: any;
-  export = FB;
-}
-
 type HttpResponse = Response;
 
 declare namespace Checkpoints {
@@ -38,6 +33,7 @@ declare namespace Checkpoints {
     checkpoints?: CheckpointsState;
     users?: UsersState;
     friends?: Friend[];
+    notifications?: Notifications;
   }
 
   interface User {
@@ -87,6 +83,30 @@ declare namespace Checkpoints {
     url: string;
   }
 
+  interface Notifications {
+    friendRequests?: Friend[];
+  }
+
+  interface SearchResult {
+    type: string;
+    id: number;
+    name: string;
+    picture?: Picture;
+    show: boolean;
+  }
+
+  interface SharedState<T> {
+    me: T;
+    users: {
+      [userId: number]: T;
+    };
+  }
+
+  type CheckpointsState = SharedState<Checkpoint[]>;
+  type UsersState = SharedState<User[]>;
+}
+
+declare namespace Checkpoints {
   namespace Forms {
     interface Registration {
       name: string;
@@ -114,23 +134,4 @@ declare namespace Checkpoints {
       };
     }
   }
-
-  interface SearchResult {
-    type: string;
-    id: number;
-    name: string;
-    picture?: Picture;
-    show: boolean;
-  }
-
-  interface SharedState<T> {
-    me: T;
-    users: {
-      [userId: number]: T;
-    };
-  }
-
-  type CheckpointsState = SharedState<Checkpoint[]>;
-  type UsersState = SharedState<User[]>;
 }
-

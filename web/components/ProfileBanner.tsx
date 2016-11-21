@@ -5,15 +5,16 @@ import * as classnames from 'classnames';
 
 import { MaterialIcon } from './Icon';
 
-type FriendStatus = 'Friends' | 'Pending' | 'None' | 'Self';
+type FriendStatus = 'Friends' | 'Pending' | 'None' | 'Self' | 'Accept';
 
 interface Props {
   user: Checkpoints.User;
   friendStatus?: FriendStatus;
   onAddFriend?: () => void;
+  onAcceptFriend?: () => void;
 }
 
-function getFriendNode(friendStatus: FriendStatus, onAddFriend: () => void): React.ReactNode {
+function getFriendNode(friendStatus: FriendStatus, onAddFriend: () => void, onAcceptFriend: () => void): React.ReactNode {
   const friendClass = classnames('ProfileBanner-friend', `ProfileBanner-friend--${friendStatus}`);
   switch (friendStatus) {
     case 'Friends':
@@ -37,6 +38,13 @@ function getFriendNode(friendStatus: FriendStatus, onAddFriend: () => void): Rea
           <span>Add friend</span>
         </a>
       );
+    case 'Accept':
+      return (
+        <a className={friendClass} href="javascript://" onClick={onAcceptFriend}>
+          <MaterialIcon icon="check_circle" />
+          <span>Accept friend request</span>
+        </a>
+      );
     default:
       return null;
   }
@@ -44,9 +52,9 @@ function getFriendNode(friendStatus: FriendStatus, onAddFriend: () => void): Rea
 
 export default class ProfileBanner extends React.Component<Props, {}> {
   render() {
-    const { user, friendStatus, onAddFriend } = this.props;
+    const { user, friendStatus, onAddFriend, onAcceptFriend } = this.props;
 
-    const friend = getFriendNode(friendStatus, onAddFriend);
+    const friend = getFriendNode(friendStatus, onAddFriend, onAcceptFriend);
 
     return (
       <div className="ProfileBanner">
