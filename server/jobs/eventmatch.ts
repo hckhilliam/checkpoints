@@ -17,9 +17,9 @@ export function matchEvents(){
 
 function sendUserEvents(user: CheckpointsServer.User) {
   let search: eventCriteria = {
-    lat: 43.4761238,
-    lng: -80.5378432,
-    distance: 700,
+    lat: 43.6532,
+    lng: -79.3832,
+    distance: 7000,
     filter: undefined
   }
   searchUserEvents(user, search).then(events => {

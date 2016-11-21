@@ -56,7 +56,7 @@ export function searchUserEvents(user: CheckpointsServer.User, search: eventCrit
     let eventKeys = {};
     let matchedEvents = {};
     events.forEach(event => {
-      let eventNames = `${event.name} ${event.description}`.toLowerCase().split(/[ ,."()]+/);
+      let eventNames = `${event.name}`.toLowerCase().split(/[ ,."()]+/);
       eventNames.forEach(name => {
         if (eventKeys[name] === undefined) {
           eventKeys[name] = {};
