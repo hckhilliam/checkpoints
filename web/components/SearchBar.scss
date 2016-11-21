@@ -8,6 +8,7 @@
   margin-left: 16px;
   background-color: white;
   line-height: 32px;
+  border-radius: 4px;
 
   &-Dropdown {
     width: 95%;
@@ -22,22 +23,17 @@
     }
   }
 
-  .Button {
-    background-color: #e0e0e0;
-    color: $md-light-green-700 !important;
+  .IconButton {
+    color: $md-green-500 !important;
   }
 
   &-List {
-    color: black;
+    color: $md-dark-text-primary;
 
     .display {
       width: 30px;
       height: 30px;
       border-radius: 50%;
     }
-  }
-
-  &-ResultIcon {
-    margin: 4px;
   }
 }

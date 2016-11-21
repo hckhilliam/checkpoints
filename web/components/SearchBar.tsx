@@ -7,6 +7,8 @@ import { searchGeneral } from '../actions/search';
 
 import Input from './Input';
 import Button from './Button';
+import IconButton from './IconButton';
+import { MaterialIcon } from './Icon';
 import { List, ClickableListItem } from './List';
 import UserProfile from './UserProfile';
 
@@ -68,9 +70,9 @@ export class SearchBar extends React.Component<SearchProps, SearchState> {
         <div className="SearchBar-Dropdown" ref={e => this.anchor = e}>
           <Input placeholder="Search" name="search" value={this.state.searchText} onChange={this.editSearch}/>
         </div>
-        <Button type="submit">
-          <i className="fa fa-search" aria-hidden="true"></i>
-        </Button>
+        <IconButton type="submit">
+          <MaterialIcon icon="search" />
+        </IconButton>
       </form>
     );
   }
@@ -99,11 +101,6 @@ const mapDispatchToProps = dispatch => {
             let picture = r.picture ? <img className="display" src={r.picture.url} /> : null;
             return (
               <ClickableListItem key={r.id} onClick={() => handleSelectResult(r)}>
-              {/*}   <span className="SearchBar-ResultIcon">
-                  { r.type=="user" && <i className="fa fa-user" aria-hidden="true"></i> }
-                  { r.type=="event" && <i className="fa fa-calendar" aria-hidden="true"></i> }
-                  { r.type=="checkpoint" && <i className="fa fa-check-circle-o" aria-hidden="true"></i> }
-                </span>*/}
                 {picture}
                 <div className="name">{r.name}</div>
               </ClickableListItem>
