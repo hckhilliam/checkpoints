@@ -29,7 +29,7 @@ export function getFriendRequests(user_id: number): Promise<CheckpointsServer.Us
 export function addFriend(user_id: number, friend_id: number) {
   debug(`Sending friend request to ${friend_id} from ${user_id}`);
   return new Promise(resolve => {
-    User.findByIdAndUpdate(friend_id, {$addToSet: {friendRequests: user_id}}).then(resolve);
+    User.findByIdAndUpdate(friend_id, {$addToSet: {friendRequests: user_id}}, GENERIC_USER_DATA).then(resolve);
   });
 }
 
@@ -44,7 +44,7 @@ export function acceptFriend(user_id: number, friend_id: number) {
       }).then(resolve);
     }),
     new Promise(resolve => {
-      User.findByIdAndUpdate(friend_id, {$addToSet: {friends: user_id}}).then(resolve);
+      User.findByIdAndUpdate(friend_id, {$addToSet: {friends: user_id}}, GENERIC_USER_DATA).then(resolve);
     })
   ]);
 }
@@ -52,7 +52,7 @@ export function acceptFriend(user_id: number, friend_id: number) {
 export function rejectFriend(user_id: number, friend_id: number) {
   debug(`Rejecting friend request from ${friend_id} as ${user_id}`);
   return new Promise(resolve => {
-    User.findByIdAndUpdate(user_id, { $pull: { friendRequests: friend_id } }).then(resolve);
+    User.findByIdAndUpdate(user_id, { $pull: { friendRequests: friend_id } }, GENERIC_USER_DATA).then(resolve);
   });
 }
 

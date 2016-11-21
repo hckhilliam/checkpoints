@@ -8,7 +8,10 @@ import { searchGeneral } from '../actions/search';
 import Input from './Input';
 import Button from './Button';
 import { List, ClickableListItem } from './List';
+import UserProfile from './UserProfile';
+
 import { openDropdownList, closeDropdownList } from '../actions/dropdownlist';
+import { openDialog } from '../actions/dialog';
 
 interface SearchProps {
   deepSearch?: (query: string) => void;
@@ -54,10 +57,6 @@ export class SearchBar extends React.Component<SearchProps, SearchState> {
     this.search(this.state.searchText);
   }
 
-  selectResult = (event) => {
-
-  }
-
   componentWillReceiveProps(nextProps: SearchProps) {
     this.filter(this.state.searchText, nextProps.results);
   }
@@ -87,13 +86,19 @@ const mapDispatchToProps = dispatch => {
   return {
     deepSearch: _.debounce((query: string) => { dispatch(searchGeneral(query)); }, 250, { leading: true, maxWait: 500 }),
     onChange: (results: Checkpoints.SearchResult[], anchor: HTMLElement) => {
-      const callback = () => dispatch(closeDropdownList());
+      const handleSelectResult = (result: Checkpoints.SearchResult) => {
+        dispatch(closeDropdownList());
+        dispatch(openDialog(<UserProfile userId={result.id} />, {
+          size: 'Large'
+        }));
+      };
+
       dispatch(openDropdownList(
         results.map(r => {
           if (r.show) {
             let picture = r.picture ? <img className="display" src={r.picture.url} /> : null;
             return (
-              <ClickableListItem key={r.id} onClick={this.selectResult}>
+              <ClickableListItem key={r.id} onClick={() => handleSelectResult(r)}>
               {/*}   <span className="SearchBar-ResultIcon">
                   { r.type=="user" && <i className="fa fa-user" aria-hidden="true"></i> }
                   { r.type=="event" && <i className="fa fa-calendar" aria-hidden="true"></i> }
@@ -113,4 +118,3 @@ const mapDispatchToProps = dispatch => {
 
 const SearchBarContainer = connect(mapStateToProps, mapDispatchToProps)(SearchBar);
 export default SearchBarContainer;
-

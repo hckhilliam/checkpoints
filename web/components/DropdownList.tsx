@@ -8,14 +8,12 @@ import * as classnames from 'classnames';
 
 import { List } from './List';
 
-import { closeDropdownList, DropdownListOptions } from '../actions/dropdownlist';
-import { showOverlay, hideOverlay, OverlayOptions } from '../actions/overlay';
+import { closeDropdownList, removeDropdownList, DropdownListOptions } from '../actions/dropdownlist';
+import { showOverlay } from '../actions/overlay';
 
 interface DropdownListProps extends React.HTMLAttributes {
   options?: DropdownListOptions;
   onOpen?: (node: Element, updatedPropOptions: DropdownListProps) => void;
-  onClose?: () => void;
-  onDestroy?: () => void;
 }
 
 interface State {
@@ -100,17 +98,12 @@ class DropdownList extends React.Component<DropdownListProps, {}> {
       window.addEventListener('keydown', this.arrowDown);
       window.addEventListener('keyup', this.arrowUp);
     } else if (!nextProps.options && this.props.options) {
-      this.props.onDestroy();
       window.removeEventListener('keydown', this.arrowDown);
       window.removeEventListener('keyup', this.arrowUp);
     }
 
     this.setListItems(nextProps);
   }
-
-  handleClose = () => {
-    this.props.onClose();
-  };
 
   setRef = (element: HTMLElement) => {
     this.element = element;
@@ -153,17 +146,10 @@ const mapDispatchToProps = dispatch => {
     onOpen: (node: Element, updatedProps: DropdownListProps) => {
       dispatch(showOverlay(node, Object.assign({}, updatedProps.options, {
         onClose: () => {
-          dispatch(closeDropdownList());
-          updatedProps.onClose();
+          dispatch(removeDropdownList());
+          updatedProps.options.onClose();
         }
       })));
-    },
-    onClose: () => {
-      dispatch(closeDropdownList());
-      dispatch(hideOverlay());
-    },
-    onDestroy: () => {
-      dispatch(hideOverlay());
     }
   };
 }

@@ -1,4 +1,4 @@
-import { get, post, put, del } from './fetch';
+import { get, post } from './fetch';
 import { getUrl } from './utils';
 
 function parseFriend(friend): Checkpoints.Friend {
@@ -17,4 +17,14 @@ function parseFriends(data): Checkpoints.Friend[] {
 export function getFriends(): Promise<Checkpoints.Friend[]> {
   const url = getUrl('friends');
   return get(url).then(res => parseFriends(res.body));
+}
+
+export function getFriendRequests(): Promise<Checkpoints.Friend[]> {
+  const url = getUrl('friends/requests');
+  return get(url).then(res => parseFriends(res.body));
+}
+
+export function addFriend(friendId: number): Promise<void> {
+  const url = getUrl(`friends/add/${friendId}`);
+  return post(url);
 }

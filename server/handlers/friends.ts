@@ -4,12 +4,12 @@ import { Request, Response } from 'express';
 
 import * as friend from '../modules/friend';
 import * as facebook from '../modules/facebook';
-import { getUserId, getFacebookId } from '../lib/request';
+import { getUserId, getCallerUserId, getFacebookId } from '../lib/request';
 import { userSort } from '../lib/sort';
 
 export function addFriend(req: Request, res: Response, next: any) {
-  friend.addFriend(getUserId(req), Number(req.params['_id']))
-    .then(friend => res.json(friend))
+  friend.addFriend(getCallerUserId(req), Number(req.params['_id']))
+    .then(friend => res.end())
     .catch(next);
 }
 
@@ -21,26 +21,27 @@ export function getFriends(req: Request, res: Response, next: any) {
 }
 
 export function getFriendRequests(req: Request, res: Response, next: any) {
-  friend.getFriendRequests(getUserId(req))
+  friend.getFriendRequests(getCallerUserId(req))
     .then(friendRequests => res.json(friendRequests))
     .catch(next);
 }
 
 export function respondToRequest(req: Request, res: Response, next: any) {
   debug(`accept param is ${req.query['accept']}`);
+  const userId = getCallerUserId(req);
   if (req.query['accept']) {
-    friend.acceptFriend(getUserId(req), Number(req.params['_id']))
+    friend.acceptFriend(userId, Number(req.params['_id']))
       .then(() => res.end())
       .catch(next);
   } else {
-    friend.rejectFriend(getUserId(req), Number(req.params['_id']))
+    friend.rejectFriend(userId, Number(req.params['_id']))
       .then(() => res.end())
       .catch(next);
   }
 }
 
 export function removeFriend(req: Request, res: Response, next: any) {
-  friend.removeFriend(getUserId(req), Number(req.params['_id']))
+  friend.removeFriend(getCallerUserId(req), Number(req.params['_id']))
     .then(() => res.end())
     .catch(next);
 }

@@ -11,12 +11,44 @@
     @include shadow-dark;
   }
 
+  &-right {
+    flex: 1;
+    margin-left: 32px;
+  }
+
   &-name {
     font-size: 32px;
     font-weight: 300;
-
-    flex: 1;
-    margin-left: 32px;
     cursor: default;
+  }
+
+  &-friend {
+    margin-top: 4px;
+    cursor: default;
+
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-left: 4px;
+      font-size: 13px;
+    }
+
+    &--Friends {
+      color: $md-green-500;
+    }
+
+    &--Pending {
+      color: $md-grey-500;
+    }
+
+    &--None {
+      cursor: pointer;
+      color: $md-blue-500;
+
+      &:hover {
+        color: $md-blue-700 !important;
+      }
+    }
   }
 }

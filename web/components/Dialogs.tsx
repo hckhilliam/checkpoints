@@ -9,8 +9,8 @@ import * as classnames from 'classnames';
 import IconButton from './IconButton';
 import { MaterialIcon } from './Icon';
 
-import { closeDialog, DialogOptions } from '../actions/dialog';
-import { showOverlay, hideOverlay, OverlayOptions } from '../actions/overlay';
+import { closeDialog, removeDialog, DialogOptions } from '../actions/dialog';
+import { showOverlay } from '../actions/overlay';
 
 interface DialogsProps {
   dialogs?: DialogOptions[];
@@ -20,7 +20,6 @@ interface DialogProps extends React.HTMLAttributes {
   options?: DialogOptions;
   onOpen?: (node: Element) => void;
   onClose?: () => void;
-  onDestroy?: () => void;
 }
 
 const DURATION = 300;
@@ -30,10 +29,6 @@ class Dialog extends React.Component<DialogProps, {}> {
 
   componentDidMount() {
     this.props.onOpen(this.element);
-  }
-
-  componentWillUnmount() {
-    this.props.onDestroy();
   }
 
   handleClose = () => {
@@ -64,17 +59,13 @@ const DialogContainer = connect(
       onOpen: (node: Element) => {
         dispatch(showOverlay(node, Object.assign({}, ownProps.options, {
           onClose: () => {
-            dispatch(closeDialog());
+            dispatch(removeDialog());
             ownProps.options.onClose();
           }
         })));
       },
       onClose: () => {
         dispatch(closeDialog());
-        dispatch(hideOverlay());
-      },
-      onDestroy: () => {
-        dispatch(hideOverlay());
       }
     };
   }

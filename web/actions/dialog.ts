@@ -1,20 +1,24 @@
 import { Action } from 'redux';
 
-import { OverlayOptions } from './overlay';
+import { hideOverlay, OverlayOptions } from './overlay';
 
 export const OPEN_DIALOG = 'OPEN_DIALOG';
 export const CLOSE_DIALOG = 'CLOSE_DIALOG';
 
-export interface DialogOptions extends OverlayOptions {
+export interface DialogOptions {
+  node?: any;
+  clickToClose?: boolean;
+  escapeToClose?: boolean;
   title?: string;
   size?: 'Small' | 'Medium' | 'Large';
+  onClose?: () => void;
 }
 
 export interface DialogAction extends Action {
   options: DialogOptions;
 }
 
-const defaultOptions: DialogOptions = {
+const defaultOptions: DialogOptions & OverlayOptions = {
   title: '',
   size: 'Medium',
   opaque: true,
@@ -23,7 +27,7 @@ const defaultOptions: DialogOptions = {
   onClose: () => {}
 };
 
-function openDialogAction(node: any, options = defaultOptions): DialogAction {
+export function openDialog(node: any, options = defaultOptions): DialogAction {
   if (options != defaultOptions)
     options = Object.assign({}, defaultOptions, options);
   options.node = node;
@@ -33,20 +37,15 @@ function openDialogAction(node: any, options = defaultOptions): DialogAction {
   };
 }
 
-function closeDialogAction(): Action {
+export function closeDialog() {
+  return hideOverlay();
+}
+
+/**
+ * Action to pop last dialog, used internally by dialogs
+ */
+export function removeDialog(): Action {
   return {
     type: CLOSE_DIALOG
-  };
-}
-
-export function openDialog(node: any, options = defaultOptions) {
-  return dispatch => {
-    dispatch(openDialogAction(node, options));
-  };
-}
-
-export function closeDialog() {
-  return dispatch => {
-    dispatch(closeDialogAction());
   };
 }

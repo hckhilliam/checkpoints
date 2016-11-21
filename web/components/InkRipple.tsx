@@ -70,6 +70,11 @@ export class InkRippleElement extends React.Component<InkRippleProps, InkRippleS
 
   node: HTMLDivElement;
   counter = counter();
+  mounted = true;
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
 
   componentWillReceiveProps(nextProps: InkRippleProps) {
     const t1 = this.props.toggle;
@@ -96,9 +101,10 @@ export class InkRippleElement extends React.Component<InkRippleProps, InkRippleS
   startRipple(x: number, y: number, anchor: string = 'center') {
     const counter = this.counter.next().value;
     window.setTimeout(() => {
-      this.setState({
-        ripples: this.state.ripples.filter(r => r.id != counter)
-      });
+      if (this.mounted)
+        this.setState({
+          ripples: this.state.ripples.filter(r => r.id != counter)
+        });
     }, enterDuration);
 
     const ripple: Ripple = {

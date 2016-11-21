@@ -23,8 +23,7 @@ const defaultOptions: OverlayOptions = {
 };
 
 export function showOverlay(node: any, options = defaultOptions): OverlayAction {
-  if (options != defaultOptions)
-    options = Object.assign({}, defaultOptions, options);
+  options = Object.assign({}, defaultOptions, options == defaultOptions ? null :  options);
   options.node = node;
   return {
     type: REQUEST_OVERLAY,

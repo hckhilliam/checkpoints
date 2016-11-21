@@ -1,3 +1,4 @@
+const debug = require('debug')('checkpoints:eventModule');
 const EventSearch = require('facebook-events-by-location-core');
 
 import { getAppFacebookToken } from './facebook';
@@ -31,11 +32,11 @@ export function getFBEventsByLocation(search: eventCriteria): Promise<Checkpoint
       lng: search.lng,
       lat: search.lat,
       distance: search.distance,
-      accessToken: accessToken.token 
+      accessToken: accessToken.token
     });
     return eventQuery.search().then((events) => events.events.map(normalizeFacebookEvent));
   });
-  
+
 }
 
 function normalizeFacebookEvent(fbEvent): CheckpointsServer.Event {
@@ -54,7 +55,6 @@ export function searchUserEvents(user: CheckpointsServer.User, search: eventCrit
 
     let eventKeys = {};
     let matchedEvents = {};
-
     events.forEach(event => {
       let eventNames = event.name.toLowerCase().split(/[ ,."()]+/);
       eventNames.forEach(name => {
@@ -62,7 +62,7 @@ export function searchUserEvents(user: CheckpointsServer.User, search: eventCrit
           eventKeys[name] = {};
           eventKeys[name][event.id] = event;
         } else if (eventKeys[name][event.id] === undefined) {
-          eventKeys[name][event.id] = event; 
+          eventKeys[name][event.id] = event;
         }
       });
       // match checkpoints to events

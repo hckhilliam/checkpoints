@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 
-import { OverlayOptions } from './overlay';
+import { hideOverlay, OverlayOptions } from './overlay';
 
 export const OPEN_DROPDOWN = 'OPEN_DROPDOWN';
 export const CLOSE_DROPDOWN = 'CLOSE_DROPDOWN';
@@ -23,7 +23,7 @@ const defaultOptions: DropdownListOptions = {
   onClose: () => {}
 };
 
-function openDropdownListAction(node: any, options): DropdownListAction {
+export function openDropdownList(node: any, options): DropdownListAction {
   if (options != defaultOptions) {
     options = Object.assign({}, defaultOptions, options);
   }
@@ -32,22 +32,15 @@ function openDropdownListAction(node: any, options): DropdownListAction {
     type: OPEN_DROPDOWN,
     options
   };
-} 
+}
 
-function closeDropdownListAction(): Action {
+export const closeDropdownList = hideOverlay;
+
+/**
+ * Internal use only!!
+ */
+export function removeDropdownList(): Action {
   return {
     type: CLOSE_DROPDOWN
-  };
-}
-
-export function openDropdownList(node: any, options = defaultOptions) {
-  return dispatch => {
-    dispatch(openDropdownListAction(node, options));
-  };
-}
-
-export function closeDropdownList() {
-  return dispatch => {
-    dispatch(closeDropdownListAction());
   };
 }

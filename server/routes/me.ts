@@ -7,7 +7,6 @@ import friends from './friends';
 import search from './search';
 import * as users from '../handlers/users';
 
-
 const api = Router();
 
 api.all('*', (req: Request & CheckpointsServer.Request, res: Response, next) => {

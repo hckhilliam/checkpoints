@@ -89,7 +89,7 @@ class Overlays extends React.Component<OverlayProps, {}> {
     const cssClass = classnames('Overlays', {
       'Overlays--active': !!overlays.length
     });
-    // I think setting key as index should be ok in this case, since we only push/pop overlays
+    // I think setting key as index and opaque should be ok, since if opacity doesn't change it doesn't need a rerender
     return (
       <div className={cssClass} style={{ zIndex: 5000 + (overlays.length - 1) * 2 }} onClick={this.handleClick}>
         <ReactCSSTransitionGroup
@@ -100,7 +100,7 @@ class Overlays extends React.Component<OverlayProps, {}> {
           transitionLeaveTimeout={DURATION}
         >
           {
-            overlays.map((overlay, i) => <Overlay key={i} options={overlay} zIndex={5000 + i * 2} />)
+            overlays.map((overlay, i) => <Overlay key={`${i}${overlay.opaque}`} options={overlay} zIndex={5000 + i * 2} />)
           }
         </ReactCSSTransitionGroup>
       </div>

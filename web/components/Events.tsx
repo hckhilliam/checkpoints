@@ -48,7 +48,7 @@ export class Events extends React.Component<Props, State> {
       lng: -80.5378432,
       distance: 700,
       filter: undefined
-    } as Checkpoints.eventSearch;
+    } as Checkpoints.EventSearch;
   };
 
   onClickEvent(id: number) {
@@ -100,7 +100,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGetEvents: (search: Checkpoints.eventSearch) => {
+    onGetEvents: (search: Checkpoints.EventSearch) => {
       dispatch(getRecommendEvents(search));
     }
   }

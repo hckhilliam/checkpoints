@@ -25,7 +25,7 @@ declare namespace Checkpoints {
     departureDate: Date;
   }
 
-  interface eventSearch {
+  interface EventSearch {
     lng: number;
     lat: number;
     distance: number;
@@ -35,7 +35,7 @@ declare namespace Checkpoints {
   interface State {
     checkpoints?: CheckpointsState;
     users?: UsersState;
-    user?: User;
+    friends?: Friend[];
   }
 
   interface User {
