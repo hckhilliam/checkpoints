@@ -24,9 +24,11 @@ const api = Router();
 api.use('/auth', auth);
 api.use('/user', user);
 
-api.all('*', init, authenticate);
-api.use('/me', me);
+api.all('*', init);
 api.use('/users', users);
+
+api.all('*', authenticate);
+api.use('/me', me);
 api.use('/events', event);
 api.use('/flights', flight);
 

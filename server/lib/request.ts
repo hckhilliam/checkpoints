@@ -10,6 +10,6 @@ export function getFacebookId(req: CheckpointsServer.Request) {
   return _.get(getUser(req), 'accounts.facebook.id') as string;
 }
 
-export function getCallerUserId(req: CheckpointsServer.Request) {
-  return req.user._id;
+export function getCallerUserId(req: CheckpointsServer.Request): number {
+  return _.get(req, 'user._id') as any;
 }

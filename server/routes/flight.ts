@@ -5,7 +5,7 @@ import { getLocation } from '../modules/location';
 const api = Router();
 
 api.post('/', (req: CheckpointsServer.Request & Request, res: Response, next) => {
-  
+
   const { originName, originCode, destinationName, destinationCode, departureDate } = req['body'];
 
   let criteria: CheckpointsServer.FlightQuery = {
@@ -16,19 +16,19 @@ api.post('/', (req: CheckpointsServer.Request & Request, res: Response, next) =>
     departureDate,
   };
 
-  let deffered: Promise<CheckpointsServer.FlightQuery> = Promise.resolve(criteria);
+  let deferred: Promise<CheckpointsServer.FlightQuery> = Promise.resolve(criteria);
 
   if (!originName && !originCode) {
-    deffered.then(() => {
-      getLocation(req).then( (Location) => {
-        deffered = Promise.resolve(Object.assign(criteria, {
-          origin: Location.country
+    deferred.then(() => {
+      getLocation(req).then(location => {
+        deferred = Promise.resolve(Object.assign(criteria, {
+          origin: location.country
         }));
       })
-    })
+    });
   }
 
-  deffered.then((query) => {
+  deferred.then((query) => {
     getFlightsHandler(query).then(
       flights => res.json({flights})
     ).catch( err => {
