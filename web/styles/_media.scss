@@ -1,7 +1,7 @@
-$xs-min: 30 * 16 - 1px;
-$sm-min: 48 * 16 - 1px;
-$md-min: 64 * 16 - 1px;
-$lg-min: 75 * 16 - 1px;
+$xs-min: 30 * 16 - 1px; // 480
+$sm-min: 48 * 16 - 1px; // 768
+$md-min: 64 * 16 - 1px; // 1024
+$lg-min: 75 * 16 - 1px; // 1200
 
 @mixin max-xs {
   @media (max-width: #{$xs-min}) {

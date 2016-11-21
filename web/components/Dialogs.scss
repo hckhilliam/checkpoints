@@ -1,4 +1,5 @@
 @import "../styles/variables";
+@import "../styles/media";
 
 .Dialogs {
   position: absolute;
@@ -50,18 +51,41 @@
   @include shadow;
 
   &--Small {
-    min-width: 256px;
-    max-width: 384px;
+    min-width: 100%;
+    max-width: 100%;
+
+    @include min-xs {
+      min-width: 480px;
+      max-width: 80%;
+    }
+
+    @include min-md {
+      min-width: 256px;
+      max-width: 480px;
+    }
   }
 
   &--Medium {
     min-width: 512px;
     max-width: 768px;
+
+    @include max-xs {
+      width: 100%;
+    }
+
+    @include max-sm {
+      min-width: 80%;
+      max-width: 100%;
+    }
   }
 
   &--Large {
     min-width: 768px;
     max-width: 100%;
+
+    @include max-sm {
+      min-width: 100%;
+    }
   }
 
   &-title {

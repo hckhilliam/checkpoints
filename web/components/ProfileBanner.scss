@@ -1,4 +1,5 @@
 @import "../styles/variables";
+@import "../styles/media";
 
 .ProfileBanner {
   display: flex;
@@ -18,9 +19,17 @@
     }
   }
 
+  @include max-md {
+    .ProfileBanner-image {
+      max-width: 128px;
+      max-height: 128px;
+    }
+  }
+
   &-right {
     flex: 1;
     margin-left: 32px;
+    @include text-ellipsis;
   }
 
   &-name {
