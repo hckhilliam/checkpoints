@@ -24,25 +24,31 @@ export class UserSettings extends React.Component<Props, {}>{
     const { user } = this.props;
     const other = _.omit(this.props, 'user');
     return (
-      <Form {...other}>
-        <InputField label="Name" name="name"/>
-        <span> Hometown 
-          <Field name="location" component = { props =>
-          {
-            return (
-              <Geosuggest initialValue={props.input.value.name} onSuggestSelect={param => {
-                props.input.value.name = param.label;
-                props.input.value.lat = param.location.lat;
-                props.input.value.lng = param.location.lng;
-              }}/>
-            );
-          }}/>
-        </span>    
-        <CheckboxField label="Subcribed to emails" name="settings.isSubscribed" />
-        <FormButtons>
-          <Button type="submit" primary>Save</Button>
-        </FormButtons>
-      </Form>
+      <div className="UserSettings">
+        <Form {...other}>
+          <InputField label="Name" name="name"/>
+          <span> Hometown 
+            <Field name="location" component = { props =>
+            {
+              return (
+                <Geosuggest className="UserSettings-Location" 
+                  types={['(cities)']}
+                  initialValue={props.input.value.name} 
+                  onSuggestSelect={param => {
+                    props.input.value.name = param.label;
+                    props.input.value.lat = param.location.lat;
+                    props.input.value.lng = param.location.lng;
+                  }}
+                />
+              );
+            }}/>
+          </span>    
+          <CheckboxField label="Subcribed to emails" name="settings.isSubscribed" />
+          <FormButtons>
+            <Button type="submit" primary>Save</Button>
+          </FormButtons>
+        </Form>
+      </div>
     )
   }
 }

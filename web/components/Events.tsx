@@ -48,7 +48,6 @@ export class Events extends React.Component<Props, State> {
   state: State = {};
 
   getSearchQuery = () => {
-    console.log(this.props);
     return {
       lat: _.isEmpty(this.props.user) ?  43.4761238 : this.props.user.location.lat,
       lng: _.isEmpty(this.props.user) ?  -80.5378432 : this.props.user.location.lng,
@@ -99,7 +98,6 @@ export class Events extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state) => {
-  console.log("lala", state);
   return {
     events: state.events,
     user: state.users.me

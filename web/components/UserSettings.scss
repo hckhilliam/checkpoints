@@ -1,0 +1,19 @@
+@import "../styles/variables";
+
+.UserSettings {
+  &-Location {
+    width: 100% !important;
+    .geosuggest__input-wrapper {
+      .geosuggest__input:focus {
+        border-color: $md-green-700;
+      }
+    }
+
+    .geosuggest__suggests-wrapper {
+      .geosuggest__suggests {
+        border-color: $md-green-700;
+      } 
+    }
+    
+  }
+}
