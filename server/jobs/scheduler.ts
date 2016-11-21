@@ -17,7 +17,7 @@ import { matchEvents } from './eventmatch';
 export const job = new CronJob('00 */1 * * * *', function() {
 
   matchEvents();
-    
+
 }, null, true, 'America/Los_Angeles');
 
 

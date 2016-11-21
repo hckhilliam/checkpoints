@@ -51,5 +51,8 @@ module.exports = {
   recordsPath: path.join(__dirname, "webpack-records"),
   ts: {
     configFileName: 'tsconfig.node.json'
+  },
+  node: {
+    __dirname: true
   }
 }

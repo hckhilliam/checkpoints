@@ -1,3 +1,6 @@
+const debug = require('debug')('checkpoints:eventmatch');
+import { EmailTemplate } from 'email-templates';
+import * as path from 'path';
 import { getSubscribedUsers } from '../modules/user';
 import { searchUserEvents, eventCriteria } from '../modules/event';
 import { createMail } from './mailer';
@@ -18,7 +21,7 @@ function sendUserEvents(user: CheckpointsServer.User) {
     lng: -80.5378432,
     distance: 700,
     filter: undefined
-  }    
+  }
   searchUserEvents(user, search).then(events => {
     let eventsIDs = events.map(event => event.id);
     if (!(_.isEmpty(eventsIDs))) {
@@ -31,18 +34,19 @@ function buildEmail(user: CheckpointsServer.User, eventIds:number[]) {
   const subject = `Recommended Events`;
   const { name, email } = user;
 
-  let eventListing: string = "";
+  let eventListing: string[] = [];
   eventIds.forEach(id => {
-    eventListing += `<p>https://www.facebook.com/events/${id}</p>`;
+    eventListing.push(`https://www.facebook.com/events/${id}`);
   });
 
-  let textBody = `llalal`;
-  let htmlBody = `
-    <p>Hi ${name}, </p>
-    <br/>
-    <h3>We'd like to recommend you some events based on your goals</h3>
-    ${eventListing}
-    <h1>😉</h1>
-  `;
-  createMail(email, subject, textBody, htmlBody);
+  let template = new EmailTemplate(path.join(__dirname, '..', 'templates', 'events-email'));
+
+  template.render({
+    name: name,
+    events: eventListing,
+    subject: subject
+  }, (err, result) => {
+    if (err) { debug(err); }
+    else { createMail(email, result.subject, result.text, result.html); }
+  });
 }
