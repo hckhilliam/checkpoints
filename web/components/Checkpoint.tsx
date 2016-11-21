@@ -12,10 +12,12 @@ import { MaterialIcon } from './Icon';
 import ConfirmDialog from './ConfirmDialog';
 import ImageUpload from './ImageUpload';
 import Picture from './Picture';
-import FacebookShareButton from './FacebookShareButton';
+import ShareLink from './ShareLink';
 
 import { completeCheckpoint, deleteCheckpoint, addCheckpointImages } from '../actions/checkpoints';
 import { openDialog, closeDialog } from '../actions/dialog';
+
+import * as share from '../lib/share';
 
 interface Props extends React.HTMLAttributes {
   checkpoint: Checkpoints.Checkpoint;
@@ -57,6 +59,8 @@ export class Checkpoint extends React.Component<Props, State> {
       'Checkpoint--complete': complete
     });
 
+    const checkpointShareUrl = share.checkpointLink(checkpoint.userId, checkpoint.id);
+
     return (
       <div className={cssClass} {...other}>
         <div className="Checkpoint-title">
@@ -83,19 +87,21 @@ export class Checkpoint extends React.Component<Props, State> {
             <span>{visibility}</span>
           </div>
         }
-        <div className="Checkpoint-photos">
-          <h3>Photos</h3>
-          <div className="Checkpoints-photos-row row">
-            {
-              checkpoint.pictures &&
-              checkpoint.pictures.map(picture => <Picture className="col-xs-6 col-sm-3 col-md-4 col-lg-2" key={picture.url} picture={picture} />)
-            }
+        {(privateView || !_.isEmpty(checkpoint.pictures)) &&
+          <div className="Checkpoint-photos">
+            <h3>Photos</h3>
+            <div className="Checkpoints-photos-row row">
+              {
+                checkpoint.pictures &&
+                checkpoint.pictures.map(picture => <Picture className="col-xs-6 col-sm-3 col-md-4 col-lg-2" key={picture.url} picture={picture} />)
+              }
+            </div>
+            {privateView && <ImageUpload onUpload={onUpload} />}
           </div>
-          {privateView && <ImageUpload onUpload={onUpload} />}
-        </div>
+        }
         {privateView &&
           <div className="Checkpoint-buttons">
-            <FacebookShareButton url="google.com" />
+            {!checkpoint.isPrivate && <ShareLink url={checkpointShareUrl} />}
             {!complete && <Button onClick={onComplete} raised primary tabIndex={-1}>Mark as complete</Button>}
           </div>
         }

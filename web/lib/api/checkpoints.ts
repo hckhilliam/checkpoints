@@ -4,6 +4,8 @@ import { getUrl } from './utils';
 function parseCheckpoint(data): Checkpoints.Checkpoint {
   data.id = data._id;
   delete data._id;
+  data.userId = data.user_id;
+  delete data.user__id;
   data.loaded = true;
   return data as Checkpoints.Checkpoint;
 }

@@ -51,7 +51,7 @@ export class HeaderUser extends React.Component<HeaderUserProps, {}> {
           {picture}
           {hasNotifications &&
             <div className="HeaderUser-notification-icon">
-              <MaterialIcon icon="message" />
+              <MaterialIcon icon="notifications" />
             </div>
           }
         </div>

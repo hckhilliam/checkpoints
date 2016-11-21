@@ -64,6 +64,7 @@ declare namespace Checkpoints {
 
   interface Checkpoint {
     id?: number;
+    userId?: number;
     title?: string;
     description?: string;
     isPrivate?: boolean;

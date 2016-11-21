@@ -37,11 +37,15 @@
 
   &-buttons {
     display: flex;
-    .FacebookShareButton {
+    margin-top: 16px;
+
+    .ShareLink {
       margin-right: auto;
     }
-    .Button:first-child {
+
+    .Button {
       margin-left: auto;
+      align-self: flex-end;
     }
   }
 
