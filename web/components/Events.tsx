@@ -44,9 +44,11 @@ export class Events extends React.Component<Props, State> {
 
   getSearchQuery = () => {
     return {
-      lat: 43.4761238,
-      lng: -80.5378432,
-      distance: 700,
+      // lat: 43.4761238,
+      // lng: -80.5378432,
+      lat: 43.6532,
+      lng: -79.3832,
+      distance: 7000,
       filter: undefined
     } as Checkpoints.EventSearch;
   };

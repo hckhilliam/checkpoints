@@ -56,7 +56,7 @@ export function searchUserEvents(user: CheckpointsServer.User, search: eventCrit
     let eventKeys = {};
     let matchedEvents = {};
     events.forEach(event => {
-      let eventNames = event.name.toLowerCase().split(/[ ,."()]+/);
+      let eventNames = `${event.name} ${event.description}`.toLowerCase().split(/[ ,."()]+/);
       eventNames.forEach(name => {
         if (eventKeys[name] === undefined) {
           eventKeys[name] = {};
@@ -67,13 +67,21 @@ export function searchUserEvents(user: CheckpointsServer.User, search: eventCrit
       });
       // match checkpoints to events
       checkpoints.forEach(checkpoint => {
-        //TODO replace title with tags/keywords
-        if (eventKeys[checkpoint.title]) {
-          _.merge(matchedEvents, eventKeys[checkpoint.title]);
-        }
+        let keywords = filterWords(checkpoint.title.toLowerCase().split(/[ ,."()]+/));
+        keywords.forEach(key => {
+          if (eventKeys[key]) {
+            _.merge(matchedEvents, eventKeys[key]);
+          }
+        });
       });
     })
     matchedEvents = _.values(matchedEvents);
     return Promise.resolve(matchedEvents);
   });
+}
+
+const blacklist = ['a', 'an', 'the', 'and', 'go', 'more', 'to'];
+
+function filterWords(words: string[]) {
+  return _.difference(words, blacklist);
 }
