@@ -43,6 +43,11 @@ declare namespace Checkpoints {
     settings?: {
       isSubscribed?: boolean;
     };
+    location?: {
+      name?: string;
+      lat?: number;
+      lng?: number;
+    };
   }
 
   interface Friend {
@@ -131,6 +136,11 @@ declare namespace Checkpoints {
       name: string;
       settings: {
         isSubscribed: boolean;
+      };
+      location: {
+        name:string;
+        lat?: number;
+        lng?: number;
       };
     }
   }

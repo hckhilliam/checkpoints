@@ -14,6 +14,7 @@ import { getRecommendEvents } from '../actions/events';
 interface Props {
   events?: Checkpoints.Event[];
   onGetEvents?: (eventSearch) => void;
+  user?: Checkpoints.User;
 }
 
 interface State {
@@ -40,14 +41,17 @@ export class Events extends React.Component<Props, State> {
     this.props.onGetEvents(this.getSearchQuery());
   }
 
+  componentDidUpdate() {
+    this.props.onGetEvents(this.getSearchQuery());
+  }
+
   state: State = {};
 
   getSearchQuery = () => {
+    console.log(this.props);
     return {
-      // lat: 43.4761238,
-      // lng: -80.5378432,
-      lat: 43.6532,
-      lng: -79.3832,
+      lat: _.isEmpty(this.props.user) ?  43.4761238 : this.props.user.location.lat,
+      lng: _.isEmpty(this.props.user) ?  -80.5378432 : this.props.user.location.lng,
       distance: 7000,
       filter: undefined
     } as Checkpoints.EventSearch;
@@ -95,8 +99,10 @@ export class Events extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state) => {
+  console.log("lala", state);
   return {
-    events: state.events
+    events: state.events,
+    user: state.users.me
   };
 };
 

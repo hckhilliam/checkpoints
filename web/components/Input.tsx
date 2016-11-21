@@ -105,7 +105,6 @@ const renderInputField = (props: InputProps & WrappedFieldProps) => {
 
   const { touched, error } = props.meta;
   const errorText = touched && error as string;
-
   return <Input {...props.input} {...inputProps} disabled={props.disabled} errorText={errorText} />;
 };
 

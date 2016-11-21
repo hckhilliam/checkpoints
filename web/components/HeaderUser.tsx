@@ -62,6 +62,7 @@ export class HeaderUser extends React.Component<HeaderUserProps, {}> {
 }
 
 const mapStateToProps = (state: Checkpoints.State) => {
+  console.log("header", state);
   return {
     user: state.users.me,
     notifications: state.notifications

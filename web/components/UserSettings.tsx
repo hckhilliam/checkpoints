@@ -2,7 +2,9 @@ import './UserSettings.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { reduxForm, SubmissionError, initialize, reset } from 'redux-form';
+import { reduxForm, SubmissionError, initialize, reset, Field } from 'redux-form';
+
+import Geosuggest from 'react-geosuggest';
 
 import Form from './Form';
 import { InputField } from './Input';
@@ -21,10 +23,21 @@ export class UserSettings extends React.Component<Props, {}>{
   render() {
     const { user } = this.props;
     const other = _.omit(this.props, 'user');
-
     return (
       <Form {...other}>
         <InputField label="Name" name="name"/>
+        <span> Hometown 
+          <Field name="location" component = { props =>
+          {
+            return (
+              <Geosuggest initialValue={props.input.value.name} onSuggestSelect={param => {
+                props.input.value.name = param.label;
+                props.input.value.lat = param.location.lat;
+                props.input.value.lng = param.location.lng;
+              }}/>
+            );
+          }}/>
+        </span>    
         <CheckboxField label="Subcribed to emails" name="settings.isSubscribed" />
         <FormButtons>
           <Button type="submit" primary>Save</Button>
@@ -51,7 +64,8 @@ const mapStateToProps = (state: Checkpoints.State) => {
   return {
     initialValues: {
       name: user.name,
-      settings: user.settings
+      settings: user.settings,
+      location: user.location
     }
   };
 };

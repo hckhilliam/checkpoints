@@ -6,7 +6,8 @@ export function parseUser(body: any) {
     id: body._id,
     name: body.name,
     picture: body.picture,
-    settings: body.settings
+    settings: body.settings,
+    location: body.location
   } as Checkpoints.User;
 }
 

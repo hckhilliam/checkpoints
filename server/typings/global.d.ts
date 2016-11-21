@@ -21,6 +21,11 @@ declare namespace CheckpointsServer {
     settings?: {
       isSubscribed?: boolean;
     };
+    location?: {
+      name?: string;
+      lat?: number;
+      lng?: number;
+    }
   }
 
   interface Picture {

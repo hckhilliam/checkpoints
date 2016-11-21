@@ -23,6 +23,13 @@ const settingsSchema = new mongoose.Schema({
   isSubscribed: { type: Boolean, default: true }
 })
 
+const locationSchema = new mongoose.Schema({
+  _id: false,
+  name: { type: String, default: "Waterloo, ON, Canada" },
+  lat: { type: Number, default: 43.4668000 },
+  lng: { type: Number, default: -80.5163900 }
+})
+
 const schema = {
   _id: Number,
   email: { type: String, required: true, unique: true },
@@ -33,7 +40,8 @@ const schema = {
   friendRequests: [Number],
   accounts: accountsSchema,
   picture: { type: pictureSchema, default: pictureSchema },
-  settings: { type: settingsSchema, default: settingsSchema }
+  settings: { type: settingsSchema, default: settingsSchema },
+  location: { type: locationSchema, default: locationSchema }
 };
 
 const userSchema = new mongoose.Schema(schema);
