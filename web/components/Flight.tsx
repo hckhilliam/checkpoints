@@ -1,4 +1,7 @@
+import './Flight.scss'
+
 import * as React from 'react';
+import * as dateformat from 'dateformat';
 
 interface Props {
   flight: Checkpoints.Flight;
@@ -7,9 +10,10 @@ interface Props {
 export const Flight = (props: Props) => {
   let flight = props.flight;
   return (
-    <div>
-      <a href={flight.url} target='_blank'>
-        <div>{flight.origin} to {flight.destintaion} leaving on {flight.departureDate}</div> 
+    <div className="Flight">
+      <a href={flight.url} target="_blank">
+        <div>{flight.originName}  to  {flight.destinationName}</div>
+        <div>Leaving {dateformat(flight.departureDate, 'mmmm dS')}</div>
         <div>${flight.price}</div>
       </a> 
     </div>

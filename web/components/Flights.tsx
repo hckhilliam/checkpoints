@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import Flight from './Flight';
 import Panel from './Panel';
 import { List, ListItem } from './List';
-import { getFlights } from '../actions/flights';
+import { getRecommendFlights } from '../actions/flights';
 
 
 interface Props {
@@ -77,7 +77,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onGetFlights: () => {
-      dispatch(getFlights());
+      dispatch(getRecommendFlights());
     }
   }
 };

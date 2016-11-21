@@ -1,24 +1,24 @@
 import { Router, Request, Response } from 'express';
-import { getFlightsHandler } from '../handlers/flights';
+import { getFlightsHandler, searchUserFlights } from '../handlers/flights';
 import { getLocation } from '../modules/location';
 
 const api = Router();
 
 api.post('/', (req: CheckpointsServer.Request & Request, res: Response, next) => {
   
-  const { origin, originCode, destination, destinationCode, departureDate } = req['body'];
+  const { originName, originCode, destinationName, destinationCode, departureDate } = req['body'];
 
   let criteria: CheckpointsServer.FlightQuery = {
-    origin,
+    originName,
     originCode,
-    destination,
+    destinationName,
     destinationCode,
     departureDate,
   };
 
   let deffered: Promise<CheckpointsServer.FlightQuery> = Promise.resolve(criteria);
 
-  if (!origin && !originCode) {
+  if (!originName && !originCode) {
     deffered.then(() => {
       getLocation(req).then( (Location) => {
         deffered = Promise.resolve(Object.assign(criteria, {
@@ -36,6 +36,13 @@ api.post('/', (req: CheckpointsServer.Request & Request, res: Response, next) =>
     });
   });
 
+});
+
+api.post('/recommend', (req: CheckpointsServer.Request & Request, res: Response, next) => {
+  let user = req.user;
+  searchUserFlights(user).then(
+    flights => res.json({flights})
+  );
 });
 
 export default api;

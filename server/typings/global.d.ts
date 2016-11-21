@@ -69,13 +69,16 @@ declare namespace CheckpointsServer {
   }
 
   interface Flight {
-    price: number;
+    Price: number;
     url: string;
+    originCode: string;
+    destinationCode: string;
+    departureDate: Date;
   }
 
   interface FlightQuery {
-    origin: string;
-    destination: string;
+    originName?: string;
+    destinationName?: string;
     originCode: string;
     destinationCode: string;
     departureDate?: Date;

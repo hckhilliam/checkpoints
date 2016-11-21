@@ -20,8 +20,10 @@ declare namespace Checkpoints {
   interface Flight {
     price: number;
     url: string;
-    origin: string;
-    destintaion: string;
+    originName: string;
+    destinationName: string;
+    originCode: string;
+    destinationCode: string;
     departureDate: Date;
   }
 

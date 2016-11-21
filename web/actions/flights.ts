@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { queryFlights } from '../lib/api/flights';
+import * as api from '../lib/api/flights';
 
 export const UPDATE_FLIGHTS: string = 'UPDATE_FLIGHTS';
 
@@ -9,7 +9,15 @@ export interface FlightUpdate extends Action {
 
 export function getFlights() {
   return dispatch => {
-    return queryFlights().then(res => {
+    return api.queryFlights().then(res => {
+      dispatch(updateFlights(res));
+    });
+  }
+}
+
+export function getRecommendFlights() {
+  return dispatch => {
+    return api.getRecommendFlights().then(res => {
       dispatch(updateFlights(res));
     });
   }
