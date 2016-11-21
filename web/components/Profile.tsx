@@ -59,9 +59,10 @@ const FriendRequestsContainer = connect(
         dispatch(respond(friendId, response));
       },
       onClick: (friendId: number) => {
-        dispatch(openDialog(<UserProfile userId={friendId} />, {
-          size: 'Large'
-        }));
+        // todo fix dialogs
+        // dispatch(openDialog(<UserProfile userId={friendId} />, {
+        //   size: 'Large'
+        // }));
       }
     };
   }

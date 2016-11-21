@@ -22,7 +22,7 @@
     align-items: center;
 
     &:hover {
-      background-color: $md-light-blue-50;
+      /*background-color: $md-light-blue-50;*/
     }
 
     &:not(:last-child) {
@@ -37,7 +37,7 @@
   }
 
   &-label {
-    cursor: pointer;
+    /*cursor: pointer;*/
     display: flex;
     align-items: center;
     flex-grow: 1;
