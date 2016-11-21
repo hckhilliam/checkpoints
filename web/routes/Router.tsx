@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Router as ReactRouter, Route, IndexRoute } from 'react-router';
+import { Router as ReactRouter, Route, IndexRoute, Redirect } from 'react-router';
 
 import { isLoggedIn } from '../lib/auth';
 import { getUserInfo } from '../actions/users';
@@ -9,6 +9,7 @@ import Root from './Root';
 import UserRoot from './UserRoot';
 import Home from './Home';
 import Dashboard from './Dashboard';
+import PublicCheckpoint from './PublicCheckpoint';
 
 interface Props {
   history: ReactRouterRedux.ReactRouterReduxHistory;
@@ -51,7 +52,9 @@ export class Router extends React.Component<Props, {}> {
           <Route component={UserRoot} onEnter={this.requireAuth}>
             <Route path="/dashboard" component={Dashboard} />
           </Route>
+          <Route path="/checkpoint/:userId/:checkpointId" component={PublicCheckpoint} />
         </Route>
+        <Redirect from="*" to="/" />
       </ReactRouter>
     );
   }

@@ -59,9 +59,7 @@ export default class ProfileBanner extends React.Component<Props, {}> {
 
   render() {
     const { user, friendStatus, onAddFriend, onAcceptFriend, size } = this.props;
-
-    const friend = getFriendNode(friendStatus, onAddFriend, onAcceptFriend);
-
+    const friend = !_.isUndefined(friendStatus) && getFriendNode(friendStatus, onAddFriend, onAcceptFriend);
     const cssClass = classnames('ProfileBanner', `ProfileBanner--${size}`);
 
     return (

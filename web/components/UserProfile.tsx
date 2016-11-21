@@ -7,6 +7,8 @@ import ProfileBanner from './ProfileBanner';
 import CheckpointsList from './CheckpointsList';
 
 import { getUserInfo } from '../actions/users';
+import { respond } from '../actions/friends';
+
 import { addFriend } from '../lib/api/friends';
 
 interface Props {
@@ -14,7 +16,9 @@ interface Props {
   user?: Checkpoints.User;
   checkpoints?: Checkpoints.Checkpoint[];
   friends?: Checkpoints.Friend[];
+  friendRequests?: Checkpoints.Friend[];
   onGetUserInfo?: () => void;
+  onAcceptFriend?: () => void;
 }
 
 interface State {
@@ -36,18 +40,24 @@ export class UserProfile extends React.Component<Props, State> {
     });
   };
 
+  handleAcceptFriend = () => {
+    this.props.onAcceptFriend();
+  }
+
   render() {
-    const { user, userId, friends, checkpoints } = this.props;
+    const { user, userId, friends, friendRequests, checkpoints } = this.props;
 
     let friendStatus = this.state.friendRequestSent ? 'Pending' : 'None';
     if (!userId)
       friendStatus = 'Self';
     else if (friends.find(f => f.id == userId))
       friendStatus = 'Friends';
+    else if (friendRequests.find(f => f.id == userId))
+      friendStatus = 'Accept';
 
     return (
       <div className="UserProfile">
-        {this.props.user && <ProfileBanner user={this.props.user} friendStatus={friendStatus as any} onAddFriend={this.handleAddFriend} />}
+        {this.props.user && <ProfileBanner user={this.props.user} friendStatus={friendStatus as any} onAddFriend={this.handleAddFriend} onAcceptFriend={this.handleAcceptFriend} />}
         {(!_.isArray(checkpoints) || !_.isEmpty(checkpoints)) &&
           <div className="UserProfile-checkpoints">
             <h2 className="UserProfile-checkpoints-title">Checkpoints</h2>
@@ -64,7 +74,8 @@ const mapStateToProps = (state: Checkpoints.State, ownProps: Props) => {
   return {
     user: state.users.users[userId],
     checkpoints: state.checkpoints.users[userId],
-    friends: state.friends
+    friends: state.friends,
+    friendRequests: state.notifications.friendRequests
   };
 };
 
@@ -73,6 +84,9 @@ const mapDispatchToProps = (dispatch, ownProps: Props) => {
   return {
     onGetUserInfo: () => {
       dispatch(getUserInfo(userId));
+    },
+    onAcceptFriend: () => {
+      dispatch(respond(userId, true));
     }
   };
 };

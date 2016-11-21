@@ -1,0 +1,39 @@
+@import "../styles/variables";
+@import "../styles/media";
+
+.PublicCheckpoint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 100%;
+
+    .Panel {
+      max-width: 100%;
+      min-width: 100%;
+      padding: 0;
+
+      @include min-md {
+        min-width: 768px;
+      }
+
+      @include min-lg {
+        min-width: 1024px;
+      }
+    }
+
+    &-content {
+      padding: 32px;
+
+      .Checkpoint {
+        margin-top: 32px;
+
+        .Checkpoint-title {
+          h1 {
+            font-size: 32px;
+          }
+        }
+      }
+    }
+}
