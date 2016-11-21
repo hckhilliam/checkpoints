@@ -41,10 +41,6 @@ export class Events extends React.Component<Props, State> {
     this.props.onGetEvents(this.getSearchQuery());
   }
 
-  componentDidUpdate() {
-    this.props.onGetEvents(this.getSearchQuery());
-  }
-
   state: State = {};
 
   getSearchQuery = () => {
