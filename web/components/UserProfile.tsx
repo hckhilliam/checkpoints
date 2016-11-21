@@ -12,6 +12,7 @@ import { addFriend } from '../lib/api/friends';
 interface Props {
   userId: number;
   user?: Checkpoints.User;
+  checkpoints?: Checkpoints.Checkpoint[];
   friends?: Checkpoints.Friend[];
   onGetUserInfo?: () => void;
 }
@@ -36,7 +37,7 @@ export class UserProfile extends React.Component<Props, State> {
   };
 
   render() {
-    const { user, userId, friends } = this.props;
+    const { user, userId, friends, checkpoints } = this.props;
 
     let friendStatus = this.state.friendRequestSent ? 'Pending' : 'None';
     if (!userId)
@@ -47,10 +48,12 @@ export class UserProfile extends React.Component<Props, State> {
     return (
       <div className="UserProfile">
         {this.props.user && <ProfileBanner user={this.props.user} friendStatus={friendStatus as any} onAddFriend={this.handleAddFriend} />}
-        <div className="UserProfile-checkpoints">
-          <h2 className="UserProfile-checkpoints-title">Checkpoints</h2>
-          <CheckpointsList userId={userId} listStyle="Flat" />
-        </div>
+        {(!_.isArray(checkpoints) || !_.isEmpty(checkpoints)) &&
+          <div className="UserProfile-checkpoints">
+            <h2 className="UserProfile-checkpoints-title">Checkpoints</h2>
+            <CheckpointsList userId={userId} listStyle="Flat" />
+          </div>
+        }
       </div>
     );
   }
@@ -60,6 +63,7 @@ const mapStateToProps = (state: Checkpoints.State, ownProps: Props) => {
   const userId = ownProps.userId;
   return {
     user: state.users.users[userId],
+    checkpoints: state.checkpoints.users[userId],
     friends: state.friends
   };
 };

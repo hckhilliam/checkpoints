@@ -1,6 +1,7 @@
 import { Action } from 'redux';
 
 import * as friends from '../lib/api/friends';
+import { getNotifications } from './notifications';
 
 // Action types
 export const UPDATE_FRIENDS = 'UPDATE_FRIENDS';
@@ -42,5 +43,15 @@ export function getFriends() {
   return dispatch => {
     return friends.getFriends()
       .then(friends => dispatch(updateFriends(friends)));
+  };
+}
+
+export function respond(friendId: number, response: boolean) {
+  return dispatch => {
+    return friends.respond(friendId, response).then(() => {
+      if (response)
+        dispatch(getFriends());
+      dispatch(getNotifications());
+    });
   };
 }

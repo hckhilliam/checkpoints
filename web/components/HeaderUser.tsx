@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as classnames from 'classnames';
 
 import { MaterialIcon } from './Icon';
-import { UserSettingsForm } from './UserSettings';
+import Profile from './Profile';
 
 import { getNotifications } from '../actions/notifications';
 import { openDialog } from '../actions/dialog';
@@ -13,7 +13,7 @@ import { openDialog } from '../actions/dialog';
 interface HeaderUserProps {
   user?: Checkpoints.User;
   notifications?: Checkpoints.Notifications;
-  onOpenSettings?: () => void;
+  onClick?: () => void;
   onGetNotifications?: () => void;
 }
 
@@ -31,7 +31,7 @@ export class HeaderUser extends React.Component<HeaderUserProps, {}> {
   }
 
   render() {
-    const { user, notifications, onOpenSettings } = this.props;
+    const { user, notifications, onClick } = this.props;
 
     const pictureUrl = _.get(user, 'picture.url') as string;
     const picture = pictureUrl ? <img src={pictureUrl} /> : null;
@@ -46,7 +46,7 @@ export class HeaderUser extends React.Component<HeaderUserProps, {}> {
     });
 
     return (
-      <div className="HeaderUser" onClick={onOpenSettings}>
+      <div className="HeaderUser" onClick={onClick}>
         <div className={pictureClass}>
           {picture}
           {hasNotifications &&
@@ -73,10 +73,9 @@ const mapDispatchToProps = dispatch => {
     onGetNotifications: () => {
       dispatch(getNotifications());
     },
-    onOpenSettings: () => {
-      dispatch(openDialog(<UserSettingsForm />, {
-        size: 'Medium',
-        title: 'User Settings'
+    onClick: () => {
+      dispatch(openDialog(<Profile />, {
+        size: 'Medium'
       }));
     }
   };

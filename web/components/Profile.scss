@@ -1,0 +1,52 @@
+@import "../styles/variables";
+
+.Profile {
+  margin: 0 16px;
+
+  &-subtitle {
+    font-size: 24px;
+  }
+
+  &-settings, &-friend-requests {
+    margin-top: 32px;
+  }
+
+  .FriendRequests {
+    margin-top: 8px;
+  }
+}
+
+.FriendRequests {
+  &-item {
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+
+  &-picture {
+    max-width: 48px;
+    max-height: 48px;
+    border-radius: 50%;
+  }
+
+  &-name {
+    font-size: 16px;
+    margin-left: 8px;
+  }
+
+  &-buttons {
+    flex: none;
+    margin-left: auto;
+  }
+
+  &-accept {
+    color: $md-green-500 !important;
+  }
+
+  &-reject {
+    color: $md-red-500 !important;
+  }
+}

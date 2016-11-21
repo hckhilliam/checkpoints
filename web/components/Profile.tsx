@@ -1,17 +1,98 @@
+import './Profile.scss';
+
 import * as React from 'react';
+import { connect } from 'react-redux';
+
+import ProfileBanner from './ProfileBanner';
+import { UserSettingsForm } from './UserSettings';
+import { MaterialIcon } from './Icon';
+import IconButton from './IconButton';
+
+import { respond } from '../actions/friends';
 
 interface Props {
-  imageUrl: string;
-  name: string;
+  user?: Checkpoints.User;
+  notifications?: Checkpoints.Notifications;
 }
 
-export const Profile = (props: Props) => {
+interface FriendRequestsProps {
+  friendRequests: Checkpoints.Friend[];
+  onRespond?: (friendId: number, response: boolean) => void;
+}
+
+const FriendRequests = (props: FriendRequestsProps) => {
+  const { friendRequests, onRespond } = props;
   return (
-    <div>
-      <img src={props.imageUrl} />
-      {props.name}
+    <div className="FriendRequests">
+      {
+        friendRequests.map(friend => {
+          return (
+            <div key={friend.id} className="FriendRequests-item">
+              {_.get(friend, 'picture.url') && <img className="FriendRequests-picture" src={friend.picture.url} />}
+              <span className="FriendRequests-name">{friend.name}</span>
+              <div className="FriendRequests-buttons">
+                <IconButton className="FriendRequests-accept" onClick={() => onRespond(friend.id, true)}>
+                  <MaterialIcon icon="check" />
+                </IconButton>
+                <IconButton className="FriendRequests-reject" onClick={() => onRespond(friend.id, false)}>
+                  <MaterialIcon icon="close" />
+                </IconButton>
+              </div>
+            </div>
+          );
+        })
+      }
     </div>
-  );
+  )
 };
 
-export default Profile;
+const FriendRequestsContainer = connect(
+  state => { return {}; },
+  (dispatch, ownProps: FriendRequestsProps) => {
+    return {
+      onRespond: (friendId: number, response: boolean) => {
+        dispatch(respond(friendId, response));
+      }
+    };
+  }
+)(FriendRequests);
+
+export class Profile extends React.Component<Props, {}> {
+  render() {
+    const { user, notifications } = this.props;
+
+    const { friendRequests } = notifications;
+
+    return (
+      <div className="Profile">
+        <ProfileBanner user={this.props.user} friendStatus="Self" size="Small" />
+        {!_.isEmpty(friendRequests) &&
+          <div className="Profile-friend-requests">
+            <h2 className="Profile-subtitle">Friend Requests</h2>
+            <FriendRequestsContainer friendRequests={friendRequests} />
+          </div>
+        }
+        <div className="Profile-settings">
+          <h2 className="Profile-subtitle">Settings</h2>
+          <UserSettingsForm />
+        </div>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state: Checkpoints.State) => {
+  return {
+    user: state.users.me,
+    notifications: state.notifications
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+
+  };
+};
+
+const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default ProfileContainer;

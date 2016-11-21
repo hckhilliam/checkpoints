@@ -28,3 +28,9 @@ export function addFriend(friendId: number): Promise<void> {
   const url = getUrl(`friends/add/${friendId}`);
   return post(url);
 }
+
+export function respond(friendId: number, response: boolean): Promise<void> {
+  const query = response ? '?accept=true' : '';
+  const url = getUrl(`friends/respond/${friendId}${query}`);
+  return post(url);
+}

@@ -10,6 +10,7 @@ type FriendStatus = 'Friends' | 'Pending' | 'None' | 'Self' | 'Accept';
 interface Props {
   user: Checkpoints.User;
   friendStatus?: FriendStatus;
+  size?: 'Small' | 'Normal';
   onAddFriend?: () => void;
   onAcceptFriend?: () => void;
 }
@@ -51,13 +52,20 @@ function getFriendNode(friendStatus: FriendStatus, onAddFriend: () => void, onAc
 }
 
 export default class ProfileBanner extends React.Component<Props, {}> {
+  static defaultProps: Props = {
+    user: {},
+    size: 'Normal'
+  };
+
   render() {
-    const { user, friendStatus, onAddFriend, onAcceptFriend } = this.props;
+    const { user, friendStatus, onAddFriend, onAcceptFriend, size } = this.props;
 
     const friend = getFriendNode(friendStatus, onAddFriend, onAcceptFriend);
 
+    const cssClass = classnames('ProfileBanner', `ProfileBanner--${size}`);
+
     return (
-      <div className="ProfileBanner">
+      <div className={cssClass}>
         <img className="ProfileBanner-image" src={user.picture.url} />
         <div className="ProfileBanner-right">
           <h1 className="ProfileBanner-name">{user.name}</h1>
