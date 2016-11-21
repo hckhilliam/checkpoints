@@ -37,10 +37,10 @@ $mobileWidth: 64em;
       flex-direction: column;
 
       @media (max-width: 75em) {
-        width: 256px;
+        min-width: 256px;
       }
       @media (min-width: 75em) {
-        width: 512px;
+        min-width: 512px;
       }
 
       /*.FriendsSection {}*/
