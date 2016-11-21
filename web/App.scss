@@ -15,3 +15,13 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+/* This only works on webkit browsers :( pls fix */
+::-webkit-scrollbar {
+  width: 4px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba($md-green-500, 0.87);
+}

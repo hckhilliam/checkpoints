@@ -45,13 +45,13 @@ export class Flights extends React.Component<Props, State> {
 
 
   render() {
-    return (
+    return _.isEmpty(this.props.flights) ? null : (
       <div className="Flights">
         <Panel>
           <h1>Suggested Destinations</h1>
         </Panel>
         <List>
-        { 
+        {
           this.props.flights.map((flight) => {
             let id = this.getID(flight);
             const selected = id == this.state.selectFlightID;

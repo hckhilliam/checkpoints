@@ -14,16 +14,6 @@ $mobileWidth: 64em;
     flex-direction: row;
     width: 100%;
 
-    /* This only works on webkit browsers :( pls fix */
-    ::-webkit-scrollbar {
-      width: 4px;
-      background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: rgba($md-green-500, 0.87);
-    }
-
     .CheckpointsSection {
       flex-grow: 1;
       margin: 16px;

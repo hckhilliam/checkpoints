@@ -9,6 +9,7 @@
   &-name {
     font-size: 18px;
     font-weight: 400;
+    @include text-ellipsis;
   }
 
   &-picture {

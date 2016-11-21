@@ -8,7 +8,6 @@ import Events from '../components/Events'
 import Flights from '../components/Flights'
 import FriendsSection from '../components/FriendsSection';
 
-
 const Dashboard = props => {
   const user = !_.isEmpty(props.user);
   return (

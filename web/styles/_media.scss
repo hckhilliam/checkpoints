@@ -3,6 +3,12 @@ $sm-min: 48 * 16 - 1px;
 $md-min: 64 * 16 - 1px;
 $lg-min: 75 * 16 - 1px;
 
+@mixin max-xs {
+  @media (max-width: #{$xs-min}) {
+    @content;
+  }
+}
+
 @mixin max-sm {
   @media (max-width: #{$sm-min}) {
     @content;
@@ -17,6 +23,12 @@ $lg-min: 75 * 16 - 1px;
 
 @mixin max-lg {
   @media (max-width: #{$lg-min}) {
+    @content;
+  }
+}
+
+@mixin min-xs {
+  @media (min-width: #{$xs-min + 1px}) {
     @content;
   }
 }

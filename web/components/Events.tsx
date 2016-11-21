@@ -64,7 +64,7 @@ export class Events extends React.Component<Props, State> {
 
 
   render() {
-    return (
+    return _.isEmpty(this.props.events) ? null : (
       <div className="Events">
         <Panel>
           <h1>Suggested Events</h1>
