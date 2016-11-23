@@ -33,7 +33,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       "SERVER_CONFIG": {
-        "FACEBOOK_CALLBACK": JSON.stringify('http://localhost:8080/api/auth/facebook/callback'),
+        "FACEBOOK_CALLBACK": JSON.stringify(process.env.FACEBOOK_CALLBACK || "http://localhost:8080/api/auth/facebook/callback"),
         "MONGODB": JSON.stringify(process.env.MONGODB || "mongodb://dev:12345678@ds011790.mlab.com:11790/checkpoints_prod" /*"mongodb://dev:12345678@ds017688.mlab.com:17688/checkpoints_dev"*/),
         "FACEBOOK_APP_ID": JSON.stringify(process.env.FACEBOOK_APP_ID || "1165313236878812"),
         "FACEBOOK_APP_SECRET": JSON.stringify(process.env.FACEBOOK_APP_SECRET || "76c2004d4560c2b28215ef088edd499a"),

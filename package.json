@@ -10,7 +10,7 @@
     "build-web": "webpack --progress --config webpack.web.config.js",
     "build-server": "webpack --progress --config webpack.node.config.js",
     "build-all": "npm install&&npm run build-server&&npm run build-web",
-    "build-prod": "set NODE_ENV=production&&set MONGODB=mongodb://dev:12345678@ds011790.mlab.com:11790/checkpoints_prod&&npm run build-all",
+    "build-prod": "set NODE_ENV=production&&set MONGODB=mongodb://dev:12345678@ds011790.mlab.com:11790/checkpoints_prod&&set FACEBOOK_CALLBACK=http://checkpoints-demo.herokuapp.com/api/auth/facebook/callback&&npm run build-all",
     "start": "node ./server/dist/www"
   },
   "engines": {
