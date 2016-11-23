@@ -12,7 +12,8 @@ var plugins = [
     "process.env": {
       "CLIENT_ID": JSON.stringify(process.env.CLIENT_ID || "checkpoints.web"),
       "API_BASE": JSON.stringify("/api"),
-      "CLOUDINARY": JSON.stringify({ cloud_name: "checkpoints" })
+      "CLOUDINARY": JSON.stringify({ cloud_name: "checkpoints" }),
+      "NODE_ENV": JSON.stringify(process.env.NODE_ENV || "dev")
     }
   })
 ];
@@ -22,16 +23,29 @@ if (prod)
 
 module.exports = {
   entry: {
-    "app": ["./web/App.tsx"],
+    "app": ["babel-polyfill", "./web/App.tsx"],
     "vendor": [
+      "classnames",
+      "dateformat",
+      "flexboxgrid",
+      "immutability-helper",
       "lodash",
-      "react",
+      "querystring",
+      "react-addons-css-transition-group",
+      "react-addons-shallow-compare",
+      "react-addons-transition-group",
       "react-dom",
+      "react-dropzone",
+      "react-geosuggest",
+      "react-linkify",
+      "react-measure",
       "react-redux",
       "react-router",
       "react-router-redux",
       "redux",
+      "redux-form",
       "redux-thunk",
+      "validator",
       "whatwg-fetch"
     ]
   },

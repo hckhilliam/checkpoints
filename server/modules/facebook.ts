@@ -19,8 +19,8 @@ function fb(token: string) {
 export function getAppFacebookToken(): Promise<FBToken> {
   return new Promise((resolve, reject) => {
     FB.api('oauth/access_token', {
-      client_id: process.env['FACEBOOK_APP_ID'],
-      client_secret: process.env['FACEBOOK_APP_SECRET'],
+      client_id: SERVER_CONFIG['FACEBOOK_APP_ID'],
+      client_secret: SERVER_CONFIG['FACEBOOK_APP_SECRET'],
       grant_type: 'client_credentials'
     }, res => {
       if (!res || res.error) {
@@ -38,8 +38,8 @@ export function getAppFacebookToken(): Promise<FBToken> {
 export function exchangeFacebookToken(exchangeToken: string): Promise<FBToken> {
   return new Promise((resolve, reject) => {
     FB.api('oauth/access_token', {
-      client_id: process.env['FACEBOOK_APP_ID'],
-      client_secret: process.env['FACEBOOK_APP_SECRET'],
+      client_id: SERVER_CONFIG['FACEBOOK_APP_ID'],
+      client_secret: SERVER_CONFIG['FACEBOOK_APP_SECRET'],
       grant_type: 'fb_exchange_token',
       fb_exchange_token: exchangeToken
     }, res => {
