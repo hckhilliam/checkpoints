@@ -3,7 +3,7 @@ const autoIncrement = require('mongoose-auto-increment');
 const debug = require('debug')('checkpoints:mongodb');
 
 export function initialize() {
-  const uri = process.env['MONGODB'];
+  const uri = process.env['MONGODB'] || SERVER_CONFIG['MONGODB'];
   return new Promise(resolve => {
     (mongoose as any).Promise = global.Promise;
     mongoose.connect(uri, () => {

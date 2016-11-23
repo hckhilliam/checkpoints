@@ -13,15 +13,15 @@ import * as accesstoken from '../modules/accesstoken';
 export function authenticateFacebook() {
   return passport.authenticate('facebook', {
     session: false,
-    scope: process.env['FACEBOOK_SCOPE']
+    scope: SERVER_CONFIG['FACEBOOK_SCOPE']
   });
 }
 
 export function useFacebookStrategy() {
   passport.use(new FacebookStrategy({
-    clientID: process.env['FACEBOOK_APP_ID'],
-    clientSecret: process.env['FACEBOOK_APP_SECRET'],
-    callbackURL: process.env['FACEBOOK_CALLBACK'],
+    clientID: SERVER_CONFIG['FACEBOOK_APP_ID'],
+    clientSecret: SERVER_CONFIG['FACEBOOK_APP_SECRET'],
+    callbackURL: SERVER_CONFIG['FACEBOOK_CALLBACK'],
     profileFields: ['id', 'email', 'displayName']
   },
   (accessToken, refreshToken, profile, done) => {
@@ -62,7 +62,7 @@ export function useFacebookStrategy() {
           .then(values => {
             // update user picture
             const user = values[2];
-            const overwrite = !(user.picture && user.picture.url) || _.get(user, 'picture.url') == process.env['DEFAULT_PICTURE'];
+            const overwrite = !(user.picture && user.picture.url) || _.get(user, 'picture.url') == SERVER_CONFIG['DEFAULT_PICTURE'];
             return facebook.updateFacebookPicture(fbUser.id, overwrite).then(() => values)
           })
           .then(values => {

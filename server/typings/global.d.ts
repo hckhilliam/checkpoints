@@ -1,3 +1,7 @@
+declare var SERVER_CONFIG: {
+  [key: string]: any;
+}
+
 declare namespace CheckpointsServer {
   interface Request {
     body?: any;
