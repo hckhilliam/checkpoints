@@ -55,7 +55,7 @@ module.exports = {
     loaders: [
       { test: /\.css$/, loader: "style-loader!css-loader!postcss-loader" },
       { test: /\.scss$/, loaders: ["style", "css", "postcss", "sass"] },
-      { test: /\.tsx?$/, loader: "ts" },
+      { test: /\.tsx?$/, loaders: prod ? ["babel-loader?presets[]=es2015", "ts"] : ["ts"] },
       { test: /\.json$/, loader: "json-loader" },
       { test: /\.png$/, loader: "url-loader", query: { mimetype: "image/png" } }
     ],

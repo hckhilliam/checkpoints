@@ -9,7 +9,12 @@
     "webpack-server": "webpack -d --progress --watch --config webpack.node.config.js",
     "build-web": "webpack --progress --config webpack.web.config.js",
     "build-server": "webpack --progress --config webpack.node.config.js",
-    "build": "webpack --progress"
+    "build-all": "npm install&&npm run build-web&&npm run build-server",
+    "build-prod": "set NODE_ENV=production&&set MONGODB=mongodb://dev:12345678@ds011790.mlab.com:11790/checkpoints_prod&&npm run build-all",
+    "start": "node ./server/dist/www"
+  },
+  "engines": {
+    "node": "6.7.0"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -71,6 +76,9 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.5.1",
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.8",
+    "babel-preset-es2015": "^6.18.0",
     "css-loader": "^0.25.0",
     "empty-module": "0.0.2",
     "file-loader": "^0.9.0",

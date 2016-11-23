@@ -12,3 +12,6 @@ web/dist/*bundle.*
 .vscode/*
 
 userscript.txt
+
+.DS_Store
+/*.env
