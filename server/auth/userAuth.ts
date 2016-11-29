@@ -17,6 +17,7 @@ function hash(password) {
 }
 
 export function createUser(email, password, name) {
+  email = email.toLowerCase();
   return new Promise((resolve, reject) => {
     user.getUserByEmail(email)
       .then(u => {
@@ -36,6 +37,7 @@ export function createUser(email, password, name) {
 }
 
 export function checkUser(email, password) {
+  email = email.toLowerCase();
   return new Promise((resolve, reject) => {
     if (!password)
       return reject('Invalid credentials');

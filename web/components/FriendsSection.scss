@@ -1,12 +1,21 @@
 @import "../styles/variables";
 
 .FriendsSection {
-  .FriendsSection-heading {
+  &-heading {
     border-bottom: 1px solid $md-dark-text-dividers;
 
     h1 {
       font-size: 14px;
       font-weight: 500;
+    }
+  }
+
+  &-list {
+    &-no-friends{
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.48);
+      text-align: center;
     }
   }
 

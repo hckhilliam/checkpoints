@@ -1,7 +1,13 @@
 @import "../styles/variables";
 
 .CheckpointsList {
-
+  &-no-items {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.32);
+    margin: 32px;
+  }
 }
 
 .CheckpointsListSection {

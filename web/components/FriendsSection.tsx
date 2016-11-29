@@ -54,6 +54,9 @@ export class FriendsSection extends React.Component<Props, State> {
               ))
             }
           </div>
+          {
+            !friends.length && <h3 className="FriendsSection-list-no-friends">You don't have any friends 😢</h3>
+          }
         </Panel>
       </div>
     );

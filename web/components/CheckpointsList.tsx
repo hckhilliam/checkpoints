@@ -123,6 +123,9 @@ export class CheckpointsList extends React.Component<Props, State> {
               onClick={this.handleSelectCheckpoint}
             />
         }
+        {
+          !pending.length && !complete.length && <h3 className="CheckpointsList-no-items">Looks like you don't have any checkpoints yet!</h3>
+        }
       </List>
     );
   }
