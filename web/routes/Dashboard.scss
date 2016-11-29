@@ -42,6 +42,12 @@
       }
     }
 
+    @include min-sm-height {
+      .FriendsSection-list {
+        max-height: 101px;
+      }
+    }
+
     @include max-sm {
       margin-top: 32px;
     }

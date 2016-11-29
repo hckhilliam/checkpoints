@@ -39,6 +39,12 @@ $lg-min: 75 * 16 - 1px; // 1200
   }
 }
 
+@mixin min-sm-height {
+  @media (max-height: #{$sm-min + 1px}) and (min-width: #{$md-min + 1px}) {
+    @content
+  }
+}
+
 @mixin min-md {
   @media (min-width: #{$md-min + 1px}) {
     @content;
