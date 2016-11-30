@@ -13,9 +13,6 @@ const market = 'CA';
 const currency = 'CAD';
 const locale = 'en-US';
 
-const hardcodedOriginCode = 'YTOA-sky';
-const hardcodedOriginName = 'Toronto';
-
 declare namespace Skyscanner{
    interface Place {
     PlaceId: string;
@@ -56,6 +53,12 @@ export function getFlights(query: CheckpointsServer.FlightQuery): Promise<Checkp
   init.headers = headers;
 
   return fetch(api + pricingapi, init).then(res => {
+
+    //If ['location'] is not defined, then there is a problem happened with the query
+    //This can happen if the origin is the same as the destination
+    if (!res.headers['_headers']['location']) { 
+      throw res.json(); 
+    }
     let sessionLocation = res.headers['_headers']['location'][0];
     sessionLocation = sessionLocation + "?" + queryString.stringify({apiKey: SERVER_CONFIG['SKYSCANNER_APIKEY']});
 
@@ -100,7 +103,7 @@ function normalizeFlight(flight): CheckpointsServer.Flight {
   return flight as CheckpointsServer.Flight;
 }
 
-export function autoSuggest(query: string): Promise<Skyscanner.Place[]> {
+export function autoSuggest(query: String): Promise<Skyscanner.Place[]> {
   let queryObject = {
     query,
     apiKey: SERVER_CONFIG['SKYSCANNER_APIKEY']
@@ -111,40 +114,57 @@ export function autoSuggest(query: string): Promise<Skyscanner.Place[]> {
   });
 }
 
+export function autoSuggestOne(query: String): Promise<Skyscanner.Place> {
+  return autoSuggest(query).then(places => {
+    places = cleansePlaces(places);
+    if (places.length == 0) {
+      return null;
+    }
+    return places[0];
+  });
+}
+
 //If a place is a country, instead of a city or airport, it is not usable for searching
 export function cleansePlaces(places: Skyscanner.Place[]) {
   return places.filter(place => place.CityId != '-sky');
 }
 
 export function searchUserFlights(user: CheckpointsServer.User): Promise<CheckpointsServer.Flight> {
-  return getActiveCheckpoints(user._id).then(ret => {
-    let checkpoints = ret as any as CheckpointsServer.Checkpoint[];
+  let userLocationQuery = user.location.city || user.location.country;  
+  return Promise.all([
+    getActiveCheckpoints(user._id),
+    autoSuggestOne(userLocationQuery)
+  ]).then(ret => {
+    let checkpoints = ret[0] as any as CheckpointsServer.Checkpoint[];
     let titlesConcated = checkpoints.map(checkpoint => checkpoint.title).join("  ").toLowerCase();
+
+    let userLocation = ret[1];
+    if (userLocation == null) {
+      return Promise.resolve([]);
+    }
 
     let destinations = Array.from(searchablePlaces).filter(destination => titlesConcated.includes(destination.toLowerCase()));
 
     return Promise.all(destinations.map(destination => {
-      return autoSuggest(destination).then(places => {
-        places = cleansePlaces(places);
-        if (places.length == 0) {
+      return autoSuggestOne(destination).then(place => {
+        if (place == null) {
           return Promise.resolve(null);
         }
 
-        let place = places[0];
-
         let query: CheckpointsServer.FlightQuery = {
-          originName: hardcodedOriginName,
-          originCode: hardcodedOriginCode,
+          originName: userLocation.PlaceName,
+          originCode: userLocation.PlaceId,
           destinationName: place.PlaceName,
           destinationCode: place.PlaceId
         }
         return getFlights(query).then(flights => {
           return flights.length == 0 ? null : flights[0];
+        }).catch(error => {
+          return null;
         });
       });
     })).then(results => {
-      // debug('results : ', results);
-      return results.filter((place) => place != null);
+      return results.filter((places) => places != null);
     });
   });
 }

@@ -27,7 +27,9 @@ const locationSchema = new mongoose.Schema({
   _id: false,
   name: { type: String, default: "Waterloo, ON, Canada" },
   lat: { type: Number, default: 43.4668000 },
-  lng: { type: Number, default: -80.5163900 }
+  lng: { type: Number, default: -80.5163900 },
+  country: {type: String, default: 'Canada'},
+  city: {type: String, default: 'Waterloo'}
 })
 
 const schema = {

@@ -47,6 +47,8 @@ declare namespace Checkpoints {
       name?: string;
       lat?: number;
       lng?: number;
+      country?: string;
+      city?: string;
     };
   }
 

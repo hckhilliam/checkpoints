@@ -14,7 +14,7 @@ export const Flight = (props: Props) => {
       <a href={flight.url} target="_blank">
         <div>{flight.originName}  to  {flight.destinationName}</div>
         <div>Leaving {dateformat(flight.departureDate, 'mmmm dS')}</div>
-        <div>${flight.price}</div>
+        <div>${flight.price.toFixed(2)}</div>
       </a> 
     </div>
   );

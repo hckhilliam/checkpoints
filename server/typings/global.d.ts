@@ -29,6 +29,8 @@ declare namespace CheckpointsServer {
       name?: string;
       lat?: number;
       lng?: number;
+      country: String;
+      city: String;
     }
   }
 

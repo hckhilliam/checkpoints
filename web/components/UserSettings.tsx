@@ -34,11 +34,21 @@ export class UserSettings extends React.Component<Props, {}>{
                 <Geosuggest className="UserSettings-Location" 
                   types={['(cities)']}
                   initialValue={props.input.value.name} 
-                  onSuggestSelect={param => {
+                  onSuggestSelect={param => 
+                  {
+                    let addressComponents = (param.gmaps as any).address_components;
+                    let city = addressComponents.find(elem => elem.types.indexOf('locality') != -1 );
+                    city =  !city || city.long_name; //Check for undefined city  
+                    let country = addressComponents.find(elem => elem.types.indexOf('country') != -1 );
+                    country =  !country || country.long_name;
+
                     props.input.value.name = param.label;
                     props.input.value.lat = param.location.lat;
                     props.input.value.lng = param.location.lng;
-                  }}
+                    props.input.value.country = country;
+                    props.input.value.city = city;
+                  }
+                }
                 />
               );
             }}/>
@@ -57,6 +67,7 @@ const UserSettingsReduxForm = reduxForm({
   form: 'UserSettings',
   validate: validate as any,
   onSubmit: (values: Checkpoints.Forms.User, dispatch) => {
+    console.log('values : ', values);
     return updateUserSettings(values).then(() => {
       dispatch(getUserInfo());
     }).catch(err => new SubmissionError({ _error: err}));
