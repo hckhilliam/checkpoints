@@ -82,7 +82,10 @@
   &--Large {
     min-width: 768px;
     max-width: 100%;
-    max-height: 90%;
+
+    @include min-sm {
+      max-height: 90%;
+    }
 
     @include max-sm {
       min-width: 100%;

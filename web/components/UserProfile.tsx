@@ -17,6 +17,7 @@ interface Props {
   checkpoints?: Checkpoints.Checkpoint[];
   friends?: Checkpoints.Friend[];
   friendRequests?: Checkpoints.Friend[];
+  isSelf?: boolean;
   onGetUserInfo?: () => void;
   onAcceptFriend?: () => void;
 }
@@ -45,10 +46,10 @@ export class UserProfile extends React.Component<Props, State> {
   }
 
   render() {
-    const { user, userId, friends, friendRequests, checkpoints } = this.props;
+    const { user, userId, friends, friendRequests, checkpoints, isSelf } = this.props;
 
     let friendStatus = this.state.friendRequestSent ? 'Pending' : 'None';
-    if (!userId)
+    if (!userId || isSelf)
       friendStatus = 'Self';
     else if (friends.find(f => f.id == userId))
       friendStatus = 'Friends';
@@ -75,7 +76,8 @@ const mapStateToProps = (state: Checkpoints.State, ownProps: Props) => {
     user: state.users.users[userId],
     checkpoints: state.checkpoints.users[userId],
     friends: state.friends,
-    friendRequests: state.notifications.friendRequests
+    friendRequests: state.notifications.friendRequests,
+    isSelf: userId == state.users.me.id
   };
 };
 

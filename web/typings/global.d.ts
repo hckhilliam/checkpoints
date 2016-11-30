@@ -109,7 +109,7 @@ declare namespace Checkpoints {
   }
 
   type CheckpointsState = SharedState<Checkpoint[]>;
-  type UsersState = SharedState<User[]>;
+  type UsersState = SharedState<User>;
 }
 
 declare namespace Checkpoints {
