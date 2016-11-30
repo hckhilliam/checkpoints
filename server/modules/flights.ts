@@ -56,8 +56,8 @@ export function getFlights(query: CheckpointsServer.FlightQuery): Promise<Checkp
 
     //If ['location'] is not defined, then there is a problem happened with the query
     //This can happen if the origin is the same as the destination
-    if (!res.headers['_headers']['location']) { 
-      throw res.json(); 
+    if (!res.headers['_headers']['location']) {
+      throw res.json();
     }
     let sessionLocation = res.headers['_headers']['location'][0];
     sessionLocation = sessionLocation + "?" + queryString.stringify({apiKey: SERVER_CONFIG['SKYSCANNER_APIKEY']});
@@ -103,7 +103,7 @@ function normalizeFlight(flight): CheckpointsServer.Flight {
   return flight as CheckpointsServer.Flight;
 }
 
-export function autoSuggest(query: String): Promise<Skyscanner.Place[]> {
+export function autoSuggest(query: string): Promise<Skyscanner.Place[]> {
   let queryObject = {
     query,
     apiKey: SERVER_CONFIG['SKYSCANNER_APIKEY']
@@ -114,7 +114,7 @@ export function autoSuggest(query: String): Promise<Skyscanner.Place[]> {
   });
 }
 
-export function autoSuggestOne(query: String): Promise<Skyscanner.Place> {
+export function autoSuggestOne(query: string): Promise<Skyscanner.Place> {
   return autoSuggest(query).then(places => {
     places = cleansePlaces(places);
     if (places.length == 0) {
@@ -130,7 +130,7 @@ export function cleansePlaces(places: Skyscanner.Place[]) {
 }
 
 export function searchUserFlights(user: CheckpointsServer.User): Promise<CheckpointsServer.Flight> {
-  let userLocationQuery = user.location.city || user.location.country;  
+  let userLocationQuery = user.location.city || user.location.country;
   return Promise.all([
     getActiveCheckpoints(user._id),
     autoSuggestOne(userLocationQuery)

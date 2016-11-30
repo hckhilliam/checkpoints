@@ -27,18 +27,18 @@ export class UserSettings extends React.Component<Props, {}>{
       <div className="UserSettings">
         <Form {...other}>
           <InputField label="Name" name="name"/>
-          <span> Hometown 
+          <span> Hometown
             <Field name="location" component = { props =>
             {
               return (
-                <Geosuggest className="UserSettings-Location" 
+                <Geosuggest className="UserSettings-Location"
                   types={['(cities)']}
-                  initialValue={props.input.value.name} 
-                  onSuggestSelect={param => 
+                  initialValue={props.input.value.name}
+                  onSuggestSelect={param =>
                   {
                     let addressComponents = (param.gmaps as any).address_components;
                     let city = addressComponents.find(elem => elem.types.indexOf('locality') != -1 );
-                    city =  !city || city.long_name; //Check for undefined city  
+                    city =  !city || city.long_name; //Check for undefined city
                     let country = addressComponents.find(elem => elem.types.indexOf('country') != -1 );
                     country =  !country || country.long_name;
 
@@ -52,7 +52,7 @@ export class UserSettings extends React.Component<Props, {}>{
                 />
               );
             }}/>
-          </span>    
+          </span>
           <CheckboxField label="Subcribed to emails" name="settings.isSubscribed" />
           <FormButtons>
             <Button type="submit" primary>Save</Button>
@@ -67,7 +67,6 @@ const UserSettingsReduxForm = reduxForm({
   form: 'UserSettings',
   validate: validate as any,
   onSubmit: (values: Checkpoints.Forms.User, dispatch) => {
-    console.log('values : ', values);
     return updateUserSettings(values).then(() => {
       dispatch(getUserInfo());
     }).catch(err => new SubmissionError({ _error: err}));

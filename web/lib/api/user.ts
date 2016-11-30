@@ -18,6 +18,5 @@ export function getInfo(userId?: number): Promise<Checkpoints.User> {
 
 export function updateUser(user: Checkpoints.User): Promise<Checkpoints.User> {
   const url = getUrl('');
-  console.log('url : ', url);
-  return put(url, user); 
+  return put(url, user);
 }
