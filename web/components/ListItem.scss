@@ -24,6 +24,7 @@
 
 .ExpandableListItem {
   user-select: none;
+  cursor: pointer;
   margin: 0 32px;
   padding: 0;
   transition: margin 0.4s ease,
@@ -32,6 +33,7 @@
   &-content {
     padding: 8px;
     position: relative;
+    transition: padding 0.4s ease;
     @include text-ellipsis;
   }
 
@@ -53,6 +55,7 @@
     width: 100%;
     white-space: normal;
     user-select: initial;
+    cursor: initial;
 
     h3 {
       user-select: none;

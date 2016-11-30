@@ -32,13 +32,15 @@ interface ExpandableListItemState {
   bodyHeight?: number;
 }
 
-const ExpandableListItemContentElement = (props: React.HTMLAttributes) => {
-  return (
-    <div className="ExpandableListItem-content" {...props}>
-      {props.children}
-    </div>
-  );
-};
+class ExpandableListItemContentElement extends React.Component<React.HTMLAttributes, {}> {
+  render() {
+    return (
+      <div className="ExpandableListItem-content" {...this.props}>
+        {this.props.children}
+      </div>
+    );
+  }
+}
 const ExpandableListItemContent = InkRipple(ExpandableListItemContentElement as any);
 
 class BaseExpandableListItem extends React.Component<ExpandableListItemProps, ExpandableListItemState> {

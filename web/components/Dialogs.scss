@@ -84,7 +84,7 @@
     max-width: 100%;
 
     @include min-sm {
-      max-height: 90%;
+      // max-height: 90%; // this causes blurry text!
     }
 
     @include max-sm {

@@ -1,6 +1,7 @@
 import './InkRipple.scss';
 
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import * as classnames from 'classnames';
 import * as update from 'immutability-helper';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -191,7 +192,7 @@ export class InkRippleElement extends React.Component<InkRippleProps, InkRippleS
     }
 
     return (
-      <div className={cssClass} {...other} style={baseStyle} onMouseDown={_.isUndefined(toggle) ? this.handleRipple : undefined}>
+      <div className={cssClass} {...other} style={baseStyle}>
         <div ref={this.handleRef} style={style}>
           <ReactCSSTransitionGroup
             transitionName="ripple"
@@ -208,40 +209,48 @@ export class InkRippleElement extends React.Component<InkRippleProps, InkRippleS
 
 interface InkRippleOptions {
   shade?: 'Light' | 'Normal' | 'Dark';
+  duration?: 'Slow' | 'Fast';
+  size?: number;
+  center?: boolean;
 }
 
 const defaultInkRippleOptions: InkRippleOptions = {
-  shade: 'Normal'
+  shade: 'Normal',
+  duration: 'Slow',
+  center: false
 };
 
 export function AdvancedInkRipple<P extends React.HTMLAttributes>(options = defaultInkRippleOptions): (WrappedComponent: React.ComponentClass<P>) => (React.ComponentClass<P & InkRippleProps>) {
   return function InkRipple(WrappedComponent: React.ComponentClass<P>): React.ComponentClass<P & InkRippleProps> {
-    return class extends React.Component<P & InkRippleProps, { ripple?: boolean, event?: React.MouseEvent }> {
+    return class extends React.Component<P & InkRippleProps, { ripple?: boolean, event?: MouseEvent }> {
       state = {
         ripple: true,
         event: null
       }
 
-      handleRipple = (event: React.MouseEvent) => {
-        event.persist();
+      handleRef = (element: any) => {
+        if (element) {
+          element = ReactDOM.findDOMNode(element);
+          element.addEventListener('mousedown', this.handleRipple);
+        }
+      };
+
+      handleRipple = (event: MouseEvent) => {
         this.setState({
           ripple: !this.state.ripple,
           event
         });
-
-        if (this.props.onMouseDown)
-          this.props.onMouseDown(event);
       };
 
       render() {
         const { children, disabled } = this.props;
-        const other = _.omit(this.props, 'children', 'disabled', 'onMouseDown');
+        const other = _.omit(this.props, 'children', 'disabled');
         if (!_.isUndefined(disabled))
           other['disabled'] = disabled;
 
         return (
           <WrappedComponent
-            onMouseDown={this.handleRipple}
+            ref={this.handleRef}
             {...other}
           >
             {children}
@@ -256,6 +265,7 @@ export function AdvancedInkRipple<P extends React.HTMLAttributes>(options = defa
 /**
  * Adds a ripple effect to the component.
  * Position must be absolute or relative, and must render props.children.
+ * Must also pass through ref.
  */
 export function InkRipple<P>(WrappedComponent: React.ComponentClass<P>): React.ComponentClass<P & InkRippleProps> {
   return AdvancedInkRipple<P>()(WrappedComponent);

@@ -3,7 +3,7 @@ import './IconButton.scss';
 import * as React from 'react';
 import * as classnames from 'classnames';
 
-import { InkRippleElement } from './InkRipple';
+import { AdvancedInkRipple } from './InkRipple';
 
 interface IconButtonProps extends React.HTMLAttributes {
   raised?: boolean;
@@ -11,7 +11,7 @@ interface IconButtonProps extends React.HTMLAttributes {
   disabled?: boolean;
 }
 
-export default class IconButton extends React.Component<IconButtonProps, {}> {
+export class IconButtonElement extends React.Component<IconButtonProps, {}> {
   static defaultProps: IconButtonProps = {
     raised: false,
     primary: false,
@@ -36,8 +36,15 @@ export default class IconButton extends React.Component<IconButtonProps, {}> {
     return (
       <button className={cssClass} {...other}>
         {children}
-        <InkRippleElement duration="Slow" shade="Normal" center={true} size={40} disabled={disabled} />
       </button>
     );
   }
 }
+
+const IconButton = AdvancedInkRipple({
+  shade: 'Normal',
+  duration: 'Slow',
+  size: 40,
+  center: true
+})(IconButtonElement)
+export default IconButton;
