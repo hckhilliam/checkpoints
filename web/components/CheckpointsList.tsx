@@ -101,28 +101,25 @@ export class CheckpointsList extends React.Component<Props, State> {
     const pending = checkpoints.filter(c => !c.isCompleted);
     const complete = checkpoints.filter(c => c.isCompleted);
 
+    const pendingSection = !!pending.length ? <CheckpointsListSection
+                                                title="In Progress"
+                                                checkpoints={pending}
+                                                selectedId={checkpoint.id}
+                                                privateView={!userId}
+                                                onClick={this.handleSelectCheckpoint}
+                                              /> : null;
+    const completeSection = !!complete.length ? <CheckpointsListSection
+                                                  title="Complete"
+                                                  checkpoints={complete}
+                                                  selectedId={checkpoint.id}
+                                                  privateView={!userId}
+                                                  onClick={this.handleSelectCheckpoint}
+                                                /> : null;
+
     return (
       <List className={cssClass} {...other}>
-        {
-          !!pending.length &&
-            <CheckpointsListSection
-              title="In Progress"
-              checkpoints={pending}
-              selectedId={checkpoint.id}
-              privateView={!userId}
-              onClick={this.handleSelectCheckpoint}
-            />
-        }
-        {
-          !!complete.length &&
-            <CheckpointsListSection
-              title="Complete"
-              checkpoints={complete}
-              selectedId={checkpoint.id}
-              privateView={!userId}
-              onClick={this.handleSelectCheckpoint}
-            />
-        }
+        {userId ? completeSection : pendingSection}
+        {userId ? pendingSection : completeSection}
         {
           !pending.length && !complete.length && <h3 className="CheckpointsList-no-items">Looks like you don't have any checkpoints yet!</h3>
         }
