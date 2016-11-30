@@ -4,11 +4,16 @@
   height: 100%;
   width: 100%;
 
-  min-height: 512px;
+  min-height: 612px;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  background-image: url('/static/bg-lg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top right;
 
   &-content {
     display: flex;

@@ -12,6 +12,7 @@
     a {
       font-size: 16px;
       text-decoration: none;
+      color: $md-dark-text-primary;
     }
   }
 
@@ -26,17 +27,26 @@
 
     &-line {
       font-size: 24px;
-      font-weight: 300;
+      font-weight: 400;
       margin: 12px 0;
+      position: relative;
+      color: $md-dark-text-secondary;
 
       &::before, &::after {
         content: '';
+        position: absolute;
+        top: 50%;
         width: 40%;
-        background: rgba(0, 0, 0, 0.2);
-        box-shadow: 0 1px 0 rgba(255,255,255,0.5);
-        display: inline-block;
         height: 1px;
-        vertical-align: middle;
+        background: $md-light-text-primary;
+      }
+
+      &::before {
+        left: 0;
+      }
+
+      &::after {
+        right: 0;
       }
     }
   }
