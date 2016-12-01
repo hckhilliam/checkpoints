@@ -68,7 +68,7 @@ export class SearchBar extends React.Component<SearchProps, SearchState> {
     return (
       <form className="SearchBar" onSubmit={this.onSubmit} autoComplete="off">
         <div className="SearchBar-Dropdown" ref={e => this.anchor = e}>
-          <Input placeholder="Search" name="search" value={this.state.searchText} onChange={this.editSearch}/>
+          <Input placeholder="Search Users" name="search" value={this.state.searchText} onChange={this.editSearch}/>
         </div>
         <IconButton type="submit">
           <MaterialIcon icon="search" />
