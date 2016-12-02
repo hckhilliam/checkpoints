@@ -1,5 +1,6 @@
 # checkpoints
 SE464 Architectures project
+
 View it here: [checkpoints-demo.herokuapp.com](checkpoints-demo.herokuapp.com)
 
 :)
