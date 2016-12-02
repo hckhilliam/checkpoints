@@ -9,6 +9,7 @@ import * as path from 'path';
 import { setRoutes } from './routes/router';
 import { initializeAuth } from './auth/auth';
 import { job } from './jobs/scheduler';
+import ErrorFactory from './handlers/error';
 
 const app = express();
 
@@ -30,9 +31,7 @@ setRoutes(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  let err = new Error('Not Found');
-  (err as any).status = 404;
-  next(err);
+  next(ErrorFactory.notFound());
 });
 
 job.start();

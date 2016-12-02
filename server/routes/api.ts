@@ -8,7 +8,7 @@ import auth from './auth';
 import me from './me';
 import users from './users';
 
-import error from '../handlers/error';
+import { error } from '../handlers/error';
 import event from './event';
 import flight from './flight';
 

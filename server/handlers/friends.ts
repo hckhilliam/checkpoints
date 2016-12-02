@@ -6,6 +6,7 @@ import * as friend from '../modules/friend';
 import * as facebook from '../modules/facebook';
 import { getUserId, getCallerUserId, getFacebookId } from '../lib/request';
 import { userSort } from '../lib/sort';
+import ErrorFactory from './error';
 
 export function addFriend(req: Request, res: Response, next: any) {
   friend.addFriend(getCallerUserId(req), Number(req.params['_id']))
@@ -23,7 +24,11 @@ export function getFriends(req: Request, res: Response, next: any) {
 export function getFriendRequests(req: Request, res: Response, next: any) {
   friend.getFriendRequests(getCallerUserId(req))
     .then(friendRequests => res.json(friendRequests))
-    .catch(next);
+    .catch((err: Error) => {
+      if (err.message == 'User not found')
+        throw ErrorFactory.notFound(err.message);
+      throw err;
+    });
 }
 
 export function respondToRequest(req: Request, res: Response, next: any) {
