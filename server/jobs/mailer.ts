@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 export function createMail(receivers: string, subject: string,  textBody: string, htmlBody: string){
   let mailOptions: nodemailer.SendMailOptions = {
     from: '"Checkpoints" <noreply@checkpoints.com>', // sender address
-    to: 'tjintest1@gmail.com', // list of receivers
+    to: receivers, // list of receivers
     subject: subject, // Subject line
     text: textBody, // plaintext body
     html: htmlBody // html body
