@@ -35,7 +35,7 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// job.start();
+job.start();
 // job();
 
 // error handlers
